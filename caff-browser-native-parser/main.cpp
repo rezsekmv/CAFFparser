@@ -59,47 +59,42 @@ vector<Color> parse_rgb_pixels(const char *buffer, uint64_t start_index, uint64_
     vector<Color> pixels;
     for (uint64_t i = start_index; i < start_index + byte_number - 1; i += 3) {
         Color color{};
-        color.red = parse_int_byte(buffer, i, start_index + 1);
-        color.green = parse_int_byte(buffer, i + 1, start_index + 2);
-        color.blue = parse_int_byte(buffer, i + 2, start_index + 3);
+        color.red = parse_int_byte(buffer, i, 1);
+        color.green = parse_int_byte(buffer, i + 1, 1);
+        color.blue = parse_int_byte(buffer, i + 2, 1);
         pixels.push_back(color);
     }
     return pixels;
 }
 
-void parse_ciff(const char *buffer, uint64_t num_anim, int start_index) {
-    uint64_t start = start_index;
-    //TODO összes kép beparseolása
-    //for (uint64_t image_number = 0; image_number < num_anim; image_number++) {
-    string magic = parse_string_byte(buffer, start, 4);
+void parse_ciff(const char *buffer, uint64_t start_index) {
+    string magic = parse_string_byte(buffer, start_index, 4);
     if (magic != "CIFF") {
         throw std::runtime_error("Invalid CIFF magic");
     }
-    uint64_t header_size = parse_int_byte(buffer, start + 4, 8);
-    uint64_t content_size = parse_int_byte(buffer, start + 12, 8);
-    uint64_t width = parse_int_byte(buffer, start + 20, 8);
-    uint64_t height = parse_int_byte(buffer, start + 28, 8);
-    pair<string, int> caption_pair = parse_caption(buffer, start + 36, start + header_size - 1);
+    uint64_t header_size = parse_int_byte(buffer, start_index + 4, 8);
+    uint64_t content_size = parse_int_byte(buffer, start_index + 12, 8);
+    uint64_t width = parse_int_byte(buffer, start_index + 20, 8);
+    uint64_t height = parse_int_byte(buffer, start_index + 28, 8);
+    pair<string, int> caption_pair = parse_caption(buffer, start_index + 36, start_index + header_size - 1);
     string caption = caption_pair.first;
     int caption_end_index = caption_pair.second;
-    vector<string> tags = parse_tags(buffer, caption_end_index + 1, start + header_size - 1);
+    vector<string> tags = parse_tags(buffer, caption_end_index + 1, start_index + header_size - 1);
 
     printf("Header: %llu\n", header_size);
     printf("Content Size: %llu\n", content_size);
     printf("Width: %llu\n", width);
     printf("Height: %llu\n", height);
     printf("Caption: %s\n", caption.c_str());
-    for (auto & tag : tags) {
+    for (auto &tag: tags) {
         cout << tag << endl;
     }
 
-    vector<Color> pixels = parse_rgb_pixels(buffer, start + header_size, content_size);
+    vector<Color> pixels = parse_rgb_pixels(buffer, start_index + header_size, content_size);
     printf("%zu db pixel:\n", pixels.size());
     for (int i = 0; i < 10/*pixels.size()*/; i++) {
         printf("%d - %d - %d\n", pixels[i].red, pixels[i].green, pixels[i].blue);
     }
-
-    //start += header_size + content_size + 17;
 }
 
 void parse_caff(const char *buffer) {
@@ -127,12 +122,6 @@ void parse_caff(const char *buffer) {
     uint64_t creator_size = parse_int_byte(buffer, 44, 8);
     string creator = parse_string_byte(buffer, 52, (int) creator_size);
     int creator_end_index = 52 + (int) creator_size;
-    uint8_t animation_id = parse_int_byte(buffer, creator_end_index, 1);
-    if (animation_id != 3) {
-        throw std::runtime_error("Invalid animation ID");
-    }
-    uint64_t animation_length = parse_int_byte(buffer, creator_end_index + 1, 8);
-    uint64_t duration = parse_int_byte(buffer, creator_end_index + 9, 8);
 
     printf("Id: %d\n", header_id);
     printf("Length: %llu\n", header_length);
@@ -148,16 +137,28 @@ void parse_caff(const char *buffer) {
     printf("Minute: %d\n", minute);
     printf("Creator size: %llu\n", creator_size);
     printf("Creator: %s\n", creator.c_str());
-    printf("Id: %d\n", animation_id);
-    printf("Length: %llu\n", animation_length);
-    printf("Duration: %llu\n", duration);
 
-    //TODO CAFF animation rész beparsolása mindegyik CIFF fájlnál
-    parse_ciff(buffer, num_anim, creator_end_index + 17);
+    uint64_t start = creator_end_index + 17;
+    for (uint64_t image_number = 0; image_number < num_anim; image_number++) {
+        uint8_t animation_id = parse_int_byte(buffer, creator_end_index, 1);
+        if (animation_id != 3) {
+            throw std::runtime_error("Invalid animation ID");
+        }
+        uint64_t animation_length = parse_int_byte(buffer, creator_end_index + 1, 8);
+        uint64_t duration = parse_int_byte(buffer, creator_end_index + 9, 8);
+
+        printf("Id: %d\n", animation_id);
+        printf("Length: %llu\n", animation_length);
+        printf("Duration: %llu\n", duration);
+
+        parse_ciff(buffer, start);
+        start += animation_length + 9;
+    }
+
 }
 
 int main() {
-    ifstream is("../images/1.caff", ifstream::binary);
+    ifstream is("../images/2.caff", ifstream::binary);
     if (is) {
         is.seekg(0, is.end);
         int file_size = is.tellg();
