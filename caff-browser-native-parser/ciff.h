@@ -1,18 +1,29 @@
 #ifndef CAFF_BROWSER_NATIVE_PARSER_CIFF_H
 #define CAFF_BROWSER_NATIVE_PARSER_CIFF_H
 
-#include <vector>
-
 using namespace std;
 
-pair<string, int> parse_caption(const char *buffer, uint64_t start_index, uint64_t max_end_index);
+class ciff {
+public:
+    string magic;
+    uint64_t header_size;
+    uint64_t content_size;
+    uint64_t width;
+    uint64_t height;
+    string caption;
+    vector <string> tags;
 
-vector<string> parse_tags(const char *buffer, int start_index, uint64_t size);
-
-void parse_rgb_pixels(const char *buffer, uint64_t start_index, uint64_t byte_number, unsigned char *pixels);
-
-void convert_to_ppm(const string &filename, uint64_t width, uint64_t height, unsigned char *pixels);
-
-void parse_ciff(const string &file_name, const char *buffer, uint64_t start_index);
+    ciff(const string &p_magic, uint64_t p_header_size, uint64_t p_content_size, uint64_t p_width, uint64_t p_height,
+         const string &p_caption, const vector <string> &p_tags
+    ) {
+        magic = p_magic;
+        header_size = p_header_size;
+        content_size = p_content_size;
+        width = p_width;
+        height = p_height;
+        caption = p_caption;
+        tags = p_tags;
+    }
+};
 
 #endif //CAFF_BROWSER_NATIVE_PARSER_CIFF_H
