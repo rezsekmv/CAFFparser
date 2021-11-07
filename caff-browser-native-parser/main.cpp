@@ -2,6 +2,8 @@
 
 #include "caff.h"
 
+using namespace std;
+
 int main() {
     ifstream is("../images/2.caff", ifstream::binary);
     if (is) {
