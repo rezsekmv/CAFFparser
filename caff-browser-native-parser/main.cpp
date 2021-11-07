@@ -1,9 +1,17 @@
 #include <fstream>
 
-#include "caff.h"
+#include "caff_parser.h"
 
-int main() {
-    ifstream is("../images/2.caff", ifstream::binary);
+using namespace std;
+
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        throw runtime_error("No filename provided");
+    }
+
+    string filename = argv[1];
+
+    ifstream is("../images/" + filename, ifstream::binary);
     if (is) {
         is.seekg(0, is.end);
         int file_size = is.tellg();
@@ -18,7 +26,7 @@ int main() {
 
         delete[] buffer;
     } else {
-        throw runtime_error("Invalid file");
+        throw runtime_error("Invalid file, filename:" + filename);
     }
 
     return 0;
