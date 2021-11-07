@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void parse_caff(const char *buffer) {
+void parse_caff(const char *buffer, const string& filename) {
     //CAFF Header
     uint8_t header_id = parse_int_byte(buffer, 0, 1);
     if (header_id != 1) {
@@ -68,7 +68,7 @@ void parse_caff(const char *buffer) {
 
         string image_index = uint64_to_string(image_number);
 
-        ciff ciff_image = parse_ciff(image_index, buffer, start);
+        ciff ciff_image = parse_ciff(filename+image_index, buffer, start);
         ciff_images.push_back(ciff_image);
         start += animation_length + 9;
     }
@@ -76,5 +76,5 @@ void parse_caff(const char *buffer) {
     caff caff_image(header_id, header_length, magic, header_size, num_anim, credit_id, credit_length,
                     year, month, day, hour, minute, creator_size, creator, animation_ids, animation_lengths, animation_durations, ciff_images);
 
-    caff_image.write_to_json("output-json");
+    caff_image.write_to_json(filename+"-json");
 }

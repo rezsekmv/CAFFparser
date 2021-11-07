@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
         is.read(buffer, file_size);
         is.close();
 
-        parse_caff(buffer);
+        parse_caff(buffer, filename);
 
         delete[] buffer;
     } else {
