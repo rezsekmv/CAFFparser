@@ -56,7 +56,7 @@ void convert_to_ppm(const string &filename, uint64_t width, uint64_t height, uns
     fclose(imageFile);
 }
 
-ciff parse_ciff(const string &filename, const char *buffer, uint64_t start_index) {
+CIFF parse_ciff(const string &filename, const char *buffer, uint64_t start_index) {
     string magic = parse_string_byte(buffer, start_index, 4);
     if (magic != "CIFF") {
         throw runtime_error("Invalid CIFF magic");
@@ -77,7 +77,7 @@ ciff parse_ciff(const string &filename, const char *buffer, uint64_t start_index
     parse_rgb_pixels(buffer, start_index + header_size, content_size, pixels);
     convert_to_ppm(filename, width, height, pixels);
 
-    ciff ciff_image(magic, header_size, content_size, width, height, caption, tags);
+    CIFF ciff_image(magic, header_size, content_size, width, height, caption, tags);
 
     return ciff_image;
 

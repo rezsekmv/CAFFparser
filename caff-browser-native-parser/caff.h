@@ -1,7 +1,7 @@
 #ifndef CAFF_BROWSER_NATIVE_PARSER_CAFF_H
 #define CAFF_BROWSER_NATIVE_PARSER_CAFF_H
 
-class caff {
+class CAFF {
 public:
     // header
     uint8_t header_id;
@@ -20,15 +20,15 @@ public:
     uint64_t creator_size;
     string creator;
     // animation
-    vector <uint8_t> animation_ids;
-    vector <uint64_t> animation_lengths;
-    vector <uint64_t> animation_durations;
-    vector <ciff> images;
+    vector<uint8_t> animation_ids;
+    vector<uint64_t> animation_lengths;
+    vector<uint64_t> animation_durations;
+    vector<CIFF> images;
 
-    caff(uint8_t headerId, uint64_t headerLength, const string &headerMagic, uint64_t headerSize, uint64_t numAnim, uint8_t creditId,
+    CAFF(uint8_t headerId, uint64_t headerLength, const string &headerMagic, uint64_t headerSize, uint64_t numAnim, uint8_t creditId,
          uint64_t creditLength, uint16_t p_year, uint8_t p_month, uint8_t p_day, uint8_t p_hour, uint8_t p_minute,
-         uint64_t creatorSize, const string &p_creator, const vector <uint8_t> &animationIds,
-         const vector <uint64_t> &animationLengths, const vector <uint64_t> &animationDurations, const vector <ciff> &ciffImgs
+         uint64_t creatorSize, const string &p_creator, const vector<uint8_t> &animationIds,
+         const vector<uint64_t> &animationLengths, const vector<uint64_t> &animationDurations, const vector<CIFF> &ciffImgs
     ) {
         header_id = headerId;
         header_length = headerLength;
@@ -130,6 +130,8 @@ public:
 
         fclose(file);
     }
+
+    virtual ~CAFF() = default;
 };
 
 #endif //CAFF_BROWSER_NATIVE_PARSER_CAFF_H

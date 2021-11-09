@@ -51,7 +51,7 @@ void parse_caff(const char *buffer, const string& filename) {
     vector<uint8_t> animation_ids;
     vector<uint64_t> animation_lengths;
     vector<uint64_t> animation_durations;
-    vector<ciff> ciff_images;
+    vector<CIFF> ciff_images;
 
     uint64_t start = creator_end_index + 17;
     for (uint64_t image_number = 0; image_number < num_anim; image_number++) {
@@ -68,12 +68,12 @@ void parse_caff(const char *buffer, const string& filename) {
 
         string image_index = uint64_to_string(image_number);
 
-        ciff ciff_image = parse_ciff(filename+image_index, buffer, start);
+        CIFF ciff_image = parse_ciff(filename + image_index, buffer, start);
         ciff_images.push_back(ciff_image);
         start += animation_length + 9;
     }
 
-    caff caff_image(header_id, header_length, magic, header_size, num_anim, credit_id, credit_length,
+    CAFF caff_image(header_id, header_length, magic, header_size, num_anim, credit_id, credit_length,
                     year, month, day, hour, minute, creator_size, creator, animation_ids, animation_lengths, animation_durations, ciff_images);
 
     caff_image.write_to_json(filename+"-json");
