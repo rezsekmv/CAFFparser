@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="bosz.norbert" id="002" labels="sample,test">
+        <loadData tableName="USER"
+                  file="../sampledata/002_FIRST_USER.csv"
+                  relativeToChangelogFile="true"
+                  schemaName="caffbrowser"
+                  separator=";"
+                  usePreparedStatements="true">
+            <column name="USER_ID" type="NUMERIC"/>
+            <column name="USER_USERNAME" type="STRING"/>
+            <column name="USER_PASSWORD" type="STRING"/>
+            <column name="USER_EMAIL" type="STRING"/>
+            <column name="USER_NAME" type="STRING"/>
+        </loadData>
+        <loadData tableName="ROLE"
+                  file="../sampledata/002_FIRST_ROLE.csv"
+                  relativeToChangelogFile="true"
+                  schemaName="caffbrowser"
+                  separator=";"
+                  usePreparedStatements="true">
+            <column name="ROLE_ID" type="NUMERIC"/>
+            <column name="ROLE_USER_ID" type="NUMERIC"/>
+            <column name="ROLE_NAME" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

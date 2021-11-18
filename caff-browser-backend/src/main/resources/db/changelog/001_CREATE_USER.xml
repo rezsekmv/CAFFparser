@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="bosz.norbert" id="001">
+        <createTable tableName="USER">
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="USER_USERNAME" type="VARCHAR2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_PASSWORD" type="VARCHAR2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_EMAIL" type="VARCHAR2(255)"/>
+            <column name="USER_NAME" type="VARCHAR2(255)"/>
+        </createTable>
+        <addAutoIncrement tableName="USER" columnName="USER_ID" columnDataType="BIGINT"/>
+
+        <createTable tableName="ROLE">
+            <column name="ROLE_ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ROLE_USER_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_ROLE_USER_ID_TO_USER_ID" references="USER(USER_ID)"/>
+            </column>
+            <column name="ROLE_NAME" type="VARCHAR2(255)"/>
+        </createTable>
+        <addAutoIncrement tableName="ROLE" columnName="ROLE_ID" columnDataType="BIGINT"/>
+    </changeSet>
+
+</databaseChangeLog>

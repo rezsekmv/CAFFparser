@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: caffbrowser
+    datasource:
+        url: jdbc:mysql://localhost:3306/caffbrowser
+        username: root
+        password: Password1
+    liquibase:
+        change-log: classpath:db/changelog-app.xml
+        labels: sample
+
+security:
+    token-secret: caffbrowsersecret
+    access-token-expiration: 600000 # 10 perc
+    refresh-token-expiration: 1800000 # 30 perc
