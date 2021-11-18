@@ -11,7 +11,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="USER_USERNAME" type="VARCHAR2(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="USER_PASSWORD" type="VARCHAR2(255)">
                 <constraints nullable="false"/>

@@ -80,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim(ROLES_PARAMETER, user.getRoles().stream().map(Object::toString).collect(Collectors.toList()))
+                .withClaim(ROLES_PARAMETER, user.getRoles().stream().map(r -> r.getName().toString()).collect(Collectors.toList()))
                 .sign(algorithm);
     }
 }

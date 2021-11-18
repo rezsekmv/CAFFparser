@@ -1,6 +1,7 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Tag(name = "auth")
 public class AuthController {
 
     private final AuthService authService;
