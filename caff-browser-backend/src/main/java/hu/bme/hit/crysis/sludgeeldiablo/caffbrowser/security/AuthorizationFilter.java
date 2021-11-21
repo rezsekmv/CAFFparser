@@ -4,6 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbError;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ObjectMapperFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +28,8 @@ import java.util.stream.Collectors;
 import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @Component
@@ -32,6 +37,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     @Value("${security.token-secret}")
     private String tokenSecret;
+
+    private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -47,9 +54,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(getAuthenticationToken(decodedJwt));
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    log.error("Error at access token handling: {}", e.getMessage());
-                    response.setHeader(ERROR_PARAMETER, e.getMessage());
-                    response.sendError(FORBIDDEN.value());
+                    String description = "Access token error";
+                    String message = e.getMessage();
+
+                    log.error("{}: {}", description, message);
+                    response.setStatus(UNAUTHORIZED.value());
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    objectMapper.writeValue(response.getOutputStream(), new CbError(message, description));
                 }
             }
         }
