@@ -12,26 +12,26 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/admin/user")
 @RequiredArgsConstructor
-@Tag(name = "user")
-public class UserController {
+@Tag(name = "admin")
+public class AdminUserController {
 
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<UserDto> getMyUser() {
-        log.trace("UserController : getMyUser");
-        return ResponseEntity.ok(userService.getMe());
+    public ResponseEntity<List<UserDto>> getAllUser() {
+        log.trace("UserController : getAllUser");
+        return ResponseEntity.ok(userService.getAll());
     }
 
-    @PutMapping
-    public ResponseEntity<UserDto> updateMyUser(@RequestBody UserDto userDto) {
-        log.trace("UserController : updateMyUser, userDto=[{}]", userDto);
-        return ResponseEntity.ok(userService.updateMe(userDto));
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
+        log.trace("UserController : getUser, id=[{}]", id);
+        return ResponseEntity.ok(userService.get(id));
     }
 
-    // TODO: changePassword
+    // TODO: updateUser
 
-    // TODO: deleteMyUser
+    // TODO: deleteUser
 }
