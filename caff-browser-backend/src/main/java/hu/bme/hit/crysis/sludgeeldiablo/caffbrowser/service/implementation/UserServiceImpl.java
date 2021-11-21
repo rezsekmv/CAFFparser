@@ -127,7 +127,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.toDto(getCurrentUser());
     }
 
-    private User getCurrentUser() {
+    @Override
+    public User getCurrentUser() {
         return findByUsername(ContextUtil.getCurrentUsername());
     }
 

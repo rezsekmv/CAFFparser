@@ -34,4 +34,8 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userId")
     private Set<Role> roles = new HashSet<>();
+
+    public String getDisplayName() {
+        return getName() != null ? getName() : getUsername();
+    }
 }

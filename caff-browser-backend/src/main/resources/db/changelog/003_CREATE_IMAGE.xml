@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="bosz.norbert" id="003">
+        <createTable tableName="IMAGE">
+            <column name="IMAGE_ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="IMAGE_UUID" type="VARCHAR2(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="IMAGE_CREATOR_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_IMAGE_CREATOR_ID_TO_USER_ID" references="USER(USER_ID)"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="IMAGE" columnName="IMAGE_ID" columnDataType="BIGINT"/>
+
+        <createTable tableName="COMMENT">
+            <column name="COMMENT_ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="COMMENT_USER_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_COMMENT_USER_ID_TO_USER_ID" references="USER(USER_ID)"/>
+            </column>
+            <column name="COMMENT_IMAGE_ID" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_COMMENT_IMAGE_ID_TO_IMAGE_ID" references="IMAGE(IMAGE_ID)"/>
+            </column>
+            <column name="COMMENT_CONTENT" type="VARCHAR2(255)"/>
+        </createTable>
+        <addAutoIncrement tableName="COMMENT" columnName="COMMENT_ID" columnDataType="BIGINT"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -19,8 +19,6 @@ public class ImageController {
 
     // TODO: getAllImage
 
-    // TODO: updateImage
-
     // TODO: commentImage
 
     // TODO: deleteImage

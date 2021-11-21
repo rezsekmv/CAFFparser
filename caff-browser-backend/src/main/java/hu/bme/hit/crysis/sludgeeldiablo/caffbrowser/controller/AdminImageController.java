@@ -13,7 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "admin")
 public class AdminImageController {
 
-    // TODO: updateImage
-
     // TODO: deleteImage
 }

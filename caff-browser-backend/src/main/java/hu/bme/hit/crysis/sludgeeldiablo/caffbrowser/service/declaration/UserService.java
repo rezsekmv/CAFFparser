@@ -47,6 +47,13 @@ public interface UserService {
     UserDto getMe();
 
     /**
+     * Aktuálisan bejelentkezett felhasználó entitás
+     *
+     * @return felhasználó entitás
+     */
+    User getCurrentUser();
+
+    /**
      * Aktuálisan bejelentkezett felhasználó adatainak módosítása
      *
      * @param userDto új adatok
