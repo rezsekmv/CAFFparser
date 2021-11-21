@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CbError> handleTokenException(CbTokenException e) {
         String description = "Token error";
         String message = e.getMessage();
-        String comment = "Próbálj meg újra bejelentkezni";
+        String comment = "Jelentkezz be újra";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.UNAUTHORIZED);
@@ -81,6 +81,6 @@ public class GlobalExceptionHandler {
         String comment = "Hoppá! Ez nem jelent jót, keresd az üzemeltetőt";
 
         log.error("{}: {}", description, message);
-        return new ResponseEntity<>(new CbError(message, description), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
