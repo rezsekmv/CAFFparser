@@ -37,4 +37,19 @@ public interface UserService {
      * @return a talált felhasználó entitás
      */
     User findByUsername(String username);
+
+    /**
+     * Aktuálisan bejelentkezett felhasználó adatainak lekérése
+     *
+     * @return talált felhasználó adatai
+     */
+    UserDto getMe();
+
+    /**
+     * Aktuálisan bejelentkezett felhasználó adatainak módosítása
+     *
+     * @param userDto új adatok
+     * @return módosított felhasználó adatai
+     */
+    UserDto updateMe(UserDto userDto);
 }

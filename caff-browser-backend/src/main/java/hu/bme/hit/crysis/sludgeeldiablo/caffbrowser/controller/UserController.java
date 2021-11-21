@@ -36,4 +36,16 @@ public class UserController {
         log.trace("UserController : get, userDto=[{}]", userDto);
         return ResponseEntity.ok(userService.save(userDto));
     }
+
+    @GetMapping
+    public ResponseEntity<UserDto> getMyUser() {
+        log.trace("UserController : getMyUser");
+        return ResponseEntity.ok(userService.getMe());
+    }
+
+    @PutMapping
+    public ResponseEntity<UserDto> updateMyUser(@RequestBody UserDto userDto) {
+        log.trace("UserController : updateMyUser, userDto=[{}]", userDto);
+        return ResponseEntity.ok(userService.updateMe(userDto));
+    }
 }

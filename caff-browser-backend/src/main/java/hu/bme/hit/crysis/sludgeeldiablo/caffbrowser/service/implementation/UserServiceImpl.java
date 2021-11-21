@@ -1,10 +1,13 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.UserMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.User;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.UserRepository;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,9 +55,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDto save(UserDto userDto) {
         log.trace("UserService : save, username=[{}]", userDto.getUsername());
-        User user = userMapper.toEntity(userDto);
-        userRepository.save(user);
-        return userMapper.toDto(user);
+        validateUsernameDoesNotExist(userDto);
+        User createdUser = userRepository.save(userMapper.toEntity(userDto));
+        return userMapper.toDto(createdUser);
+    }
+
+    private void validateUsernameDoesNotExist(UserDto userDto) {
+        if (userRepository.existsByUsernameIgnoreCase(userDto.getUsername())) {
+            throw new CbException("error.user.usernameTaken");
+        }
     }
 
     @Override
@@ -64,7 +73,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(CbNotFoundException::new);
     }
 
     @Override
@@ -75,6 +84,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(CbNotFoundException::new);
+    }
+
+    @Override
+    public UserDto getMe() {
+        log.trace("UserService : getMe");
+        return userMapper.toDto(getCurrentUser());
+    }
+
+    private User getCurrentUser() {
+        return findById(ContextUtil.getCurrentUserId());
+    }
+
+    @Override
+    public UserDto updateMe(UserDto userDto) {
+        log.trace("UserService : updateMe, userDto=[{}]", userDto);
+        User updatedUser = userMapper.update(getCurrentUser(), userDto);
+        return userMapper.toDto(updatedUser);
     }
 }

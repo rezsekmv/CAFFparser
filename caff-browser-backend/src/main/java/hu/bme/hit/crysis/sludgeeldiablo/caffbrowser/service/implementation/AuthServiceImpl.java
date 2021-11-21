@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = request.getHeader(AUTHORIZATION);
         if (refreshToken == null) {
-            throw new RuntimeException("Refresh token can not be null!");
+            throw new CbTokenException("Refresh token can not be null!");
         } else {
             try {
                 Algorithm algorithm = Algorithm.HMAC256(tokenSecret.getBytes());
