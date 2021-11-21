@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbTokenException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.User;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.AuthService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
@@ -21,9 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.*;
+import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.ACCESS_TOKEN_PARAMETER;
+import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.ROLES_PARAMETER;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -47,21 +48,15 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Refresh token can not be null!");
         } else {
             try {
-                try {
-                    Algorithm algorithm = Algorithm.HMAC256(tokenSecret.getBytes());
-                    DecodedJWT decodedJwt = JWT.require(algorithm).build().verify(refreshToken);
-                    String username = decodedJwt.getSubject();
-                    User user = userService.findByUsername(username);
+                Algorithm algorithm = Algorithm.HMAC256(tokenSecret.getBytes());
+                DecodedJWT decodedJwt = JWT.require(algorithm).build().verify(refreshToken);
+                String username = decodedJwt.getSubject();
+                User user = userService.findByUsername(username);
 
-                    Map<String, String> map = createTokenMap(request, user, algorithm);
-                    valueIntoResponse(response, map);
-                } catch (Exception e) {
-                    log.error("Error at refreshing token: {}", e.getMessage());
-                    response.setHeader(ERROR_PARAMETER, e.getMessage());
-                    response.sendError(FORBIDDEN.value());
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
+                Map<String, String> map = createTokenMap(request, user, algorithm);
+                valueIntoResponse(response, map);
+            } catch (Exception e) {
+                throw new CbTokenException(e.getMessage());
             }
         }
     }
