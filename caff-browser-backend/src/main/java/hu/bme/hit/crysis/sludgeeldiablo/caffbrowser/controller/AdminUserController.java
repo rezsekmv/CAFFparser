@@ -5,6 +5,7 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserServ
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,16 @@ public class AdminUserController {
         return ResponseEntity.ok(userService.get(id));
     }
 
-    // TODO: updateUser
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        log.trace("UserController : getUser, id=[{}], userDto=[{}]", id, userDto);
+        return ResponseEntity.ok(userService.update(id, userDto));
+    }
 
-    // TODO: deleteUser
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        log.trace("UserController : getUser, id=[{}]", id);
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

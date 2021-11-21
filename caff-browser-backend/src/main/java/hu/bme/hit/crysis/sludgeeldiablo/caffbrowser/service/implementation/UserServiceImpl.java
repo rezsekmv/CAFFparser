@@ -132,4 +132,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User updatedUser = userMapper.update(getCurrentUser(), userDto);
         return userMapper.toDto(updatedUser);
     }
+
+    @Override
+    public UserDto update(Long id, UserDto userDto) {
+        log.trace("UserService : update, userDto=[{}]", userDto);
+        User updatedUser = userMapper.update(findById(id), userDto);
+        return userMapper.toDto(updatedUser);
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.trace("UserService : delete, ud=[{}]", id);
+        userRepository.delete(findById(id));
+    }
 }

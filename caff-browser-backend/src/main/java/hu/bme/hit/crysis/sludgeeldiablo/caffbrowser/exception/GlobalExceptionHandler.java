@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CbForbiddenException.class)
     public ResponseEntity<CbError> handleCfmForbiddenException(CbForbiddenException e) {
-        String description = "Forbidden";
+        String description = "Insufficient permissions";
         String message = messageSource.getMessage(e.getMessageKey(), null, null);
 
         log.error("{}: {}", description, message);
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CbError> handleTokenException(CbTokenException e) {
         String description = "Token error";
         String message = e.getMessage();
-        String comment = "Your refresh token is probably expired or invalid, try getting a new one";
+        String comment = "Próbálj meg újra bejelentkezni";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.UNAUTHORIZED);
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CbError> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         String description = "Invalid message";
         String message = e.getMessage();
-        String comment = "Check the JSON message, you might have a typo in it";
+        String comment = "Ellenőrizd a JSON üzenetet, valószínűleg elírtál valamit";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.BAD_REQUEST);
@@ -66,9 +66,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<CbError> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        String description = "Method not allowed";
+        String description = "Invalid path";
         String message = e.getMessage();
-        String comment = "Make sure you are using an existing path";
+        String comment = "Ellenőrizd, hogy létező végpontot próbálsz-e hívni";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.METHOD_NOT_ALLOWED);
@@ -78,6 +78,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CbError> handleException(Throwable t) {
         String description = "Unexpected error";
         String message = t.getMessage();
+        String comment = "Hoppá! Ez nem jelent jót, keresd az üzemeltetőt";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.INTERNAL_SERVER_ERROR);

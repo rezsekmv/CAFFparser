@@ -52,4 +52,20 @@ public interface UserService {
      * @return módosított felhasználó adatai
      */
     UserDto updateMe(UserDto userDto);
+
+    /**
+     * Felhasználó adatainak módosítása id alapján
+     *
+     * @param id felhasználó azonosítója
+     * @param userDto módosított adatok
+     * @return a módosított felhasználó
+     */
+    UserDto update(Long id, UserDto userDto);
+
+    /**
+     * Felhasználó törlése id alapján
+     *
+     * @param id felhasználó azonosítója
+     */
+    void delete(Long id);
 }
