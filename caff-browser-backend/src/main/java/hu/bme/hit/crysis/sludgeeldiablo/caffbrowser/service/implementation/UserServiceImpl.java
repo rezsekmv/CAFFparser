@@ -55,9 +55,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDto save(UserDto userDto) {
         log.trace("UserService : save, username=[{}]", userDto.getUsername());
+        validateNotLoggedIn();
         validateUsernameDoesNotExist(userDto);
         User createdUser = userRepository.save(userMapper.toEntity(userDto));
         return userMapper.toDto(createdUser);
+    }
+
+    private void validateNotLoggedIn() {
+        if (ContextUtil.getCurrentUserId() != null) {
+            throw new CbException("error.user.loggedIn");
+        }
     }
 
     private void validateUsernameDoesNotExist(UserDto userDto) {
