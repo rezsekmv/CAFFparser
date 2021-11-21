@@ -3,6 +3,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ObjectMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -41,6 +42,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private Integer refreshTokenExpiration;
 
     private final AuthenticationManager authenticationManager;
+    private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     public AuthenticationFilter(@Lazy AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -72,7 +74,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private void valueIntoResponse(HttpServletResponse response, Map<String, String> map) throws IOException {
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), map);
+        objectMapper.writeValue(response.getOutputStream(), map);
     }
 
     private HashMap<String, String> createTokenMap(HttpServletRequest request, User user, Algorithm algorithm) {

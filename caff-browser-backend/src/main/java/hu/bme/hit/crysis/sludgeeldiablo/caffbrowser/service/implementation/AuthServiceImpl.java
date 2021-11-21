@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.User;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.AuthService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ObjectMapperFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
     private Integer accessTokenExpiration;
 
     private final UserService userService;
+    private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
@@ -66,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
 
     private void valueIntoResponse(HttpServletResponse response, Map<String, String> map) throws IOException {
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), map);
+        objectMapper.writeValue(response.getOutputStream(), map);
     }
 
     private HashMap<String, String> createTokenMap(HttpServletRequest request, User user, Algorithm algorithm) {
