@@ -25,6 +25,14 @@ public interface UserService {
     UserDto get(Long id);
 
     /**
+     * Felhasználó keresése id alapján
+     *
+     * @param id felhasználó azonosítója
+     * @return a talált felhasználó entitás
+     */
+    User findById(Long id);
+
+    /**
      * Az összes felhasználó lekérése
      *
      * @return az összes felhasználó listája

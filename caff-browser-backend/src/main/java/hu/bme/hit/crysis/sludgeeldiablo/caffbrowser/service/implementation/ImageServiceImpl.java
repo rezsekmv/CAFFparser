@@ -11,6 +11,8 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageSer
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,7 +60,19 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto save(MultipartFile file) {
         log.trace("ImageService : save, file=[{}]", file);
-        Image createdImage = imageMapper.toEntity(file);
-        return imageMapper.toDto(imageRepository.save(createdImage));
+        Image createdImage = imageRepository.save(imageMapper.toEntity(file));
+        return imageMapper.toDto(createdImage);
+    }
+
+    @Override
+    public ImageDto get(Long id) {
+        log.trace("ImageService : get, id=[{}]", id);
+        return imageMapper.toDto(findById(id));
+    }
+
+    @Override
+    public Page<ImageDto> getAll(Pageable pageable) {
+        log.trace("ImageService : getAll, pageable=[{}]", pageable);
+        return imageRepository.findAll(pageable).map(imageMapper::toDto);
     }
 }

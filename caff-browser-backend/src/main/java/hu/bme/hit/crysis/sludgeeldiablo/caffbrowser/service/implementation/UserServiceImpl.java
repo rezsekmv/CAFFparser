@@ -105,7 +105,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.toDto(findById(id));
     }
 
-    private User findById(Long id) {
+    @Override
+    public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(CbNotFoundException::new);
     }
