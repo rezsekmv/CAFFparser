@@ -10,6 +10,7 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserServ
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil.ADMIN;
+import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil.ANONYMOUS_USER;
 
 @Slf4j
 @Service
@@ -55,21 +59,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDto save(UserDto userDto) {
         log.trace("UserService : save, username=[{}]", userDto.getUsername());
-        validateNotLoggedIn();
-        validateUsernameDoesNotExist(userDto);
+        validateUsername(userDto.getUsername());
+        validateUsernameDoesNotExist(userDto.getUsername());
         User createdUser = userRepository.save(userMapper.toEntity(userDto));
         return userMapper.toDto(createdUser);
     }
 
-    private void validateNotLoggedIn() {
-        if (ContextUtil.getCurrentUserId() != null) {
-            throw new CbException("error.user.loggedIn");
+    private void validateUsername(String username) {
+        validateUsernameAlphanumeric(username);
+        validateUsernameLength(username);
+        validateUsernameInvalid(username);
+    }
+
+    private void validateUsernameAlphanumeric(String username) {
+        if (!StringUtils.isAlphanumeric(username)) {
+            throw new CbException("error.user.username.alphanumeric");
         }
     }
 
-    private void validateUsernameDoesNotExist(UserDto userDto) {
-        if (userRepository.existsByUsernameIgnoreCase(userDto.getUsername())) {
-            throw new CbException("error.user.usernameTaken");
+    private void validateUsernameLength(String username) {
+        if (username.length() <= 3) {
+            throw new CbException("error.user.username.short");
+        }
+    }
+
+    private void validateUsernameInvalid(String username) {
+        if (ANONYMOUS_USER.equals(username) || username.contains(ADMIN)) {
+            throw new CbException("error.user.username.invalid");
+        }
+    }
+
+    private void validateUsernameDoesNotExist(String username) {
+        if (userRepository.existsByUsernameIgnoreCase(username)) {
+            throw new CbException("error.user.username.taken");
         }
     }
 
@@ -101,7 +123,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private User getCurrentUser() {
-        return findById(ContextUtil.getCurrentUserId());
+        return findByUsername(ContextUtil.getCurrentUsername());
     }
 
     @Override
