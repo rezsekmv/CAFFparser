@@ -66,9 +66,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<CbError> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        String description = "Invalid path";
+        String description = "Method not allowed on path";
         String message = e.getMessage();
-        String comment = "Ellenőrizd, hogy létező végpontot próbálsz-e hívni";
+        String comment = "Ellenőrizd, hogy a megadott végponton elvégezhető-e a kért művelet";
 
         log.error("{}: {}", description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.METHOD_NOT_ALLOWED);

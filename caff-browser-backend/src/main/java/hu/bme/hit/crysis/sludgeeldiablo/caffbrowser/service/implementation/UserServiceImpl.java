@@ -1,5 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
@@ -15,7 +16,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -26,11 +29,13 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil.ANON
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -142,7 +147,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void delete(Long id) {
-        log.trace("UserService : delete, ud=[{}]", id);
+        log.trace("UserService : delete, id=[{}]", id);
         userRepository.delete(findById(id));
+    }
+
+    @Override
+    public void deleteMe() {
+        log.trace("UserService : delete");
+        userRepository.delete(getCurrentUser());
+    }
+
+    @Override
+    public void password(PasswordDto passwordDto) {
+        log.trace("UserService : password, passwordDto=[{}]", passwordDto);
+        validateOldPassword(passwordDto.getOldPassword());
+        setNewPassword(passwordDto.getNewPassword());
+    }
+
+    private void validateOldPassword(String password) {
+        if (!passwordEncoder.matches(password, getCurrentUser().getPassword())) {
+            throw new CbException("error.password.invalid");
+        }
+    }
+
+    private void setNewPassword(String password) {
+        getCurrentUser().setPassword(passwordEncoder.encode(password));
     }
 }

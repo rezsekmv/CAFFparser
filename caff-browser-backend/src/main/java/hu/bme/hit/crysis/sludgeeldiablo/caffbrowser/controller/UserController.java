@@ -1,10 +1,12 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +33,17 @@ public class UserController {
         return ResponseEntity.ok(userService.updateMe(userDto));
     }
 
-    // TODO: changePassword
+    @PutMapping("/password")
+    public ResponseEntity<Void> updateMyPassword(@RequestBody PasswordDto passwordDto) {
+        log.trace("UserController : updateMyPassword, passwordDto=[{}]", passwordDto);
+        userService.password(passwordDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-    // TODO: deleteMyUser
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMyUser() {
+        log.trace("UserController : deleteMyUser");
+        userService.deleteMe();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -1,5 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.User;
 
@@ -68,4 +69,17 @@ public interface UserService {
      * @param id felhasználó azonosítója
      */
     void delete(Long id);
+
+    /**
+     * Aktuálisan bejelentkezett felhasználó törlése
+     *
+     */
+    void deleteMe();
+
+    /**
+     * Aktuálisan bejelentkezett felhasználó jelszavának módosítása
+     *
+     * @param passwordDto régi és új jelszó
+     */
+    void password(PasswordDto passwordDto);
 }

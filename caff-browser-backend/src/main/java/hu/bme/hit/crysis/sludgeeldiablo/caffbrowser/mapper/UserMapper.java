@@ -44,7 +44,7 @@ public abstract class UserMapper {
     @Mapping(target = "email", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(expression = "java(getEncodedPassword(dto))", target = "password")
-    abstract public User changePassword(@MappingTarget User entity, UserDto dto);
+    abstract public void updatePassword(@MappingTarget User entity, UserDto dto);
 
     Set<RoleName> getRoleNames(User entity) {
         return entity.getRoles().stream()
