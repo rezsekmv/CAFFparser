@@ -35,12 +35,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "admin",
+									"value": "sludge",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "admin123",
+									"value": "1234",
 									"type": "text"
 								}
 							]
@@ -58,7 +58,37 @@
 					"response": []
 				},
 				{
-					"name": "refreshToken",
+					"name": "sign-up",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"borgore\",\r\n    \"password\": \"1234\",\r\n    \"name\": \"Magic Trick\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/public/sign-up",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"public",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
 					"event": [
 						{
 							"listen": "test",
@@ -97,6 +127,24 @@
 							],
 							"path": [
 								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api-docs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/public/api-docs",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"public",
+								"api-docs"
 							]
 						}
 					},
@@ -198,13 +246,30 @@
 			"name": "UserController",
 			"item": [
 				{
-					"name": "save",
+					"name": "get-me",
 					"request": {
-						"method": "POST",
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/user",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-me",
+					"request": {
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Bob\",\r\n    \"password\": \"1234\"\r\n}\r\n",
+							"raw": "{\r\n    \"name\": \"El Diablo\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,27 +289,36 @@
 					"response": []
 				},
 				{
-					"name": "get",
+					"name": "password",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"1234\",\r\n    \"newPassword\": \"123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base-api-url}}/user/1",
+							"raw": "{{base-api-url}}/user/password",
 							"host": [
 								"{{base-api-url}}"
 							],
 							"path": [
 								"user",
-								"1"
+								"password"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getAll",
+					"name": "delete-me",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{base-api-url}}/user",
@@ -253,6 +327,259 @@
 							],
 							"path": [
 								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ImageController",
+			"item": [
+				{
+					"name": "TODO: create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image/1/comment",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image",
+								"1",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AdminUserController",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/admin/user/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/admin/user",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Magic Trick\",\r\n    \"email\": \"borgore@magic.trick\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/admin/user/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sample Name\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/admin/user/9",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AdminImageController",
+			"item": [
+				{
+					"name": "TODO: update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/admin/image/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"image",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TODO: delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/admin/image/1",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"admin",
+								"image",
+								"1"
 							]
 						}
 					},
