@@ -20,8 +20,17 @@ public abstract class ImageMapper {
     @Mapping(expression = "java(getUserDisplayName(entity))", target = "userDisplayName")
     abstract public ImageDto toDto(Image entity);
 
+    @Mapping(expression = "java(getUserDisplayName(entity))", target = "userDisplayName")
+    @Mapping(expression = "java(getCommentNumber(entity))", target = "commentNumber")
+    @Mapping(target = "comments", ignore = true)
+    abstract public ImageDto toDtoPaged(Image entity);
+
     String getUserDisplayName(Image entity) {
         return userService.findById(entity.getUserId()).getDisplayName();
+    }
+
+    Integer getCommentNumber(Image entity) {
+        return entity.getComments().size();
     }
 
     public Image toEntity(MultipartFile file) {

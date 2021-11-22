@@ -77,7 +77,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Page<ImageDto> getAll(Pageable pageable) {
         log.trace("ImageService : getAll, pageable=[{}]", pageable);
-        return imageRepository.findAll(pageable).map(imageMapper::toDto);
+        return imageRepository.findAll(pageable).map(imageMapper::toDtoPaged);
     }
 
     @Override

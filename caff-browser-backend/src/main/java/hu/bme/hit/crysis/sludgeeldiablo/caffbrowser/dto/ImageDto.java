@@ -12,4 +12,5 @@ public class ImageDto {
     private String gifPath;
     private String jsonPath;
     private List<CommentDto> comments;
+    private Integer commentNumber;
 }
