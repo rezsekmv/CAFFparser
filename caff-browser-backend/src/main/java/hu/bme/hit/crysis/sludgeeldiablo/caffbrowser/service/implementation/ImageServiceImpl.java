@@ -1,9 +1,12 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.CommentMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.ImageMapper;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Comment;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.CommentRepository;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.ImageRepository;
@@ -26,6 +29,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
     private final ImageMapper imageMapper;
     private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
     private final UserService userService;
 
     @Override
@@ -74,5 +78,12 @@ public class ImageServiceImpl implements ImageService {
     public Page<ImageDto> getAll(Pageable pageable) {
         log.trace("ImageService : getAll, pageable=[{}]", pageable);
         return imageRepository.findAll(pageable).map(imageMapper::toDto);
+    }
+
+    @Override
+    public CommentDto comment(CommentDto commentDto) {
+        log.trace("ImageService : comment, commentDto=[{}]", commentDto);
+        Comment createdComment = commentRepository.save(commentMapper.toEntity(commentDto));
+        return commentMapper.toDto(createdComment);
     }
 }

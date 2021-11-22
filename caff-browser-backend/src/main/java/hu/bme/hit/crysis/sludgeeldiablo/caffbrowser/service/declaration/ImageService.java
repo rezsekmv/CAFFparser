@@ -1,5 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,9 +39,17 @@ public interface ImageService {
     ImageDto get(Long id);
 
     /**
-     * Egy oldalnyi kép lekérdezse
+     * Egy oldalnyi kép lekérdezése
      *
      * @return egy oldalnyi kép adatai
      */
     Page<ImageDto> getAll(Pageable pageable);
+
+    /**
+     * Hozzászólás írása egy képhez
+     *
+     * @param commentDto a hozzászólás adatai
+     * @return a létrejött hozzászólás
+     */
+    CommentDto comment(CommentDto commentDto);
 }

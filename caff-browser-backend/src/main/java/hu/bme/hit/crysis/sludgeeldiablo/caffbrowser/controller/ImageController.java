@@ -1,5 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,7 +42,11 @@ public class ImageController {
         return ResponseEntity.ok(imageService.getAll(pageable));
     }
 
-    // TODO: commentImage
+    @PostMapping("/comment")
+    public ResponseEntity<CommentDto> commentImage(@RequestBody CommentDto commentDto) {
+        log.trace("ImageController : commentImage, commentDto=[{}]", commentDto);
+        return new ResponseEntity<>(imageService.comment(commentDto), HttpStatus.CREATED);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMyImage(@PathVariable Long id) {
