@@ -12,6 +12,8 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -102,22 +104,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDto get(Long id) {
+        log.trace("UserService : get, id=[{}]", id);
         return userMapper.toDto(findById(id));
     }
 
     @Override
     public User findById(Long id) {
+        log.trace("UserService : findById, id=[{}]", id);
         return userRepository.findById(id)
                 .orElseThrow(CbNotFoundException::new);
     }
 
     @Override
-    public List<UserDto> getAll() {
-        return userMapper.toDtoList(userRepository.findAll());
+    public Page<UserDto> getAll(Pageable pageable) {
+        log.trace("UserService : getAll");
+        return userRepository.findAll(pageable).map(userMapper::toDto);
     }
 
     @Override
     public User findByUsername(String username) {
+        log.trace("UserService : updateMe, username=[{}]", username);
         return userRepository.findByUsername(username)
                 .orElseThrow(CbNotFoundException::new);
     }
@@ -130,6 +136,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getCurrentUser() {
+        log.trace("UserService : getCurrentUser");
         return findByUsername(ContextUtil.getCurrentUsername());
     }
 

@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        log.trace("AuthService : refreshToken, request=[{}], response=[{}]", request, response);
         String refreshToken = request.getHeader(AUTHORIZATION);
         if (refreshToken == null) {
             throw new CbTokenException("Refresh token can not be null!");

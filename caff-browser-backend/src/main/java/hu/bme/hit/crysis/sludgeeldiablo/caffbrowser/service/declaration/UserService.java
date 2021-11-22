@@ -3,6 +3,8 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -33,11 +35,11 @@ public interface UserService {
     User findById(Long id);
 
     /**
-     * Az összes felhasználó lekérése
+     * Egy oldalnyi felhasználó lekérése
      *
-     * @return az összes felhasználó listája
+     * @return egy oldalnyi felhasználó listája
      */
-    List<UserDto> getAll();
+    Page<UserDto> getAll(Pageable pageable);
 
     /**
      * Felhasználó entitás keresése név alapján

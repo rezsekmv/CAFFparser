@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +26,9 @@ public class AdminUserController {
 
     @GetMapping
     @Operation(summary = "Összes felhasználó megtekintése")
-    public ResponseEntity<List<UserDto>> getAllUser() {
-        log.trace("UserController : getAllUser");
-        return ResponseEntity.ok(userService.getAll());
+    public ResponseEntity<Page<UserDto>> getAllUser(@ParameterObject Pageable pageable) {
+        log.trace("UserController : getAllUser, pageable=[{}]", pageable);
+        return ResponseEntity.ok(userService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
