@@ -3,6 +3,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.AuthService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class AuthController {
     private final UserService userService;
 
     @GetMapping("/refresh-token")
+    @Operation(summary = "Access token frissítése")
     public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.trace("AuthController : refreshToken, request=[{}], response=[{}]", request, response);
         authService.refreshToken(request, response);
@@ -31,6 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/public/sign-up")
+    @Operation(summary = "Új felhasználó létrehozása")
     public ResponseEntity<UserDto> signUp(@RequestBody UserDto userDto) {
         log.trace("AuthController : signUp, userDto=[{}]", userDto);
         return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);

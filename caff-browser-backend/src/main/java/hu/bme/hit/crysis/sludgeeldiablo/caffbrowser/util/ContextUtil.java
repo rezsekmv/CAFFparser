@@ -8,9 +8,9 @@ public class ContextUtil {
     public static final String ADMIN = "admin";
 
     /**
-     * Visszaadja az aktuális bejelentkezett felhasználó azonosítóját
+     * Visszaadja az aktuális bejelentkezett felhasználó felhasználónevét
      *
-     * @return bejelentkezett felhasználó azonosítója
+     * @return bejelentkezett felhasználó felhasználónevét
      */
     public static String getCurrentUsername() {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();

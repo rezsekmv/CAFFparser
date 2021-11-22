@@ -19,6 +19,13 @@ public class NativeParserUtil {
         return JSON_PATH.replace("{uuid}", uuid);
     }
 
+    /**
+     * A fogadott CIFF vagy CAFF fájlt GIF fájlként, illetve kiegészítő JSON adatfájlként
+     * menti a fájlrendszerre egy helyben generált UUID alapján, melyet továbbít az alkalmazásnak
+     *
+     * @param file feltöltött CIFF vagy CAFF fájl
+     * @return generált UUID azonosító
+     */
     public static String parse(MultipartFile file) {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
         // TODO: a beérkező file egy caff vagy ciff fájl

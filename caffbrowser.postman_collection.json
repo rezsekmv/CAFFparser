@@ -58,7 +58,7 @@
 					"response": []
 				},
 				{
-					"name": "sign-up",
+					"name": "signUp",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -88,7 +88,7 @@
 					"response": []
 				},
 				{
-					"name": "refresh-token",
+					"name": "refreshToken",
 					"event": [
 						{
 							"listen": "test",
@@ -133,7 +133,7 @@
 					"response": []
 				},
 				{
-					"name": "api-docs",
+					"name": "apiDocs",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -246,7 +246,7 @@
 			"name": "UserController",
 			"item": [
 				{
-					"name": "get-me",
+					"name": "getMyUser",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -263,7 +263,7 @@
 					"response": []
 				},
 				{
-					"name": "update-me",
+					"name": "updateMyUser",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -289,7 +289,7 @@
 					"response": []
 				},
 				{
-					"name": "password",
+					"name": "updateMyPassword",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -316,7 +316,7 @@
 					"response": []
 				},
 				{
-					"name": "delete-me",
+					"name": "deleteMyUser",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -338,9 +338,54 @@
 			"name": "ImageController",
 			"item": [
 				{
-					"name": "TODO: create",
+					"name": "createImage",
 					"request": {
 						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Net/Random Pictures/aipom0.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-api-url}}/image",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getImage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-api-url}}/image/18",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"image",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllImage",
+					"request": {
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "{{base-api-url}}/image",
@@ -355,71 +400,26 @@
 					"response": []
 				},
 				{
-					"name": "TODO: get",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-api-url}}/image/1",
-							"host": [
-								"{{base-api-url}}"
-							],
-							"path": [
-								"image",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TODO: get-all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base-api-url}}/image",
-							"host": [
-								"{{base-api-url}}"
-							],
-							"path": [
-								"image"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TODO: update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{base-api-url}}/image/1",
-							"host": [
-								"{{base-api-url}}"
-							],
-							"path": [
-								"image",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TODO: comment",
+					"name": "commentImage",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imageId\": 19,\r\n    \"content\": \"Gyönyörű képet láthatunk újfent\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base-api-url}}/image/1/comment",
+							"raw": "{{base-api-url}}/image/comment",
 							"host": [
 								"{{base-api-url}}"
 							],
 							"path": [
 								"image",
-								"1",
 								"comment"
 							]
 						}
@@ -427,7 +427,7 @@
 					"response": []
 				},
 				{
-					"name": "TODO: delete",
+					"name": "deleteMyImage",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -450,7 +450,7 @@
 			"name": "AdminUserController",
 			"item": [
 				{
-					"name": "get",
+					"name": "getUser",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -469,7 +469,7 @@
 					"response": []
 				},
 				{
-					"name": "get-all",
+					"name": "getAllUser",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -487,7 +487,7 @@
 					"response": []
 				},
 				{
-					"name": "update",
+					"name": "updateUser",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -515,7 +515,7 @@
 					"response": []
 				},
 				{
-					"name": "delete",
+					"name": "deleteUser",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -548,26 +548,7 @@
 			"name": "AdminImageController",
 			"item": [
 				{
-					"name": "TODO: update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{base-api-url}}/admin/image/1",
-							"host": [
-								"{{base-api-url}}"
-							],
-							"path": [
-								"admin",
-								"image",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TODO: delete",
+					"name": "deleteImage",
 					"request": {
 						"method": "DELETE",
 						"header": [],

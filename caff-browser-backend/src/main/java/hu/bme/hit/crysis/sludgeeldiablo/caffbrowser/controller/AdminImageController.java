@@ -1,6 +1,7 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class AdminImageController {
     private final ImageService imageService;
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Kép eltávolítása")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         log.trace("AdminImageController : deleteImage, id=[{}]", id);
         imageService.delete(id);

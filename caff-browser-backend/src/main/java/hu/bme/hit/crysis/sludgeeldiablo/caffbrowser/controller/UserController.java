@@ -3,6 +3,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +23,21 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @Operation(summary = "Saját felhasználó megtekintése")
     public ResponseEntity<UserDto> getMyUser() {
         log.trace("UserController : getMyUser");
         return ResponseEntity.ok(userService.getMe());
     }
 
     @PutMapping
+    @Operation(summary = "Saját felhasználó módosítása")
     public ResponseEntity<UserDto> updateMyUser(@RequestBody UserDto userDto) {
         log.trace("UserController : updateMyUser, userDto=[{}]", userDto);
         return ResponseEntity.ok(userService.updateMe(userDto));
     }
 
     @PutMapping("/password")
+    @Operation(summary = "Saját felhasználó jelszavának módosítása")
     public ResponseEntity<Void> updateMyPassword(@RequestBody PasswordDto passwordDto) {
         log.trace("UserController : updateMyPassword, passwordDto=[{}]", passwordDto);
         userService.password(passwordDto);
@@ -41,6 +45,7 @@ public class UserController {
     }
 
     @DeleteMapping
+    @Operation(summary = "Saját felhasználó eltávolítása")
     public ResponseEntity<Void> deleteMyUser() {
         log.trace("UserController : deleteMyUser");
         userService.deleteMe();
