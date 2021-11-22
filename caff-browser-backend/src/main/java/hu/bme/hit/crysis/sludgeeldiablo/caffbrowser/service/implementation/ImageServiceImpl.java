@@ -71,13 +71,13 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto get(Long id) {
         log.trace("ImageService : get, id=[{}]", id);
-        return imageMapper.toDto(findById(id));
+        return imageMapper.toDtoWithComments(findById(id));
     }
 
     @Override
     public Page<ImageDto> getAll(Pageable pageable) {
         log.trace("ImageService : getAll, pageable=[{}]", pageable);
-        return imageRepository.findAll(pageable).map(imageMapper::toDtoPaged);
+        return imageRepository.findAll(pageable).map(imageMapper::toDto);
     }
 
     @Override

@@ -18,12 +18,13 @@ public abstract class ImageMapper {
     // TODO: natív komponens beemelése és függvények implementálása
 
     @Mapping(expression = "java(getUserDisplayName(entity))", target = "userDisplayName")
+    @Mapping(expression = "java(getCommentNumber(entity))", target = "commentNumber")
+    @Mapping(target = "comments", ignore = true)
     abstract public ImageDto toDto(Image entity);
 
     @Mapping(expression = "java(getUserDisplayName(entity))", target = "userDisplayName")
-    @Mapping(expression = "java(getCommentNumber(entity))", target = "commentNumber")
-    @Mapping(target = "comments", ignore = true)
-    abstract public ImageDto toDtoPaged(Image entity);
+    @Mapping(expression = "java(mapComments(entity, pageable))", target = "comments")
+    abstract public ImageDto toDtoWithComments(Image entity);
 
     String getUserDisplayName(Image entity) {
         return userService.findById(entity.getUserId()).getDisplayName();
