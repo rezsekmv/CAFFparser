@@ -44,6 +44,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CbNativeParserException.class)
+    public ResponseEntity<CbError> handleNativeParserException(CbNativeParserException e) {
+        String description = "Native parser error";
+        String message = e.getMessage() != null ? e.getMessage() : messageSource.getMessage("error.parser", null, null);
+
+        log.error("{}: {}", description, message);
+        return new ResponseEntity<>(new CbError(message, description), HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
     @ExceptionHandler(CbTokenException.class)
     public ResponseEntity<CbError> handleTokenException(CbTokenException e) {
         String description = "Token error";

@@ -3,6 +3,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNativeParserException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.CommentMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.ImageMapper;
@@ -12,6 +13,7 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.CommentRepository
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.ImageRepository;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.NativeParserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -64,8 +66,24 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto save(MultipartFile file) {
         log.trace("ImageService : save, file=[{}]", file);
-        Image createdImage = imageRepository.save(imageMapper.toEntity(file));
+        String uuid = parseFile(file);
+        Image createdImage = imageRepository.save(createImage(uuid));
         return imageMapper.toDto(createdImage);
+    }
+
+    private String parseFile(MultipartFile file) {
+        try {
+            return NativeParserUtil.parse(file);
+        } catch (Throwable t) {
+            throw new CbNativeParserException(t.getMessage());
+        }
+    }
+
+    private Image createImage(String uuid) {
+        Image image = new Image();
+        image.setUuid(uuid);
+        image.setUserId(userService.getCurrentUser().getId());
+        return image;
     }
 
     @Override
