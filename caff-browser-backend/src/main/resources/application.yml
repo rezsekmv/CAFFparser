@@ -2,9 +2,9 @@ spring:
     application:
         name: caffbrowser
     datasource:
-        url: jdbc:mysql://localhost:3306/caffbrowser
+        url: jdbc:mysql://localhost:3306/caffBrowserDB
         username: root
-        password: Password1
+        password: password
     liquibase:
         change-log: classpath:db/changelog-app.xml
         labels: sample

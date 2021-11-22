@@ -9,7 +9,7 @@
         <loadData tableName="USER"
                   file="../sampledata/002_FIRST_USER.csv"
                   relativeToChangelogFile="true"
-                  schemaName="caffbrowser"
+                  schemaName="caffBrowserDB"
                   separator=";"
                   usePreparedStatements="true">
             <column name="USER_ID" type="NUMERIC"/>
@@ -21,7 +21,7 @@
         <loadData tableName="ROLE"
                   file="../sampledata/002_FIRST_ROLE.csv"
                   relativeToChangelogFile="true"
-                  schemaName="caffbrowser"
+                  schemaName="caffBrowserDB"
                   separator=";"
                   usePreparedStatements="true">
             <column name="ROLE_ID" type="NUMERIC"/>
