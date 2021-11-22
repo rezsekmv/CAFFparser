@@ -23,7 +23,6 @@ public abstract class ImageMapper {
     abstract public ImageDto toDto(Image entity);
 
     @Mapping(expression = "java(getUserDisplayName(entity))", target = "userDisplayName")
-    @Mapping(expression = "java(mapComments(entity, pageable))", target = "comments")
     abstract public ImageDto toDtoWithComments(Image entity);
 
     String getUserDisplayName(Image entity) {

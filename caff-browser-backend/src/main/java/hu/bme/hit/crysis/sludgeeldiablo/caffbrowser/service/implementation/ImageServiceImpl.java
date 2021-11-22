@@ -83,7 +83,19 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public CommentDto comment(CommentDto commentDto) {
         log.trace("ImageService : comment, commentDto=[{}]", commentDto);
+        validateCanComment(commentDto.getImageId());
         Comment createdComment = commentRepository.save(commentMapper.toEntity(commentDto));
         return commentMapper.toDto(createdComment);
+    }
+
+    private void validateCanComment(Long imageId) {
+        if (currentUserAlreadyCommented(imageId)) {
+            throw new CbException("error.image.comment");
+        }
+    }
+
+    private boolean currentUserAlreadyCommented(Long imageId) {
+        return findById(imageId).getComments().stream()
+                .anyMatch(c -> c.getUserId().equals(getCurrentUserId()));
     }
 }
