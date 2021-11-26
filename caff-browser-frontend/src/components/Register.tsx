@@ -15,12 +15,12 @@ const Register = () => {
     <div className="container" style={registerBoxStyle}>
       <h1>Regisztráció</h1>
       <div className='row'>
-        <InputField inputType={'text'} placeholder={'Felhasználónév'} classes={'col-12'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
-        <InputField inputType={'email'} placeholder={'Email'} classes={'col-6'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
-        <InputField inputType={'email'} placeholder={'Email újra'} classes={'col-6'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
-        <InputField inputType={'password'} placeholder={'Jelszó'} classes={'col-6'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
-        <InputField inputType={'password'} placeholder={'Jelszó újra'} classes={'col-6'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
-        <InputField inputType={'text'} placeholder={'Név'} classes={'col-12'} handleOnChange={(e: any) => setUsername(e.target.value)}/>
+        <InputField inputType={'text'} placeholder={'Felhasználónév'} classes={'col-12'} handleOnChange={setUsername}/>
+        <InputField inputType={'email'} placeholder={'Email'} classes={'col-6'} handleOnChange={setPassword}/>
+        <InputField inputType={'email'} placeholder={'Email újra'} classes={'col-6'} handleOnChange={setUsername}/>
+        <InputField inputType={'password'} placeholder={'Jelszó'} classes={'col-6'} handleOnChange={setUsername}/>
+        <InputField inputType={'password'} placeholder={'Jelszó újra'} classes={'col-6'} handleOnChange={setUsername}/>
+        <InputField inputType={'text'} placeholder={'Név'} classes={'col-12'} handleOnChange={setUsername}/>
         <div>
           <button onClick={(e) => handleRegister(e)} style={buttonStyle}>
             Regisztráció

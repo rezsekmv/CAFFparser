@@ -15,7 +15,7 @@ const InputField = ({
 }: InputFieldParams) => {
 
   return (
-    <div className={classes}>
+    <div className={classes || ''}>
       <input
         type={inputType || 'text'}
         onChange={(e) => {

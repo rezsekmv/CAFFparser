@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Color from '../styles/Color';
+import InputField from './InputField';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -13,25 +14,9 @@ const Login = () => {
   return (
       <div className='mx-auto' style={loginBoxStyle}>
         <h1 style={titleStyle}>Bejelentkezés</h1>
-        <div>
-          <input
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            style={inputStyle}
-            placeholder="Felhasználónév"
-          ></input>
-        </div>
-        <div>
-          <input
-          type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            style={inputStyle}
-            placeholder="Jelszó"
-          ></input>
-        </div>
+        <InputField inputType={'text'} placeholder={'Felhasználónév'} classes={''} handleOnChange={setUsername}/>
+        <InputField inputType={'password'} placeholder={'Jelszó'} classes={''} handleOnChange={setPassword}/>
+        
         <div>
           <button onClick={(e) => handleClick(e)} style={buttonStyle}>
             Bejelentkezés
