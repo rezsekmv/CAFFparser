@@ -46,8 +46,8 @@ const Header = (props: any) => {
 const headerStyle = {
   backgroundColor: Color.dark,
   height: '70px',
-  paddingLeft: '20px',
-  paddingRight: '20px'
+  paddingLeft: '10rem',
+  paddingRight: '10rem'
 };
 
 const titleStyle = {

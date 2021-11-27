@@ -6,20 +6,23 @@ import InputField from './InputField';
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   const handleRegister = (e: any) => {
     AuthService.signUp({
       username,
-      password
+      password,
+      email,
+      name
     }).then(
       (user) => {
         console.log(user);
       }
     ).catch( (error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
-    console.log('username: ' + username);
-    console.log('password: ' + password);
+
   };
 
   return (
@@ -36,13 +39,13 @@ const Register = () => {
           inputType={'email'}
           placeholder={'Email'}
           classes={'col-6'}
-          handleOnChange={setPassword}
+          handleOnChange={setEmail}
         />
         <InputField
           inputType={'email'}
           placeholder={'Email újra'}
           classes={'col-6'}
-          handleOnChange={setUsername}
+          handleOnChange={()=>{}}
         />
         <InputField
           inputType={'password'}
@@ -54,13 +57,13 @@ const Register = () => {
           inputType={'password'}
           placeholder={'Jelszó újra'}
           classes={'col-6'}
-          handleOnChange={setUsername}
+          handleOnChange={()=>{}}
         />
         <InputField
           inputType={'text'}
           placeholder={'Név'}
           classes={'col-12'}
-          handleOnChange={setUsername}
+          handleOnChange={setName}
         />
         <div>
           <button onClick={(e) => handleRegister(e)} style={buttonStyle}>
