@@ -2,6 +2,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.enums.RoleName;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,9 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVari
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${security.cors}")
+    private Boolean cors;
+
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationFilter authenticationFilter;
@@ -34,7 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         authenticationFilter.setFilterProcessesUrl(LOGIN_URL);
-        http.cors();
+        if (cors) {
+            http.cors();
+        }
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(LOGIN_URL, REFRESH_TOKEN_URL, PUBLIC_URL).permitAll();
