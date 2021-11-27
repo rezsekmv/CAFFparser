@@ -1,0 +1,26 @@
+spring:
+    config:
+        activate:
+            on-profile: localdb
+    application:
+        name: caffbrowser
+    datasource:
+        url: jdbc:mysql://localhost:3306/caffbrowser
+        username: root
+        password: Password1
+    liquibase:
+        change-log: classpath:db/changelog-app.xml
+        labels: sample
+    servlet:
+        multipart:
+            max-file-size: 25MB
+            max-request-size: 25MB
+
+security:
+    token-secret: caffbrowsersecret
+    access-token-expiration: 600000 # 10 perc
+    refresh-token-expiration: 1800000 # 30 perc
+
+springdoc:
+    api-docs:
+        path: /api/public/api-docs
