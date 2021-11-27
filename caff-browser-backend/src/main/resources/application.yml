@@ -1,29 +1,29 @@
 spring:
-    application:
-        name: caffbrowser
-    datasource:
-        url: jdbc:mysql://localhost:3306/caffBrowserDB
-        username: root
-        password: password
-    liquibase:
-        change-log: classpath:db/changelog-app.xml
-        labels: sample
-    servlet:
-        multipart:
-            max-file-size: 25MB
-            max-request-size: 25MB
+  application:
+    name: caffbrowser
+  datasource:
+    url: jdbc:mysql://localhost:3306/caffBrowserDB
+    username: root
+    password: password
+  liquibase:
+    change-log: classpath:db/changelog-app.xml
+    labels: sample
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
 
 server:
-    port: 8080
-    https: false
-    http-port: 8080
+  port: 8080
+  https: false
+  http-port: 8080
 
 security:
-    cors: true
-    token-secret: caffbrowsersecret
-    access-token-expiration: 600000 # 10 perc
-    refresh-token-expiration: 1800000 # 30 perc
+  cors: true
+  token-secret: caffbrowsersecret
+  access-token-expiration: 600000 # 10 perc
+  refresh-token-expiration: 1800000 # 30 perc
 
 springdoc:
-    api-docs:
-        path: /api/public/api-docs
+  api-docs:
+    path: /api/public/api-docs

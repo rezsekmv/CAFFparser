@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: https
+
+server:
+  port: 8443
+  https: true
+  http-port: 8080
+  ssl:
+    enabled: true
+    key-store: classpath:https/caffbrowser.p12
+    key-store-password: eldiab
+    key-store-type: PKCS12
+    key-alias: springboot

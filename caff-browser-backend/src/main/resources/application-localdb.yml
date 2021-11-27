@@ -1,0 +1,8 @@
+spring:
+  config:
+    activate:
+      on-profile: localdb
+  datasource:
+    url: jdbc:mysql://localhost:3306/caffbrowser
+    username: root
+    password: Password1
