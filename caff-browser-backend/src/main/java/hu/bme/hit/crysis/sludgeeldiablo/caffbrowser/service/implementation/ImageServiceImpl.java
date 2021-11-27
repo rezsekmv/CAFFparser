@@ -89,7 +89,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto get(Long id) {
         log.trace("ImageService : get, id=[{}]", id);
-        return imageMapper.toDtoWithComments(findById(id));
+        return imageMapper.toDtoWithDetails(findById(id));
     }
 
     @Override
@@ -107,12 +107,16 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private void validateCanComment(Long imageId) {
-        if (currentUserAlreadyCommented(imageId)) {
+        if (!canCurrentUserCommentImage(imageId)) {
             throw new CbException("error.image.comment");
         }
     }
 
-    private boolean currentUserAlreadyCommented(Long imageId) {
+    private Boolean canCurrentUserCommentImage(Long imageId) {
+        return userService.isCurrentUserAdmin() || !isCurrentUserCommentedAlready(imageId);
+    }
+
+    private Boolean isCurrentUserCommentedAlready(Long imageId) {
         return findById(imageId).getComments().stream()
                 .anyMatch(c -> c.getUserId().equals(getCurrentUserId()));
     }

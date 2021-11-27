@@ -2,6 +2,7 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.enums.RoleName;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.UserMapper;
@@ -181,5 +182,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private void setNewPassword(String password) {
         getCurrentUser().setPassword(passwordEncoder.encode(password));
+    }
+
+    @Override
+    public Boolean isCurrentUserAdmin() {
+        return getCurrentUser().getRoles().stream()
+                .anyMatch(r -> r.getName() == RoleName.ADMINISTRATOR);
     }
 }

@@ -99,4 +99,11 @@ public interface UserService {
      * @param passwordDto régi és új jelszó
      */
     void password(PasswordDto passwordDto);
+
+    /**
+     * Visszaadja, hogy a bejelentkezett felhasználó bír-e adminisztrátori jogosultsággal
+     *
+     * @return adminisztrátori jogosultságra utaló logikai érték
+     */
+    Boolean isCurrentUserAdmin();
 }

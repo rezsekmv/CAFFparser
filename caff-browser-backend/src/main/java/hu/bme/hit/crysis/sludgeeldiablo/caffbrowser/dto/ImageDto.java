@@ -13,4 +13,5 @@ public class ImageDto {
     private String jsonPath;
     private List<CommentDto> comments;
     private Integer commentsSize;
+    private Boolean canComment;
 }

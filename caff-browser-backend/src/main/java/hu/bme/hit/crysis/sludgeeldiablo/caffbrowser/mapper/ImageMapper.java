@@ -15,9 +15,11 @@ public abstract class ImageMapper {
 
     @Mapping(expression = "java(getCommentsSize(entity))", target = "commentsSize")
     @Mapping(target = "comments", ignore = true)
+    @Mapping(target = "canComment", ignore = true)
     abstract public ImageDto toDto(Image entity);
 
-    abstract public ImageDto toDtoWithComments(Image entity);
+    @Mapping(expression = "java(canComment(entity))", target = "canComment")
+    abstract public ImageDto toDtoWithDetails(Image entity);
 
     @AfterMapping
     public void mapToDto(@MappingTarget ImageDto dto, Image entity) {
@@ -28,6 +30,15 @@ public abstract class ImageMapper {
 
     Integer getCommentsSize(Image entity) {
         return entity.getComments().size();
+    }
+
+    Boolean canComment(Image entity) {
+        return userService.isCurrentUserAdmin() || !isCurrentUserCommentedAlready(entity);
+    }
+
+    private Boolean isCurrentUserCommentedAlready(Image entity) {
+        return entity.getComments().stream()
+                .anyMatch(c -> c.getUserId().equals(userService.getCurrentUser().getId()));
     }
 
     private String getUserDisplayName(Image entity) {
