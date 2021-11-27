@@ -13,6 +13,11 @@ spring:
             max-file-size: 25MB
             max-request-size: 25MB
 
+server:
+    port: 8080
+    https: false
+    http-port: 8080
+
 security:
     cors: true
     token-secret: caffbrowsersecret

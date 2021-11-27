@@ -1,6 +1,8 @@
-package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security;
+package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.config;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.enums.RoleName;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.AuthenticationFilter;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
