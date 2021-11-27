@@ -9,14 +9,14 @@ import java.util.UUID;
 public class NativeParserUtil {
 
     private static final String GIF_PATH = "dummy/{uuid}.gif";
-    private static final String JSON_PATH = "dummy/{uuid}.json";
+    private static final String CAFF_PATH = "dummy/{uuid}.caff";
 
     public static String getGifPath(String uuid) {
         return GIF_PATH.replace("{uuid}", uuid);
     }
 
-    public static String getJsonPath(String uuid) {
-        return JSON_PATH.replace("{uuid}", uuid);
+    public static String getCaffPath(String uuid) {
+        return CAFF_PATH.replace("{uuid}", uuid);
     }
 
     /**
@@ -30,8 +30,10 @@ public class NativeParserUtil {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
         // TODO: a beérkező file egy caff vagy ciff fájl
         //  erre kell meghívni a natív parsert ebben a függvényben
-        //  generáljunk egy uuid-t nekik és azon a néven mentsük a gifet és a jsont is
+        //  generáljunk egy uuid-t nekik és azon a néven mentsük a gifet és a caffot is
         //  a generált uuid-t pedig visszatérési értékként adjuk meg ebben a függvényben
+        //  a parser generál egy jsont is, ebből bányásszuk ki a metaadatokat amiket mentünk az Image entitásba
+        //  utána lehetőleg töröljük a jsont
         return UUID.randomUUID().toString();
     }
 }
