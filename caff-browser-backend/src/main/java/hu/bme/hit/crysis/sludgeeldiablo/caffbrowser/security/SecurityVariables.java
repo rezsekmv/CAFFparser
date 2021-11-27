@@ -13,5 +13,6 @@ public class SecurityVariables {
     public static final String USERNAME_PARAMETER = "username";
     public static final String PASSWORD_PARAMETER = "password";
     public static final String ROLES_PARAMETER = "roles";
-    public static final String ERROR_PARAMETER = "error";
+
+    public static final String BEARER_TOKEN_START = "Bearer ";
 }

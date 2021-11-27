@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbError;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbTokenException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ObjectMapperFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,6 @@ import java.util.stream.Collectors;
 
 import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -45,11 +45,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         if (isLogin(request) || isRefreshToken(request) || isPublic(request)) {
             filterChain.doFilter(request, response);
         } else {
-            String accessToken = request.getHeader(AUTHORIZATION);
-            if (accessToken == null) {
+            String header = request.getHeader(AUTHORIZATION);
+            if (header == null) {
                 filterChain.doFilter(request, response);
             } else {
                 try {
+                    String accessToken = getAccessToken(header);
                     DecodedJWT decodedJwt = getVerifier().verify(accessToken);
                     SecurityContextHolder.getContext().setAuthentication(getAuthenticationToken(decodedJwt));
                     filterChain.doFilter(request, response);
@@ -76,6 +77,17 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private boolean isPublic(HttpServletRequest request) {
         return request.getServletPath().startsWith(PUBLIC_URL.substring(0, PUBLIC_URL.length() - 3));
+    }
+
+    private String getAccessToken(String header) {
+        validateIsBearerToken(header);
+        return header.replaceFirst(BEARER_TOKEN_START, "");
+    }
+
+    private void validateIsBearerToken(String header) {
+        if (!header.startsWith(BEARER_TOKEN_START)) {
+            throw new CbTokenException("Authorization type must be Bearer token");
+        }
     }
 
     private JWTVerifier getVerifier() {

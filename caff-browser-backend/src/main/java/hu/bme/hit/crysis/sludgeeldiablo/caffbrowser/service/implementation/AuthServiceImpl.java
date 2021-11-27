@@ -23,8 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.ACCESS_TOKEN_PARAMETER;
-import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.ROLES_PARAMETER;
+import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVariables.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -46,11 +45,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.trace("AuthService : refreshToken, request=[{}], response=[{}]", request, response);
-        String refreshToken = request.getHeader(AUTHORIZATION);
-        if (refreshToken == null) {
-            throw new CbTokenException("Refresh token can not be null!");
+        String header = request.getHeader(AUTHORIZATION);
+        if (header == null) {
+            throw new CbTokenException("Authorization header can not be null!");
         } else {
             try {
+                String refreshToken = getRefreshToken(header);
                 Algorithm algorithm = Algorithm.HMAC256(tokenSecret.getBytes());
                 DecodedJWT decodedJwt = JWT.require(algorithm).build().verify(refreshToken);
                 String username = decodedJwt.getSubject();
@@ -61,6 +61,17 @@ public class AuthServiceImpl implements AuthService {
             } catch (Exception e) {
                 throw new CbTokenException(e.getMessage());
             }
+        }
+    }
+
+    private String getRefreshToken(String header) {
+        validateIsBearerToken(header);
+        return header.replaceFirst(BEARER_TOKEN_START, "");
+    }
+
+    private void validateIsBearerToken(String header) {
+        if (!header.startsWith(BEARER_TOKEN_START)) {
+            throw new CbTokenException("Authorization type must be Bearer token");
         }
     }
 
