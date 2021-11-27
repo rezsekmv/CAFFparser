@@ -23,7 +23,7 @@ const Header = (props: any) => {
       setLabel('BROWSE');
       setLink('/login');
     }
-  }, [link, label]);
+  }, [link, label, location.pathname]);
 
   const faUserCircleIcon = faUserCircle as IconProp;
 

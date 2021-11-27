@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AuthService, UserService } from '../services/openapi';
 import Color from '../styles/Color';
 import InputField from './InputField';
 
@@ -35,13 +36,6 @@ const loginBoxStyle = {
 
 const titleStyle = {
   color: Color.white,
-};
-
-const inputStyle = {
-  backgroundColor: Color.white,
-  padding: '.5rem ',
-  margin: '.7rem .3rem .2rem .3rem',
-  width: '20rem',
 };
 
 const buttonStyle = {
