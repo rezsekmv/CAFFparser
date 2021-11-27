@@ -1,15 +1,11 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNativeParserException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.CommentMapper;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper.ImageMapper;
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Comment;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.CommentRepository;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.repository.ImageRepository;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
@@ -30,23 +26,7 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final ImageMapper imageMapper;
-    private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
     private final UserService userService;
-
-    @Override
-    public void deleteMyImage(Long id) {
-        log.trace("ImageService : deleteMyImage, id=[{}]", id);
-        Image image = findById(id);
-        validateMyImage(image);
-        imageRepository.delete(image);
-    }
-
-    private void validateMyImage(Image image) {
-        if (!image.getUser().getId().equals(getCurrentUserId())) {
-            throw new CbException("error.image.delete");
-        }
-    }
 
     private Long getCurrentUserId() {
         return userService.getCurrentUser().getId();
@@ -55,10 +35,28 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void delete(Long id) {
         log.trace("ImageService : delete, id=[{}]", id);
-        imageRepository.delete(findById(id));
+        validateCanDelete(id);
+        imageRepository.deleteById(id);
     }
 
-    private Image findById(Long id) {
+    private void validateCanDelete(Long id) {
+        if (!canCurrentUserModifyImage(id)) {
+            throw new CbException("error.image.delete");
+        }
+    }
+
+    @Override
+    public Boolean canCurrentUserModifyImage(Long id) {
+        return isOwnedByCurrentUser(id) || userService.isCurrentUserAdmin();
+    }
+
+    private Boolean isOwnedByCurrentUser(Long id) {
+        return findById(id).getUserId().equals(getCurrentUserId());
+    }
+
+    @Override
+    public Image findById(Long id) {
+        log.trace("ImageService : findById, id=[{}]", id);
         return imageRepository.findById(id)
                 .orElseThrow(CbNotFoundException::new);
     }
@@ -99,20 +97,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public CommentDto comment(CommentDto commentDto) {
-        log.trace("ImageService : comment, commentDto=[{}]", commentDto);
-        validateCanComment(commentDto.getImageId());
-        Comment createdComment = commentRepository.save(commentMapper.toEntity(commentDto));
-        return commentMapper.toDto(createdComment);
-    }
-
-    private void validateCanComment(Long imageId) {
-        if (!canCurrentUserCommentImage(imageId)) {
-            throw new CbException("error.image.comment");
-        }
-    }
-
-    private Boolean canCurrentUserCommentImage(Long imageId) {
+    public Boolean canCurrentUserCommentImage(Long imageId) {
         return userService.isCurrentUserAdmin() || !isCurrentUserCommentedAlready(imageId);
     }
 

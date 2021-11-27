@@ -2,10 +2,12 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.mapper;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserService;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.NativeParserUtil;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommentMapper.class})
 public abstract class ImageMapper {
@@ -13,12 +15,15 @@ public abstract class ImageMapper {
     @Autowired
     private UserService userService;
 
+    @Autowired @Lazy
+    private ImageService imageService;
+
     @Mapping(expression = "java(getCommentsSize(entity))", target = "commentsSize")
     @Mapping(target = "comments", ignore = true)
-    @Mapping(target = "canComment", ignore = true)
     abstract public ImageDto toDto(Image entity);
 
-    @Mapping(expression = "java(canComment(entity))", target = "canComment")
+    @Mapping(expression = "java(isCommentable(entity))", target = "commentable")
+    @Mapping(expression = "java(isModifiable(entity))", target = "modifiable")
     abstract public ImageDto toDtoWithDetails(Image entity);
 
     @AfterMapping
@@ -32,13 +37,12 @@ public abstract class ImageMapper {
         return entity.getComments().size();
     }
 
-    Boolean canComment(Image entity) {
-        return userService.isCurrentUserAdmin() || !isCurrentUserCommentedAlready(entity);
+    Boolean isCommentable(Image entity) {
+        return imageService.canCurrentUserCommentImage(entity.getId());
     }
 
-    private Boolean isCurrentUserCommentedAlready(Image entity) {
-        return entity.getComments().stream()
-                .anyMatch(c -> c.getUserId().equals(userService.getCurrentUser().getId()));
+    Boolean isModifiable(Image entity) {
+        return imageService.canCurrentUserModifyImage(entity.getId());
     }
 
     private String getUserDisplayName(Image entity) {

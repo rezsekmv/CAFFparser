@@ -46,18 +46,11 @@ public class ImageController {
         return ResponseEntity.ok(imageService.getAll(pageable));
     }
 
-    @PostMapping("/comment")
-    @Operation(summary = "Hozzászólás az azonosító alapján megadott képhez")
-    public ResponseEntity<CommentDto> commentImage(@RequestBody CommentDto commentDto) {
-        log.trace("ImageController : commentImage, commentDto=[{}]", commentDto);
-        return new ResponseEntity<>(imageService.comment(commentDto), HttpStatus.CREATED);
-    }
-
     @DeleteMapping("/{id}")
-    @Operation(summary = "Saját kép eltávolítása")
-    public ResponseEntity<Void> deleteMyImage(@PathVariable Long id) {
-        log.trace("ImageController : deleteMyImage, id=[{}]", id);
-        imageService.deleteMyImage(id);
+    @Operation(summary = "Kép eltávolítása")
+    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+        log.trace("ImageController : deleteImage, id=[{}]", id);
+        imageService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

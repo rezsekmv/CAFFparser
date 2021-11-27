@@ -1,7 +1,7 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,18 +9,19 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageService {
 
     /**
-     * Saját kép törlése
-     *
-     * @param id a kép azonosítója
-     */
-    void deleteMyImage(Long id);
-
-    /**
      * Kép törlése
      *
      * @param id a kép azonosítója
      */
     void delete(Long id);
+
+    /**
+     * Visszaadja azonosító alapján a kép entitást
+     *
+     * @param id megadott azonosító
+     * @return kép entitás
+     */
+    Image findById(Long id);
 
     /**
      * Kép feltöltése
@@ -46,10 +47,18 @@ public interface ImageService {
     Page<ImageDto> getAll(Pageable pageable);
 
     /**
-     * Hozzászólás írása egy képhez
+     * Visszaadja, hogy a bejelentkezett felhasználó módosíthatja-e a megadott azonosítójú képet
      *
-     * @param commentDto a hozzászólás adatai
-     * @return a létrejött hozzászólás
+     * @param id a kép azonosítója
+     * @return logikai érték
      */
-    CommentDto comment(CommentDto commentDto);
+    Boolean canCurrentUserModifyImage(Long id);
+
+    /**
+     * Visszaadja, hogy a bejelentkezett felhasználó hozzászólhat-e a megadott azonosítójú képhez
+     *
+     * @param imageId kép azonosítója
+     * @return logikai érték
+     */
+    Boolean canCurrentUserCommentImage(Long imageId);
 }
