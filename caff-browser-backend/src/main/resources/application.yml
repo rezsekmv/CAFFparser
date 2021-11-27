@@ -12,6 +12,10 @@ spring:
         multipart:
             max-file-size: 25MB
             max-request-size: 25MB
+    jpa:
+        properties:
+            hibernate:
+                format_sql: false
 
 security:
     token-secret: caffbrowsersecret

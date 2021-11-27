@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         authenticationFilter.setFilterProcessesUrl(LOGIN_URL);
+        http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(LOGIN_URL, REFRESH_TOKEN_URL, PUBLIC_URL).permitAll();
