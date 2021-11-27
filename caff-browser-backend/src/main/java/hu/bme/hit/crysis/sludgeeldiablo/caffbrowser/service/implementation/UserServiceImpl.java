@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private void validateUsernameLength(String username) {
-        if (username.length() <= 3) {
+        if (username.length() < 3) {
             throw new CbException("error.user.username.short");
         }
     }
