@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   db:
-    build: /caff-browser-backend/database/
+    build: caff-browser-backend/database/
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     # Use root/password as user/password credentials
