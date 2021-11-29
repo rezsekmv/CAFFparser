@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CommentDto } from '../models/CommentDto';
 import type { ImageDto } from '../models/ImageDto';
 import type { PageImageDto } from '../models/PageImageDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -28,32 +27,15 @@ export class ImageService {
      * @throws ApiError
      */
     public static createImage(
-formData?: {
-image?: Blob;
-},
-): CancelablePromise<ImageDto> {
+    formData?: {
+    image?: Blob;
+    },
+    ): CancelablePromise<ImageDto> {
         return __request({
             method: 'POST',
             path: `/api/image`,
             formData: formData,
             mediaType: 'multipart/form-data',
-        });
-    }
-
-    /**
-     * Hozzászólás az azonosító alapján megadott képhez
-     * @param requestBody 
-     * @returns CommentDto OK
-     * @throws ApiError
-     */
-    public static commentImage(
-requestBody: CommentDto,
-): CancelablePromise<CommentDto> {
-        return __request({
-            method: 'POST',
-            path: `/api/image/comment`,
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 
@@ -73,12 +55,12 @@ id: number,
     }
 
     /**
-     * Saját kép eltávolítása
+     * Kép eltávolítása
      * @param id 
      * @returns any OK
      * @throws ApiError
      */
-    public static deleteMyImage(
+    public static deleteImage(
 id: number,
 ): CancelablePromise<any> {
         return __request({

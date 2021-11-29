@@ -16,6 +16,7 @@ export type { UserDto } from './models/UserDto';
 
 export { AdminService } from './services/AdminService';
 export { AuthService } from './services/AuthService';
+export { CommentService } from './services/CommentService';
 export { HelloService } from './services/HelloService';
 export { ImageService } from './services/ImageService';
 export { UserService } from './services/UserService';

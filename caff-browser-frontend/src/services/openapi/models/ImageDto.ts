@@ -11,4 +11,6 @@ export type ImageDto = {
     jsonPath?: string;
     comments?: Array<CommentDto>;
     commentsSize?: number;
+    commentable?: boolean;
+    modifiable?: boolean;
 }
