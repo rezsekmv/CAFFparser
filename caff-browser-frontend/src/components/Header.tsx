@@ -28,18 +28,28 @@ const Header = (props: any) => {
   const faUserCircleIcon = faUserCircle as IconProp;
 
   return (
-    <>
+    <div className="masthead">
       <div style={headerStyle}>
-        <span className="h1 float-start" style={titleStyle}>
-          CAFF BROWSER
-        </span>
-        <a className="text-decoration-none float-end" style={linkStyle} href={link}>
-          {/*ts-ignore*/}
-          <span className='h2'>{label}</span><FontAwesomeIcon style={iconStyle} icon={faUserCircleIcon} size='2x'></FontAwesomeIcon>
+        <a href="/" className="header-title">
+          <span className="h1 float-start" style={titleStyle}>
+            CAFF BROWSER
+          </span>
         </a>
+        <div className="float-end">
+          <div className="row">
+            <a className="text-decoration-none" style={linkStyle} href={link}>
+              <span className='h2'>{label}</span><FontAwesomeIcon style={iconStyle} icon={faUserCircleIcon} size='2x'></FontAwesomeIcon>
+            </a>
+          </div>
+          <div className="row">
+            <a className="text-decoration-none" style={linkStyle} href={link}>
+              <span className='h4'>My profile</span>
+            </a>
+          </div>
+        </div>
       </div>
       <div style={redLineStyle}></div>
-    </>
+    </div>
   );
 };
 

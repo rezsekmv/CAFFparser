@@ -2,11 +2,11 @@ import Color from '../styles/Color';
 
 const Footer = () => {
   return (
-    <div className="position-fixed w-100" style={footerStyle}>
+    <div className="w-100 footer" style={footerStyle}>
       <div className='w-100' style={redLineStyle}></div>
       <div className='w-100' style={darkFooterStyle}>
-          <span className='float-start'>Carnage Feat. Sludge - El Diablo Productions</span>
-          <span className='float-end'>App information</span>
+        <span className='float-start'>Carnage Feat. Sludge - El Diablo Productions</span>
+        <span className='float-end'>App information</span>
       </div>
     </div>
   );
