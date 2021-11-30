@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserCircle} from '@fortawesome/fontawesome-free-solid';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import { TokenService } from '../services/TokenService';
 
 const Header = (props: any) => {
     const location = useLocation();

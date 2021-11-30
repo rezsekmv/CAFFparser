@@ -8,7 +8,6 @@ const MAX_ROWS = 2;
 
 const Browser = () => {
     const [currentPage, setCurrentPage] = useState(0);
-    // @ts-ignore
     const [data, setData] = useState<Array<ImageDto>>([{
             id: 1,
             comments: [{content: 'Nice Pic'}, {content: 'Great'}],
@@ -19,7 +18,7 @@ const Browser = () => {
     );
 
     useEffect( () => {
-        ImageService.getAllImage().then((page) => {
+        ImageService.getAllImage({}).then((page) => {
             setData(page.content!);
         }).catch((err) => {
             console.error(err?.body?.message);
