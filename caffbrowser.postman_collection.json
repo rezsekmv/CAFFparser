@@ -104,16 +104,11 @@
 					],
 					"request": {
 						"auth": {
-							"type": "apikey",
-							"apikey": [
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "value",
+									"key": "token",
 									"value": "{{refresh-token}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
 									"type": "string"
 								}
 							]
@@ -595,15 +590,10 @@
 		}
 	],
 	"auth": {
-		"type": "apikey",
-		"apikey": [
+		"type": "bearer",
+		"bearer": [
 			{
-				"key": "key",
-				"value": "Authorization",
-				"type": "string"
-			},
-			{
-				"key": "value",
+				"key": "token",
 				"value": "{{access-token}}",
 				"type": "string"
 			}
@@ -632,7 +622,7 @@
 	"variable": [
 		{
 			"key": "base-api-url",
-			"value": "http://localhost:8080/api"
+			"value": "https://localhost:8443/api"
 		},
 		{
 			"key": "access-token",
