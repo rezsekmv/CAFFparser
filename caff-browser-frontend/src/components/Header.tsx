@@ -42,7 +42,7 @@ const Header = (props: any) => {
             </a>
           </div>
           <div className="row">
-            <a className="text-decoration-none" style={linkStyle} href={link}>
+            <a className="text-decoration-none" style={linkStyle} href='/profile'>
               <span className='h4'>My profile</span>
             </a>
           </div>

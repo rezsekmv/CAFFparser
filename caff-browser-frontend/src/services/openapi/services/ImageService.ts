@@ -13,10 +13,10 @@ export class ImageService {
      * @returns PageImageDto OK
      * @throws ApiError
      */
-    public static getAllImage(): CancelablePromise<PageImageDto> {
+    public static getAllImage(page: number): CancelablePromise<PageImageDto> {
         return __request({
             method: 'GET',
-            path: `/api/image`,
+            path: `/api/image?page=${page}`,
         });
     }
 
@@ -27,9 +27,9 @@ export class ImageService {
      * @throws ApiError
      */
     public static createImage(
-    formData?: {
-    image?: Blob;
-    },
+        formData?: {
+            image?: Blob;
+        },
     ): CancelablePromise<ImageDto> {
         return __request({
             method: 'POST',
@@ -46,8 +46,8 @@ export class ImageService {
      * @throws ApiError
      */
     public static getImage(
-id: number,
-): CancelablePromise<ImageDto> {
+        id: number,
+    ): CancelablePromise<ImageDto> {
         return __request({
             method: 'GET',
             path: `/api/image/${id}`,
@@ -61,8 +61,8 @@ id: number,
      * @throws ApiError
      */
     public static deleteImage(
-id: number,
-): CancelablePromise<any> {
+        id: number,
+    ): CancelablePromise<any> {
         return __request({
             method: 'DELETE',
             path: `/api/image/${id}`,

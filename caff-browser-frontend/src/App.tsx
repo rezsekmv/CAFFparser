@@ -5,6 +5,8 @@ import Register from './components/Register';
 import Browser from './components/Browser';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 import ImageDetailView from './components/ImageDetailView';
 import Color from './styles/Color';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -20,6 +22,8 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/image/:id" element={<ImageDetailView />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/profile/edit" element={<EditProfile />}></Route>
           </Routes>
         </div>
       </Router>
@@ -29,7 +33,7 @@ function App() {
 }
 
 const globalStyle = {
-  color: Color.dark,
+  color: Color.dark
 };
 
 export default App;

@@ -23,6 +23,12 @@
 .custom-card-img {
   max-height: 200px;
   object-fit: cover; /* contain? */
+  transition-duration: 250ms;
+}
+
+.custom-card-img:hover {
+  transition-duration: 250ms;
+  transform: scale(1.5, 1.5);
 }
 
 div.container {
@@ -57,4 +63,13 @@ div.container {
 
 .row.img-browser {
   margin-top: 15px;
+}
+
+.card-image-container {
+  overflow: hidden;
+}
+
+.profile-box-data p, .profile-box-data input {
+  margin-top: 10px;
+
 }
