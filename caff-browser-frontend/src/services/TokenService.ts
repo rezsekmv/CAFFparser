@@ -1,3 +1,5 @@
+import {AuthService} from "./openapi";
+
 const ACCESS_TOKEN = 'accessToken';
 const REFRESH_TOKEN = 'refreshToken';
 
@@ -6,23 +8,25 @@ const TokenService = {
     saveAccessToken: (token: string) => {
         sessionStorage.setItem(ACCESS_TOKEN, token);
     },
-    getAccessToken: (token: string) => {
+    getAccessToken: () => {
         sessionStorage.getItem(ACCESS_TOKEN);
     },
-    removeAccessToken: (token: string) => {
+    removeAccessToken: () => {
         sessionStorage.removeItem(ACCESS_TOKEN)
     },
     saveRefreshToken: (token: string) => {
         localStorage.setItem(REFRESH_TOKEN, token);
     },
-    getRefreshToken: (token: string) => {
+    getRefreshToken: () => {
         localStorage.getItem(REFRESH_TOKEN);
     },
-    removeRefreshToken: (token: string) => {
+    removeRefreshToken: () => {
         localStorage.removeItem(REFRESH_TOKEN)
     },
 
-    getAccessTokenWithRefreshToken( () => {
-
-    })
+    getAccessTokenWithRefreshToken: () => {
+        AuthService.refreshToken().then(() => {
+            console.log('refresh')
+        })
+    }
 }

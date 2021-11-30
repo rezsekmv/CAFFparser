@@ -23,7 +23,7 @@ export const OpenAPI: Config = {
     VERSION: '0',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
-    TOKEN: undefined,
+    TOKEN: TokenService.getAccessToken(),
     USERNAME: undefined,
     PASSWORD: undefined,
     HEADERS: undefined,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -10,6 +10,8 @@ import Color from './styles/Color';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
+  const [admin, setAdmin] = useState();
+
   return (
     <div className="App" style={globalStyle}>
       <Router>
