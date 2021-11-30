@@ -10,7 +10,7 @@ public class ImageDto {
     private Long id;
     private String userDisplayName;
     private String gifPath;
-    private String jsonPath;
+    private String caffPath;
     private List<CommentDto> comments;
     private Integer commentsSize;
     private Boolean commentable;

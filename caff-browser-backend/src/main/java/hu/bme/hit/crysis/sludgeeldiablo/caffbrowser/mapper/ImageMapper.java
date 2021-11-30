@@ -30,7 +30,7 @@ public abstract class ImageMapper {
     public void mapToDto(@MappingTarget ImageDto dto, Image entity) {
         dto.setUserDisplayName(getUserDisplayName(entity));
         dto.setGifPath(NativeParserUtil.getGifPath(entity.getUuid()));
-        dto.setJsonPath(NativeParserUtil.getJsonPath(entity.getUuid()));
+        dto.setCaffPath(NativeParserUtil.getCaffPath(entity.getUuid()));
     }
 
     Integer getCommentsSize(Image entity) {
