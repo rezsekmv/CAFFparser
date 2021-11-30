@@ -49,13 +49,13 @@ public class Image {
     @Convert(converter = SetConverter.class)
     private Set<String> captions = new HashSet<>();
 
-    @Column(name = "IMAGE_LABELS")
+    @Column(name = "IMAGE_TAGS")
     @Convert(converter = SetConverter.class)
-    private Set<String> labels = new HashSet<>();
+    private Set<String> tags = new HashSet<>();
 
     @Column(name = "IMAGE_HEIGHT")
-    private Integer height;
+    private Long height;
 
     @Column(name = "IMAGE_WIDTH")
-    private Integer width;
+    private Long width;
 }

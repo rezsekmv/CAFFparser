@@ -22,7 +22,7 @@ public class ImageDto {
     private LocalDateTime date;
     private String credit;
     private Set<String> captions;
-    private Set<String> labels;
-    private Integer height;
-    private Integer width;
+    private Set<String> tags;
+    private Long height;
+    private Long width;
 }

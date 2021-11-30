@@ -10,9 +10,9 @@
             <column name="IMAGE_DATE" type="DATETIME"/>
             <column name="IMAGE_CREDIT" type="VARCHAR2(255)"/>
             <column name="IMAGE_CAPTIONS" type="VARCHAR2(255)"/>
-            <column name="IMAGE_LABELS" type="VARCHAR2(255)"/>
-            <column name="IMAGE_WIDTH" type="INT"/>
-            <column name="IMAGE_HEIGHT" type="INT"/>
+            <column name="IMAGE_TAGS" type="VARCHAR2(255)"/>
+            <column name="IMAGE_WIDTH" type="BIGINT"/>
+            <column name="IMAGE_HEIGHT" type="BIGINT"/>
         </addColumn>
     </changeSet>
 
