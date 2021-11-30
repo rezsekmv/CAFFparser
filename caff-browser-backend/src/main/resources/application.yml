@@ -8,6 +8,8 @@ spring:
   liquibase:
     change-log: classpath:db/changelog-app.xml
     labels: sample
+  mvc:
+    static-path-pattern: /public/images/**
   servlet:
     multipart:
       max-file-size: 25MB
@@ -27,3 +29,5 @@ security:
 springdoc:
   api-docs:
     path: /api/public/api-docs
+
+repopath: d:\Programozas\CAFFparser

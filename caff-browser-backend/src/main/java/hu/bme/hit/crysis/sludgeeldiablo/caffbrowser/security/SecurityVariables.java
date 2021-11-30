@@ -5,6 +5,7 @@ public class SecurityVariables {
     public static final String LOGIN_URL = "/api/login";
     public static final String REFRESH_TOKEN_URL = "/api/refresh-token";
     public static final String PUBLIC_URL = "/api/public/**";
+    public static final String IMAGES_URL = "/public/images/**";
     public static final String ADMIN_URL = "/api/admin/**";
     public static final String MOD_URL = "/api/mod/**";
 
