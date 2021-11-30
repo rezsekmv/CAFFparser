@@ -26,10 +26,9 @@ public class AuthController {
 
     @GetMapping("/refresh-token")
     @Operation(summary = "Access token frissítése")
-    public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.trace("AuthController : refreshToken, request=[{}], response=[{}]", request, response);
-        authService.refreshToken(request, response);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(authService.refreshToken(request, response));
     }
 
     @PostMapping("/public/sign-up")

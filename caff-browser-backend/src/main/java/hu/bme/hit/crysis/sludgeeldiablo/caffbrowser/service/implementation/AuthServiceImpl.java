@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
     private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     @Override
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+    public String refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.trace("AuthService : refreshToken, request=[{}], response=[{}]", request, response);
         String header = request.getHeader(AUTHORIZATION);
         if (header == null) {
@@ -58,6 +58,7 @@ public class AuthServiceImpl implements AuthService {
 
                 Map<String, String> map = createTokenMap(request, user, algorithm);
                 valueIntoResponse(response, map);
+                return map.get(ACCESS_TOKEN_PARAMETER);
             } catch (Exception e) {
                 throw new CbTokenException(e.getMessage());
             }

@@ -10,6 +10,7 @@ public interface AuthService {
      *
      * @param request a HTTP request
      * @param response a HTTP response
+     * @return új access token
      */
-    void refreshToken(HttpServletRequest request, HttpServletResponse response);
+    String refreshToken(HttpServletRequest request, HttpServletResponse response);
 }
