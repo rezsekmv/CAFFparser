@@ -1,13 +1,16 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.converter.SetConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "IMAGE")
@@ -33,4 +36,26 @@ public class Image {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "imageId")
     private List<Comment> comments = new ArrayList<>();
+
+    // CAFF meta data
+
+    @Column(name = "IMAGE_DATE")
+    private LocalDateTime date;
+
+    @Column(name = "IMAGE_CREDIT")
+    private String credit;
+
+    @Column(name = "IMAGE_CAPTIONS")
+    @Convert(converter = SetConverter.class)
+    private Set<String> captions = new HashSet<>();
+
+    @Column(name = "IMAGE_LABELS")
+    @Convert(converter = SetConverter.class)
+    private Set<String> labels = new HashSet<>();
+
+    @Column(name = "IMAGE_HEIGHT")
+    private Integer height;
+
+    @Column(name = "IMAGE_WIDTH")
+    private Integer width;
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="bosz.norbert" id="004">
+        <addColumn tableName="IMAGE">
+            <column name="IMAGE_DATE" type="DATETIME"/>
+            <column name="IMAGE_CREDIT" type="VARCHAR2(255)"/>
+            <column name="IMAGE_CAPTIONS" type="VARCHAR2(255)"/>
+            <column name="IMAGE_LABELS" type="VARCHAR2(255)"/>
+            <column name="IMAGE_WIDTH" type="INT"/>
+            <column name="IMAGE_HEIGHT" type="INT"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
