@@ -94,8 +94,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const response = pm.response.json();\r",
-									"pm.collectionVariables.set('access-token', response.accessToken);\r",
+									"const response = pm.response.text();\r",
+									"pm.collectionVariables.set('access-token', response);\r",
 									""
 								],
 								"type": "text/javascript"
@@ -334,6 +334,9 @@
 			"item": [
 				{
 					"name": "createImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -343,7 +346,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/D:/Net/Random Pictures/aipom0.png"
+									"src": "/D:/Net/Random Pictures/katona.jpg"
 								}
 							]
 						},
