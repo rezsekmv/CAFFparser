@@ -69,19 +69,4 @@ id: number,
         });
     }
 
-    /**
-     * Kép eltávolítása
-     * @param id 
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static deleteImage(
-id: number,
-): CancelablePromise<any> {
-        return __request({
-            method: 'DELETE',
-            path: `/api/admin/image/${id}`,
-        });
-    }
-
 }

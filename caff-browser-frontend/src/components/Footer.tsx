@@ -2,11 +2,11 @@ import Color from '../styles/Color';
 
 const Footer = () => {
   return (
-    <div className="position-fixed w-100" style={footerStyle}>
+    <div className="w-100 footer" style={footerStyle}>
       <div className='w-100' style={redLineStyle}></div>
       <div className='w-100' style={darkFooterStyle}>
-          <span className='float-start'>Carnage Feat. Sludge - El Diablo Productions</span>
-          <span className='float-end'>App information</span>
+        <span className='float-start' style={footerTextStyle}>Carnage Feat. Sludge - El Diablo Productions</span>
+        <span className='float-end' style={footerTextStyle}>App information</span>
       </div>
     </div>
   );
@@ -21,14 +21,18 @@ const footerStyle = {
 const darkFooterStyle = {
   backgroundColor: Color.dark,
   color: Color.white,
-  height: '50px',
-  paddingLeft: '10rem',
-  paddingRight: '10rem',
-  paddingTop: '.8rem'
+  height: '8vh',
+  paddingLeft: '10%',
+  paddingRight: '10vw',
+  paddingTop: '1.5vh'
 };
 
+const footerTextStyle = {
+  fontSize: '2.5vh'
+}
+
 const redLineStyle = {
-  height: '10px',
+  height: '1vh',
   backgroundColor: Color.red,
 };
 
