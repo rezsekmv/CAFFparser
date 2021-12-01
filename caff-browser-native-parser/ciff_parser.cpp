@@ -40,10 +40,10 @@ void parse_rgb_pixels(const char *buffer, uint64_t start_index, uint64_t byte_nu
     }
 }
 
-void convert_to_ppm(const string &filename, uint64_t width, uint64_t height, unsigned char *pixels) {
+void convert_to_ppm(const string &path, const string &filename, uint64_t width, uint64_t height, unsigned char *pixels) {
     FILE *imageFile;
 
-    imageFile = fopen(("../output-images/" + filename + ".ppm").c_str(), "wb");
+    imageFile = fopen((path + "\\caff-browser-native-parser\\output-images\\" + filename + ".ppm").c_str(), "wb");
     if (imageFile == nullptr) {
         perror("ERROR: Cannot open output file");
         exit(EXIT_FAILURE);
@@ -56,7 +56,7 @@ void convert_to_ppm(const string &filename, uint64_t width, uint64_t height, uns
     fclose(imageFile);
 }
 
-CIFF parse_ciff(const string &filename, const char *buffer, uint64_t start_index) {
+CIFF parse_ciff(const string &path, const string &filename, const char *buffer, uint64_t start_index) {
     string magic = parse_string_byte(buffer, start_index, 4);
     if (magic != "CIFF") {
         throw runtime_error("Invalid CIFF magic");
@@ -75,7 +75,7 @@ CIFF parse_ciff(const string &filename, const char *buffer, uint64_t start_index
 
     unsigned char pixels[content_size];
     parse_rgb_pixels(buffer, start_index + header_size, content_size, pixels);
-    convert_to_ppm(filename, width, height, pixels);
+    convert_to_ppm(path, filename, width, height, pixels);
 
     CIFF ciff_image(magic, header_size, content_size, width, height, caption, tags);
 

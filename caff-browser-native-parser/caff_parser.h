@@ -5,6 +5,6 @@
 
 using namespace std;
 
-void parse_caff(const char *buffer, const string& filename);
+void parse_caff(const char *buffer, const string &path, const string &filename);
 
 #endif //CAFF_BROWSER_NATIVE_PARSER_CAFF_PARSER_H
