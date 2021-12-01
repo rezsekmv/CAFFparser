@@ -1,77 +1,63 @@
 import { faSmileBeam } from '@fortawesome/free-regular-svg-icons';
-import { Component } from 'react';
+import { Component, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ImageDto, CommentDto } from '../services/openapi';
+import { ImageDto, CommentDto, ImageService } from '../services/openapi';
+import StaticService from '../services/StaticService';
 import CommentCard from './CommentCard';
 
 const ImageDetailView = () => {
+  const [image, setImage] = useState<ImageDto>();
+  const { id } = useParams();
 
-    const { id } = useParams();
+  useEffect(() => {
+    ImageService.getImage(+id!)
+      .then((img) => {
+        setImage(img);
+      })
+      .catch((error) => console.error('Failed to fetch image!'));
+      
+  }, [id]);
 
-    const data: ImageDto = {
-        commentable: true,
-        comments: [
-            {
-                content: 'This is a comment',
-                id: 1,
-                imageId: 1,
-                modifiable: true,
-                userDisplayName: 'Test Commenter'
-            },
-            {
-                content: 'This is a comment, too',
-                id: 1,
-                imageId: 1,
-                modifiable: false,
-                userDisplayName: 'Test User'
-            }
-        ],
-        commentsSize: 1,
-        gifPath: 'https://i0.wp.com/www.printmag.com/wp-content/uploads/2021/02/4cbe8d_f1ed2800a49649848102c68fc5a66e53mv2.gif?fit=476%2C280&ssl=1',
-        id: 1,
-        modifiable: true,
-        userDisplayName: 'Test User'
-    }
-
-    return (
-        <div>
-            <img style={styles.mainImage} src="https://i0.wp.com/www.printmag.com/wp-content/uploads/2021/02/4cbe8d_f1ed2800a49649848102c68fc5a66e53mv2.gif?fit=476%2C280&ssl=1" />
-            <div style={styles.infoBar}>
-                <div>
-                    {data.userDisplayName}
-                </div>
-            </div>
-            <div style={styles.commentsSection}>
-                {data.comments?.map(comment =>
-                    <CommentCard
-                        content={comment.content}
-                        id={comment.id}
-                        modifiable={comment.modifiable}
-                        username={comment.userDisplayName}
-                    />
-                )}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div>
+      <img
+        style={styles.mainImage}
+        src={StaticService.getImage(image?.gifPath!)}
+      />
+      <div style={styles.infoBar} className='mx-auto my-3'>
+        <h2>{image?.userDisplayName}</h2>
+      </div>
+      <div style={styles.commentsSection}>
+        {image?.comments?.map((comment) => (
+          <CommentCard
+            content={comment.content!}
+            id={comment.id!}
+            modifiable={comment.modifiable!}
+            username={comment.userDisplayName!}
+            imageId={comment.imageId!}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const styles = {
-    mainImage: {
-        display: 'block',
-        margin: 'auto',
-        'max-width': 400,
-        'max-height': 400
-    },
-    infoBar: {
-        maxWidth: 400,
-        margin: 'auto',
-        height: 40,
-    },
-    commentsSection: {
-        width: '400px',
-        display: 'block',
-        margin: 'auto'
-    }
+  mainImage: {
+    display: 'block',
+    margin: 'auto',
+    'max-width': 400,
+    'max-height': 400,
+  },
+  infoBar: {
+    maxWidth: 400,
+    height: 40,
+  },
+  commentsSection: {
+    width: '400px',
+    display: 'block',
+    margin: 'auto',
+  },
 };
 
 export default ImageDetailView;

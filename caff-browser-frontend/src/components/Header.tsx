@@ -22,8 +22,8 @@ const Header = (props: any) => {
       setLink('/register');
     }
     if (location.pathname === '/') {
-      setLabel('BROWSE');
-      setLink('/login');
+      setLabel('My profile');
+      setLink('/');
     }
   }, [link, label, location.pathname]);
 
@@ -48,17 +48,19 @@ const Header = (props: any) => {
             style={linkStyle}
             to={'/profile'}
           >
-            <span className="h4" style={headerTextStyle}>
+            <span className="h2" style={headerTextStyle}>
               My profile
             </span>
           </Link>
-          <button
-            style={logoutStyle}
+          <Link
+            className="text-decoration-none"
+            style={linkStyle}
+            to={'/logout'}
           >
-            <span className="h4" style={headerTextStyle}>
+            <span className="h2" style={headerTextStyle}>
               Logout
             </span>
-          </button>
+          </Link>
         </div>
       </div>
       <div style={redLineStyle}></div>
@@ -102,19 +104,19 @@ const redLineStyle = {
 };
 
 const leftContainerStyle = {
-    paddingTop: '1.5vh',
-    marginTop: 0,
-    height: '8vh',
-}
+  paddingTop: '1.5vh',
+  marginTop: 0,
+  height: '8vh',
+};
 
 const logoutStyle = {
-    backgroundColor: Color.dark,
-    color: Color.white,
-    borderColor: Color.red,
-    fontSize: '1vh',
-    borderWidth: '0.5vh',
-    padding: '0.2vh',
-    margin: '0.2vh'
-}
+  backgroundColor: Color.dark,
+  color: Color.white,
+  borderColor: Color.red,
+  fontSize: '1vh',
+  borderWidth: '0.5vh',
+  padding: '0.2vh',
+  margin: '0.2vh',
+};
 
 export default Header;

@@ -89,7 +89,7 @@ const Browser = () => {
                   <ImageCard
                     id={gif.id}
                     title={'Caption'}
-                    body={'Body'}
+                    user={gif.credit!}
                     commentCount={gif.commentsSize}
                     imageUrl={StaticService.getImage(gif.gifPath!)}
                   />

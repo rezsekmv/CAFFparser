@@ -1,17 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faUser } from '@fortawesome/free-regular-svg-icons';
+import { Link } from 'react-router-dom';
 
 const ImageCard = (props: any) => {
   return (
-    <div className="card">
+    <div className="card" style={{height: '270px'}}>
       <div className="card-image-container">
-        <a href={'image/' + props.id}>
+        <Link to={'image/' + props.id}>
           <img
             className="card-img-top custom-card-img"
             src={props.imageUrl}
             alt=""
           />
-        </a>
+        </Link>
       </div>
 
       <div className="card-body">
@@ -30,7 +31,7 @@ const ImageCard = (props: any) => {
               <div className="comment-icon counter-child">
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
               </div>
-              <div className="comment-count counter-child">test</div>
+              <div className="comment-count counter-child">{props.user}</div>
             </div>
           </div>
         </div>
