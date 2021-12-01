@@ -1,6 +1,7 @@
-import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import { faCheckCircle, faEdit, faTrashAlt, IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CommentDto, CommentService, ImageService } from '../services/openapi';
 
@@ -13,25 +14,36 @@ interface CommentCardProps {
 }
 
 const CommentCard = (props: CommentCardProps) => {
-  const navigate = useNavigate();
+  const faIcon = faCheck as IconDefinition;
 
-  const hadleDelete = () => {
+  const [editing, setEditing] = useState(false);
+  const [editText, setEditText] = useState(props.content);
+
+  const handleDelete = () => {
     CommentService.deleteComment(props.id)
-      .then((res) => {
-        navigate('/');
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log('Can not delete comment');
       });
   };
 
   const handleEdit = () => {
-    CommentService.updateComment(props.id, {content: props.content, imageId: props.imageId})
+    setEditing(true);
+  };
+
+  const handleConfirm = () => {
+    CommentService.updateComment(props.id, {
+      content: editText,
+      imageId: props.imageId,
+    })
       .then((res) => {
-        navigate('/');
+        setEditText(res.content!)
       })
       .catch((err) => {
         console.log('Can not update comment');
+      })
+      .finally(() => {
+        setEditing(false);
       });
   };
 
@@ -42,17 +54,34 @@ const CommentCard = (props: CommentCardProps) => {
         <div>
           {props.modifiable && (
             <div>
-              <span className="btn btn-warning">
-                <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
-              </span>{' '}
+              {!editing && (
+                <span className="btn btn-warning">
+                  <FontAwesomeIcon
+                    onClick={() => handleEdit()}
+                    icon={faEdit}
+                  ></FontAwesomeIcon>
+                </span>
+              )}
+              {editing && (
+                <span className="btn btn-success">
+                  <FontAwesomeIcon
+                    onClick={() => handleConfirm()}
+                    icon={faIcon}
+                  ></FontAwesomeIcon>
+                </span>
+              )}{' '}
               <span className="btn btn-danger">
-                <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
+                <FontAwesomeIcon
+                  onClick={() => handleDelete()}
+                  icon={faTrashAlt}
+                ></FontAwesomeIcon>
               </span>
             </div>
           )}
         </div>
       </div>
-      <div>{props.content}</div>
+      {!editing && (<p>{editText}</p>)}
+      {editing && (<input style={styles.input} className="form-control" type={'text'} value={editText} onChange={(e) => {setEditText(e.target.value)}}/>)}
     </div>
   );
 };
@@ -71,6 +100,9 @@ const styles = {
   username: {
     color: 'grey',
   },
+  input: {
+    width: '80%'
+  }
 };
 
 export default CommentCard;
