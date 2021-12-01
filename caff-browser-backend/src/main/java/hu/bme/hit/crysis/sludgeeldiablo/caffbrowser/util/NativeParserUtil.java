@@ -65,7 +65,7 @@ public class NativeParserUtil {
      * @param file feltöltött CIFF vagy CAFF fájl
      * @return generált UUID azonosító
      */
-    public static Image parse(MultipartFile file) throws IOException, InterruptedException {
+    public static Image parse(MultipartFile file) throws Exception {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
         validateFormat(file);
 
@@ -116,7 +116,7 @@ public class NativeParserUtil {
         int height = (int) getFirstElement(caffJson).getHeight();
         for (File image : getGifParts(uuid)) {
             byte[] fileContent = Files.readAllBytes(image.toPath());
-            BufferedImage bufferedImage = ppm(width, height, 255, Arrays.copyOfRange(fileContent, 4, fileContent.length - 1));
+            BufferedImage bufferedImage = ppm(width, height, Arrays.copyOfRange(fileContent, fileContent.length - width * height * 3, fileContent.length));
             writer.writeToSequence(bufferedImage);
         }
 
