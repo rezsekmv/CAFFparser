@@ -1,29 +1,46 @@
 import { useState } from 'react';
-import { AuthService, UserService } from '../services/openapi';
+import { useNavigate } from 'react-router-dom';
+import LoginService from '../services/LoginService';
 import Color from '../styles/Color';
 import InputField from './InputField';
 
-const Login = () => {
+interface LoginProps {
+  isLoggedIn: Function
+}
+
+const Login = ({isLoggedIn}: LoginProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleClick = (e: any) => {
-    console.log('username: ' + username);
-    console.log('password: ' + password);
+    LoginService.login(username, password);
+    isLoggedIn(true);
+    navigate('/');
   };
 
   return (
-      <div className='mx-auto' style={loginBoxStyle}>
-        <h1 style={titleStyle}>Bejelentkezés</h1>
-        <InputField inputType={'text'} placeholder={'Felhasználónév'} classes={''} handleOnChange={setUsername}/>
-        <InputField inputType={'password'} placeholder={'Jelszó'} classes={''} handleOnChange={setPassword}/>
-        
-        <div>
-          <button onClick={(e) => handleClick(e)} style={buttonStyle}>
-            Bejelentkezés
-          </button>
-        </div>
+    <div className="mx-auto" style={loginBoxStyle}>
+      <h1 style={titleStyle}>Bejelentkezés</h1>
+      <InputField
+        inputType={'text'}
+        placeholder={'Felhasználónév'}
+        classes={''}
+        handleOnChange={setUsername}
+      />
+      <InputField
+        inputType={'password'}
+        placeholder={'Jelszó'}
+        classes={''}
+        handleOnChange={setPassword}
+      />
+
+      <div>
+        <button onClick={(e) => handleClick(e)} style={buttonStyle}>
+          Bejelentkezés
+        </button>
       </div>
+    </div>
   );
 };
 

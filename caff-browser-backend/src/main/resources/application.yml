@@ -24,8 +24,8 @@ security:
   cors:
     enabled: true
   token-secret: caffbrowsersecret
-  access-token-expiration: 600000 # 10 perc
-  refresh-token-expiration: 1800000 # 30 perc
+  access-token-expiration:  10800000 # 3 óra
+  refresh-token-expiration: 108000000 # 30 óra
 
 springdoc:
   api-docs:

@@ -1,96 +1,120 @@
 import Color from '../styles/Color';
-import {useLocation} from 'react-router-dom';
-import {useEffect, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUserCircle} from '@fortawesome/fontawesome-free-solid';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/fontawesome-free-solid';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { TokenService } from '../services/TokenService';
+import { Button } from 'react-bootstrap';
 
 const Header = (props: any) => {
-    const location = useLocation();
-    const [link, setLink] = useState('/');
-    const [label, setLabel] = useState('');
+  const location = useLocation();
+  const [link, setLink] = useState('/');
+  const [label, setLabel] = useState('');
 
-    useEffect(() => {
-        TokenService.saveAccessToken('asdasd');
-        if (location.pathname === '/register') {
-            setLabel('Bejelentkezés');
-            setLink('/login');
-        }
-        if (location.pathname === '/login') {
-            setLabel('Regisztráció');
-            setLink('/register');
-        }
-        if (location.pathname === '/') {
-            setLabel('BROWSE');
-            setLink('/login');
-        }
-    }, [link, label, location.pathname]);
+  useEffect(() => {
+    if (location.pathname === '/register') {
+      setLabel('Bejelentkezés');
+      setLink('/login');
+    }
+    if (location.pathname === '/login') {
+      setLabel('Regisztráció');
+      setLink('/register');
+    }
+    if (location.pathname === '/') {
+      setLabel('BROWSE');
+      setLink('/login');
+    }
+  }, [link, label, location.pathname]);
 
-    const faUserCircleIcon = faUserCircle as IconProp;
+  const faUserCircleIcon = faUserCircle as IconProp;
 
-    return (
-        <div className="masthead">
-            <div style={headerStyle}>
-                <a href="/" className="header-title">
+  return (
+    <div className="masthead">
+      <div style={headerStyle}>
+        <Link to={'/'} className="header-title">
           <span className="h1 float-start" style={titleStyle}>
             CAFF BROWSER
           </span>
-                </a>
-                <div className="float-end">
-                    <div className="row">
-                        <a className="text-decoration-none" style={linkStyle} href={link}>
-                            <div className={'float-start'}>
-                                <span className='h2' style={headerTextStyle}>{label}</span>
-                            </div>
-                            <div className={'float-end'}>
-                                <FontAwesomeIcon style={iconStyle} icon={faUserCircleIcon} size='2x'></FontAwesomeIcon>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="row">
-                        <a className="text-decoration-none" style={linkStyle} href={link}>
-                            <span className='h4' style={headerTextStyle}>My profile</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style={redLineStyle}></div>
+        </Link>
+        <div className="float-end" style={leftContainerStyle}>
+          <Link className="text-decoration-none" style={linkStyle} to={link}>
+            <span className="h2" style={headerTextStyle}>
+              {label}
+            </span>
+          </Link>
+          <Link
+            className="text-decoration-none"
+            style={linkStyle}
+            to={'/profile'}
+          >
+            <span className="h4" style={headerTextStyle}>
+              My profile
+            </span>
+          </Link>
+          <button
+            style={logoutStyle}
+          >
+            <span className="h4" style={headerTextStyle}>
+              Logout
+            </span>
+          </button>
         </div>
-    );
+      </div>
+      <div style={redLineStyle}></div>
+    </div>
+  );
 };
 
 const headerStyle = {
-    backgroundColor: Color.dark,
-    height: '8vh',
-    paddingLeft: '10vw',
-    paddingRight: '10vw'
+  backgroundColor: Color.dark,
+  height: '8vh',
+  paddingLeft: '10vw',
+  paddingRight: '10vw',
 };
 
 const titleStyle = {
-    color: Color.red,
-    display: 'inline',
-    fontSize: '4vh',
-    marginTop: '1.5vh'
+  color: Color.red,
+  display: 'inline',
+  fontSize: '4vh',
+  marginTop: '1.5vh',
 };
 
 const linkStyle = {
-    color: Color.white,
-    fontSize: '3vh'
-}
+  color: Color.white,
+  fontSize: '3vh',
+  marginTop: '1.5vh',
+  marginRight: '2vw',
+};
 
 const headerTextStyle = {
-    fontSize: '3vh',
-    marginTop: '2vh'
-}
+  fontSize: '3vh',
+  marginTop: '2vh',
+};
 
 const iconStyle = {
-    margin: '2vh'
-}
+  margin: '2vh',
+};
 
 const redLineStyle = {
-    height: '1vh',
-    backgroundColor: Color.red,
+  height: '1vh',
+  backgroundColor: Color.red,
 };
+
+const leftContainerStyle = {
+    paddingTop: '1.5vh',
+    marginTop: 0,
+    height: '8vh',
+}
+
+const logoutStyle = {
+    backgroundColor: Color.dark,
+    color: Color.white,
+    borderColor: Color.red,
+    fontSize: '1vh',
+    borderWidth: '0.5vh',
+    padding: '0.2vh',
+    margin: '0.2vh'
+}
 
 export default Header;

@@ -7,8 +7,8 @@ export const TokenService = {
   saveAccessToken: (token: string) => {
     sessionStorage.setItem(ACCESS_TOKEN, token);
   },
-  getAccessToken: () => {
-    sessionStorage.getItem(ACCESS_TOKEN);
+  getAccessToken: ():string => {
+    return sessionStorage.getItem(ACCESS_TOKEN)!;
   },
   removeAccessToken: () => {
     sessionStorage.removeItem(ACCESS_TOKEN);
@@ -16,8 +16,8 @@ export const TokenService = {
   saveRefreshToken: (token: string) => {
     localStorage.setItem(REFRESH_TOKEN, token);
   },
-  getRefreshToken: () => {
-    localStorage.getItem(REFRESH_TOKEN);
+  getRefreshToken: ():string => {
+    return localStorage.getItem(REFRESH_TOKEN)!;
   },
   removeRefreshToken: () => {
     localStorage.removeItem(REFRESH_TOKEN);

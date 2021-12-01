@@ -22,7 +22,8 @@ pageable: Pageable,
             method: 'GET',
             path: `/api/image`,
             query: {
-                'pageable': pageable,
+                'page': ''+pageable.pageNumber,
+                'size': ''+pageable.pageSize
             },
         });
     }

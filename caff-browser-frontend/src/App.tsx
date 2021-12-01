@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -9,9 +9,17 @@ import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import ImageDetailView from './components/ImageDetailView';
 import Color from './styles/Color';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 
-function App() {
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [admin, setAdmin] = useState(false);
+
   return (
     <div className="App" style={globalStyle}>
       <Router>
@@ -19,7 +27,10 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/" element={<Browser />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route
+              path="/login"
+              element={<Login isLoggedIn={setLoggedIn} />}
+            ></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/image/:id" element={<ImageDetailView />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
@@ -30,10 +41,10 @@ function App() {
       <Footer></Footer>
     </div>
   );
-}
+};
 
 const globalStyle = {
-  color: Color.dark
+  color: Color.dark,
 };
 
 export default App;

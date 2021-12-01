@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { TokenService } from './TokenService';
 
-axios.interceptors.request.use(
+export const requestInterceptor = axios.interceptors.request.use(
   (config) => {
     console.log(
       `${config.method?.toUpperCase()} Request made to ${
@@ -17,7 +17,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+export const responseInterceptor =axios.interceptors.response.use(
   (response) => {
     const { status, data, config } = response;
     console.log(`Response from ${config.url}:`, {
