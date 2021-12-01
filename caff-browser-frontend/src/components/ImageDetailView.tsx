@@ -72,11 +72,11 @@ const ImageDetailView = () => {
 
         {image?.tags?.map((tag, idx) => {
           return (
-            <div key={idx}>
-              <Badge className="hover-red" bg="secondary">
+            <>
+              <Badge key={idx} className="hover-red" bg="secondary">
                 {tag}
               </Badge>{' '}
-            </div>
+            </>
           );
         })}
       </div>

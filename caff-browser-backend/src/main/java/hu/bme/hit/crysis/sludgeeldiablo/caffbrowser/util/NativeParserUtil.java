@@ -144,7 +144,7 @@ public class NativeParserUtil {
     }
 
     private static Ciff getFirstElement(CaffJson caff) {
-        return caff.getAnimation().getCIFFs().get(0);
+        return caff.getAnimation().getCiffs().get(0);
     }
 
     private static List<File> getGifParts(String uuid) {
@@ -181,7 +181,7 @@ public class NativeParserUtil {
     }
 
     private static String getCaption(CaffJson caff) {
-        return caff.getAnimation().getCIFFs()
+        return caff.getAnimation().getCiffs()
                 .stream()
                 .map(Ciff::getCaption)
                 .findFirst()
@@ -189,7 +189,7 @@ public class NativeParserUtil {
     }
 
     private static Set<String> getTags(CaffJson caff) {
-        return caff.getAnimation().getCIFFs()
+        return caff.getAnimation().getCiffs()
                 .stream()
                 .map(Ciff::getTags)
                 .flatMap(Collection::stream)
