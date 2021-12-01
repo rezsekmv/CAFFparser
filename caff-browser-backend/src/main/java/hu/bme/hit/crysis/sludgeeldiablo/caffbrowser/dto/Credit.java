@@ -12,6 +12,6 @@ public class Credit {
     long day;
     long hour;
     long minute;
-    long creator_length;
+    long creatorLength;
     String creator;
 }
