@@ -7,15 +7,22 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserServ
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.NativeParserUtil;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommentMapper.class})
 public abstract class ImageMapper {
 
+    private static final String IMAGE_PATH_REGEX = "/**";
+
+    @Value("${spring.mvc.static-path-pattern}")
+    private String imagesPath;
+
     @Autowired
     private UserService userService;
 
-    @Autowired @Lazy
+    @Lazy
+    @Autowired
     private ImageService imageService;
 
     @Mapping(expression = "java(getCommentsSize(entity))", target = "commentsSize")
@@ -29,8 +36,16 @@ public abstract class ImageMapper {
     @AfterMapping
     public void mapToDto(@MappingTarget ImageDto dto, Image entity) {
         dto.setUserDisplayName(getUserDisplayName(entity));
-        dto.setGifPath(NativeParserUtil.getGifPath(entity.getUuid()));
-        dto.setCaffPath(NativeParserUtil.getCaffPath(entity.getUuid()));
+        dto.setGifPath(getGifPath(entity));
+        dto.setCaffPath(getCaffPath(entity));
+    }
+
+    private String getGifPath(Image entity) {
+        return imagesPath.replace(IMAGE_PATH_REGEX, NativeParserUtil.getGifPath(entity.getUuid()));
+    }
+
+    private String getCaffPath(Image entity) {
+        return imagesPath.replace(IMAGE_PATH_REGEX, NativeParserUtil.getCaffPath(entity.getUuid()));
     }
 
     Integer getCommentsSize(Image entity) {

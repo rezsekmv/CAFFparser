@@ -27,8 +27,8 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.PpmReader.ppm
 @Slf4j
 public class NativeParserUtil {
 
-    private static final String GIF_PATH = "dummy/{uuid}.gif";
-    private static final String CAFF_PATH = "dummy/{uuid}.caff";
+    private static final String GIF_PATH = "/{uuid}.gif";
+    private static final String CAFF_PATH = "/{uuid}.caff";
 
     public static String getGifPath(String uuid) {
         return GIF_PATH.replace("{uuid}", uuid);
