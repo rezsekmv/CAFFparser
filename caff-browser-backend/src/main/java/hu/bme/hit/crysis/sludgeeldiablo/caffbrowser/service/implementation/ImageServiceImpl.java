@@ -12,7 +12,6 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.UserServ
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.NativeParserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,9 +27,6 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
     private final ImageMapper imageMapper;
     private final UserService userService;
-
-    @Value("${repopath}")
-    private String path;
 
     private Long getCurrentUserId() {
         return userService.getCurrentUser().getId();
@@ -68,22 +64,26 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto save(MultipartFile file) {
         log.trace("ImageService : save, file=[{}]", file);
-        Image createdImage = parseFile(file);
-        createdImage = imageRepository.save(setImageUserInfo(createdImage));
+        Image createdImage = imageRepository.save(createImage(file));
         return imageMapper.toDto(createdImage);
+    }
+
+    private Image createImage(MultipartFile file) {
+        Image image = parseFile(file);
+        setCurrentUser(image);
+        return image;
     }
 
     private Image parseFile(MultipartFile file) {
         try {
-            return NativeParserUtil.parse(file, path);
+            return NativeParserUtil.parse(file);
         } catch (Throwable t) {
             throw new CbNativeParserException(t.getMessage());
         }
     }
 
-    private Image setImageUserInfo(Image image) {
+    private void setCurrentUser(Image image) {
         image.setUserId(userService.getCurrentUser().getId());
-        return image;
     }
 
     @Override
