@@ -5,12 +5,13 @@ import lombok.Data;
 @Data
 public class Credit {
 
-    Long id;
-    Long length;
-    Long month;
-    Long day;
-    Long hour;
-    Long minute;
-    Long creator_length;
+    long id;
+    long length;
+    long year;
+    long month;
+    long day;
+    long hour;
+    long minute;
+    long creator_length;
     String creator;
 }

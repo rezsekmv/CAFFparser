@@ -5,13 +5,13 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CIFF {
+public class Ciff {
 
     String magic;
-    Long header_size;
-    Long content_size;
-    Long width;
-    Long height;
+    long header_size;
+    long content_size;
+    long width;
+    long height;
     String caption;
     List<String> tags;
 }

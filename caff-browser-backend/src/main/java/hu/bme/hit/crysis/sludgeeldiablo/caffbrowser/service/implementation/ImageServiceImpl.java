@@ -68,12 +68,12 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto save(MultipartFile file) {
         log.trace("ImageService : save, file=[{}]", file);
-        String uuid = parseFile(file);
-        Image createdImage = imageRepository.save(createImage(uuid));
+        Image createdImage = parseFile(file);
+        createdImage = imageRepository.save(setImageUserInfo(createdImage));
         return imageMapper.toDto(createdImage);
     }
 
-    private String parseFile(MultipartFile file) {
+    private Image parseFile(MultipartFile file) {
         try {
             return NativeParserUtil.parse(file, path);
         } catch (Throwable t) {
@@ -81,9 +81,7 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-    private Image createImage(String uuid) {
-        Image image = new Image();
-        image.setUuid(uuid);
+    private Image setImageUserInfo(Image image) {
         image.setUserId(userService.getCurrentUser().getId());
         return image;
     }

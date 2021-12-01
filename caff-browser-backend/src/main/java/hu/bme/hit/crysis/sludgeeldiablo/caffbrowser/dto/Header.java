@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Header {
 
-    Long id;
-    Long length;
+    long id;
+    long length;
     String magic;
-    Long header_size;
-    Long num_anim;
+    long header_size;
+    long num_anim;
 }

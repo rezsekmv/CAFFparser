@@ -10,5 +10,5 @@ public class Animation {
     List<Long> ids;
     List<Long> lengths;
     List<Long> durations;
-    List<CIFF> CIFFs;
+    List<Ciff> CIFFs;
 }
