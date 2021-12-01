@@ -21,7 +21,7 @@ public class ImageDto {
     // CAFF meta data
     private LocalDateTime date;
     private String credit;
-    private Set<String> captions;
+    private String caption;
     private Set<String> tags;
     private Long width;
     private Long height;

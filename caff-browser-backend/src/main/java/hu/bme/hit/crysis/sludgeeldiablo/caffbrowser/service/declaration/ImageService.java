@@ -1,6 +1,7 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageQueryDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +43,11 @@ public interface ImageService {
     /**
      * Egy oldalnyi kép lekérdezése
      *
+     * @param pageable lapozási paraméterek
+     * @param query keresési paraméterek
      * @return egy oldalnyi kép adatai
      */
-    Page<ImageDto> getAll(Pageable pageable);
+    Page<ImageDto> getAll(Pageable pageable, ImageQueryDto query);
 
     /**
      * Visszaadja, hogy a bejelentkezett felhasználó módosíthatja-e a megadott azonosítójú képet

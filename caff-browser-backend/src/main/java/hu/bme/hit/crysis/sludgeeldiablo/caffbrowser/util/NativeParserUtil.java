@@ -75,7 +75,7 @@ public class NativeParserUtil {
         CaffJson caffJson = parseJson(uuid);
         createGif(caffJson, uuid);
 
-        return createImageModel(uuid, caffJson);
+        return createImageModel(uuid, caffJson, caffJson.getCredit());
     }
 
     private static void validateFormat(MultipartFile file) {
@@ -92,10 +92,8 @@ public class NativeParserUtil {
 
     private static CaffJson parseJson(String uuid) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(REPOSITORY_PATH + PARSER_OUTPUT_JSON_PATH + getJsonPath(uuid))));
-
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<CaffJson> jsonAdapter = moshi.adapter(CaffJson.class);
-
         return jsonAdapter.fromJson(content);
     }
 
@@ -103,8 +101,8 @@ public class NativeParserUtil {
         ImageOutputStream output = new FileImageOutputStream(new File(REPOSITORY_PATH + SERVER_IMAGES_PATH + getGifPath(uuid)));
         GifSequenceWriter writer = new GifSequenceWriter(output, 1, 1, true);
 
-        int width = (int) caffJson.getAnimation().getCiffs().get(0).getWidth();
-        int height = (int) caffJson.getAnimation().getCiffs().get(0).getHeight();
+        int width = (int) getFirstElement(caffJson).getWidth();
+        int height = (int) getFirstElement(caffJson).getHeight();
         for (File image : getGifParts(uuid)) {
             byte[] fileContent = Files.readAllBytes(image.toPath());
             BufferedImage bufferedImage = ppm(width, height, 255, Arrays.copyOfRange(fileContent, 4, fileContent.length - 1));
@@ -115,42 +113,54 @@ public class NativeParserUtil {
         output.close();
     }
 
+    private static Ciff getFirstElement(CaffJson caff) {
+        return caff.getAnimation().getCiffs().get(0);
+    }
+
     private static List<File> getGifParts(String uuid) {
-        File dir = new File(REPOSITORY_PATH + PARSER_OUTPUT_IMAGES_PATH);
-        return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
+        return getFilesInDirectory()
                 .filter(file -> file.getName().startsWith(uuid))
                 .collect(Collectors.toList());
     }
 
-    private static Image createImageModel(String imageName, CaffJson caff) {
+    private static Stream<File> getFilesInDirectory() {
+        return Arrays.stream(Objects.requireNonNull(getDirectory().listFiles()));
+    }
+
+    private static File getDirectory() {
+        return new File(REPOSITORY_PATH + PARSER_OUTPUT_IMAGES_PATH);
+    }
+
+    private static Image createImageModel(String uuid, CaffJson caff, Credit credit) {
         Image image = new Image();
-
-        Credit credit = caff.getCredit();
-        int year = (int) credit.getYear();
-        int month = (int) credit.getMonth();
-        int day = (int) credit.getDay();
-        int hour = (int) credit.getHour();
-        int minute = (int) credit.getMinute();
-
-        image.setUuid(imageName);
-        image.setDate(LocalDateTime.of(year, month, day, hour, minute));
+        image.setUuid(uuid);
+        image.setDate(getLocalDateTime(credit));
         image.setCredit(credit.getCreator());
-        image.setCaptions(
-                caff.getAnimation().getCiffs()
-                        .stream()
-                        .map(Ciff::getCaption)
-                        .collect(Collectors.toSet())
-        );
-        image.setTags(
-                caff.getAnimation().getCiffs()
-                        .stream()
-                        .map(Ciff::getTags)
-                        .flatMap(Collection::stream)
-                        .collect(Collectors.toSet())
-        );
-        image.setHeight(caff.getAnimation().getCiffs().get(0).getHeight());
-        image.setWidth(caff.getAnimation().getCiffs().get(0).getWidth());
-
+        image.setCaption(getCaption(caff));
+        image.setTags(getTags(caff));
+        image.setHeight(getFirstElement(caff).getHeight());
+        image.setWidth(getFirstElement(caff).getWidth());
         return image;
+    }
+
+    private static LocalDateTime getLocalDateTime(Credit credit) {
+        return LocalDateTime.of((int) credit.getYear(), (int) credit.getMonth(), (int) credit.getDay(),
+                (int) credit.getHour(), (int) credit.getMinute());
+    }
+
+    private static String getCaption(CaffJson caff) {
+        return caff.getAnimation().getCiffs()
+                .stream()
+                .map(Ciff::getCaption)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static Set<String> getTags(CaffJson caff) {
+        return caff.getAnimation().getCiffs()
+                .stream()
+                .map(Ciff::getTags)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 }

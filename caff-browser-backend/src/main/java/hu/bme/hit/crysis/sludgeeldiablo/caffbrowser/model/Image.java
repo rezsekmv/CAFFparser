@@ -45,9 +45,8 @@ public class Image {
     @Column(name = "IMAGE_CREDIT")
     private String credit;
 
-    @Column(name = "IMAGE_CAPTIONS")
-    @Convert(converter = SetConverter.class)
-    private Set<String> captions = new HashSet<>();
+    @Column(name = "IMAGE_CAPTION")
+    private String caption;
 
     @Column(name = "IMAGE_TAGS")
     @Convert(converter = SetConverter.class)

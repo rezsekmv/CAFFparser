@@ -1,6 +1,7 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.implementation;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageQueryDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNativeParserException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNotFoundException;
@@ -93,9 +94,23 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Page<ImageDto> getAll(Pageable pageable) {
+    public Page<ImageDto> getAll(Pageable pageable, ImageQueryDto query) {
         log.trace("ImageService : getAll, pageable=[{}]", pageable);
-        return imageRepository.findAll(pageable).map(imageMapper::toDto);
+        return getQueriedImages(pageable, query).map(imageMapper::toDto);
+    }
+
+    private Page<Image> getQueriedImages(Pageable pageable, ImageQueryDto query) {
+        makePropertiesNullSafe(query);
+        return imageRepository.findAllByCreditContainsAndCaptionContains(query.getCredit(), query.getCaption(), pageable);
+    }
+
+    private void makePropertiesNullSafe(ImageQueryDto query) {
+        if (query.getCredit() == null) {
+            query.setCredit("");
+        }
+        if (query.getCaption() == null) {
+            query.setCaption("");
+        }
     }
 
     @Override

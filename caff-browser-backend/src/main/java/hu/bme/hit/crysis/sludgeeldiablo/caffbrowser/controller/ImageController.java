@@ -1,13 +1,12 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.controller;
 
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageQueryDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -43,9 +42,9 @@ public class ImageController {
 
     @GetMapping
     @Operation(summary = "Összes kép megtekintése")
-    public ResponseEntity<Page<ImageDto>> getAllImage(@PageableDefault(size = 8) Pageable pageable) {
-        log.trace("ImageController : getAllImage");
-        return ResponseEntity.ok(imageService.getAll(pageable));
+    public ResponseEntity<Page<ImageDto>> getAllImage(@PageableDefault(size = 8) Pageable pageable, @RequestBody ImageQueryDto query) {
+        log.trace("ImageController : getAllImage, pageable=[{}], query=[{}]", pageable, query);
+        return ResponseEntity.ok(imageService.getAll(pageable, query));
     }
 
     @DeleteMapping("/{id}")
