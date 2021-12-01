@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CommentDto } from '../models/CommentDto';
 import type { ImageDto } from '../models/ImageDto';
+import type { Pageable } from '../models/Pageable';
 import type { PageImageDto } from '../models/PageImageDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -11,13 +11,19 @@ export class ImageService {
 
     /**
      * Összes kép megtekintése
+     * @param pageable 
      * @returns PageImageDto OK
      * @throws ApiError
      */
-    public static getAllImage(): CancelablePromise<PageImageDto> {
+    public static getAllImage(
+pageable: Pageable,
+): CancelablePromise<PageImageDto> {
         return __request({
             method: 'GET',
             path: `/api/image`,
+            query: {
+                'pageable': pageable,
+            },
         });
     }
 
@@ -41,23 +47,6 @@ image?: Blob;
     }
 
     /**
-     * Hozzászólás az azonosító alapján megadott képhez
-     * @param requestBody 
-     * @returns CommentDto OK
-     * @throws ApiError
-     */
-    public static commentImage(
-requestBody: CommentDto,
-): CancelablePromise<CommentDto> {
-        return __request({
-            method: 'POST',
-            path: `/api/image/comment`,
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * Kép és annak részleteinek megtekintése azonosító alapján
      * @param id 
      * @returns ImageDto OK
@@ -73,12 +62,12 @@ id: number,
     }
 
     /**
-     * Saját kép eltávolítása
+     * Kép eltávolítása
      * @param id 
      * @returns any OK
      * @throws ApiError
      */
-    public static deleteMyImage(
+    public static deleteImage(
 id: number,
 ): CancelablePromise<any> {
         return __request({

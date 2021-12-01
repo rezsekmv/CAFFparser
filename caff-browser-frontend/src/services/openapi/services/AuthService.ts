@@ -26,10 +26,10 @@ requestBody: UserDto,
 
     /**
      * Access token frissítése
-     * @returns any OK
+     * @returns string OK
      * @throws ApiError
      */
-    public static refreshToken(): CancelablePromise<any> {
+    public static refreshToken(): CancelablePromise<string> {
         return __request({
             method: 'GET',
             path: `/api/refresh-token`,

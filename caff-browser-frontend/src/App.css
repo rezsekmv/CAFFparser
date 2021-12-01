@@ -1,3 +1,75 @@
 .App {
-  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.url-no-format {
+  color: #000000;
+  text-decoration: none;
+}
+
+.masthead {
+  vertical-align: center;
+}
+
+.browser-pager {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+}
+
+.custom-card-img {
+  max-height: 200px;
+  object-fit: cover; /* contain? */
+  transition-duration: 250ms;
+}
+
+.custom-card-img:hover {
+  transition-duration: 250ms;
+  transform: scale(1.5, 1.5);
+}
+
+div.container {
+  margin: 0;
+  position: relative;
+  margin: auto;
+  margin-top: 30px;
+  flex: 1;
+  max-width: 1000px;
+}
+
+.card-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-comment-counter {
+  color: #000000;
+  text-decoration: none;
+}
+
+.counter-child {
+  float: left;
+  margin: 5px;
+}
+
+.card-user {
+  display: flex;
+  justify-content: right;
+}
+
+.row.img-browser {
+  margin-top: 15px;
+}
+
+.card-image-container {
+  overflow: hidden;
+}
+
+.profile-box-data p, .profile-box-data input {
+  margin-top: 10px;
+
 }
