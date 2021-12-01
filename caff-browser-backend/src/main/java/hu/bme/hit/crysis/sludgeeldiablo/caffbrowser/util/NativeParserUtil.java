@@ -9,7 +9,6 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbNativeParserExce
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model.Image;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.GifSequenceWriter;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.stream.FileImageOutputStream;
@@ -32,7 +31,7 @@ public class NativeParserUtil {
 
     private static final String GIF_PATH = "/{uuid}.gif";
     private static final String CAFF_PATH = "/{uuid}.caff";
-    private static final String JSON_PATH = "/{uuid}.caff-json.json";
+    private static final String JSON_PATH = "/{uuid}-json.json";
 
     private static final String SERVER_IMAGES_PATH = "/caff-browser-backend/src/main/resources/static";
     private static final String PARSER_OUTPUT_JSON_PATH = "/caff-browser-native-parser/output-json";
@@ -65,17 +64,30 @@ public class NativeParserUtil {
      * @param file feltöltött CIFF vagy CAFF fájl
      * @return generált UUID azonosító
      */
-    public static Image parse(MultipartFile file) throws IOException {
+    public static Image parse(MultipartFile file) throws IOException, InterruptedException {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
         validateFormat(file);
 
-        // TODO: parser meghívása, hogy legenerálja a ppm-eket amiket felhasználunk a következő sorokban
-
         String uuid = saveCaff(file);
-        CaffJson caffJson = parseJson(uuid);
-        createGif(caffJson, uuid);
+        String filename = getCaffPath(uuid);
 
-        return createImageModel(uuid, caffJson, caffJson.getCredit());
+        String exe = "D:\\Documents\\BME-VIK\\MSC\\2.felev\\Biztonsag\\CAFFparser\\caff-browser-native-parser\\cmake-build-debug\\caff-browser-native-parser.exe";
+        String path = "D:\\Documents\\BME-VIK\\MSC\\2.felev\\Biztonsag\\CAFFparser";
+
+        callParser(exe, path, filename);
+
+        CaffJson caffJson = parseJson(filename);
+        createGif(caffJson, filename);
+
+        return createImageModel(filename, caffJson, caffJson.getCredit());
+    }
+
+    private static void callParser(String exe, String path, String filename) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(exe, path, filename);
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+        Process process = processBuilder.start();
+        process.waitFor();
     }
 
     private static void validateFormat(MultipartFile file) {
