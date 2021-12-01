@@ -56,9 +56,14 @@ div.container {
   margin: 5px;
 }
 
+.download-child {
+  float: right;
+  margin: 5px;
+}
+
 .card-user {
   display: flex;
-  justify-content: right;
+  justify-content: left;
 }
 
 .row.img-browser {
