@@ -41,10 +41,12 @@ public class ImageController {
     }
 
     @GetMapping
-    @Operation(summary = "Összes kép megtekintése")
-    public ResponseEntity<Page<ImageDto>> getAllImage(@PageableDefault(size = 8) Pageable pageable, @RequestBody ImageQueryDto query) {
-        log.trace("ImageController : getAllImage, pageable=[{}], query=[{}]", pageable, query);
-        return ResponseEntity.ok(imageService.getAll(pageable, query));
+    @Operation(summary = "Összes kép megtekintése szűréssel")
+    public ResponseEntity<Page<ImageDto>> getAllImage(@PageableDefault(size = 8) Pageable pageable,
+                                                      @RequestParam(required = false) String credit,
+                                                      @RequestParam(required = false) String caption) {
+        log.trace("ImageController : getAllImage, pageable=[{}], credit=[{}], caption=[{}]", pageable, credit, caption);
+        return ResponseEntity.ok(imageService.getAll(pageable, new ImageQueryDto(credit, caption)));
     }
 
     @DeleteMapping("/{id}")

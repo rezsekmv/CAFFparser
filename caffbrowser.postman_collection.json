@@ -67,7 +67,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"borgore\",\r\n    \"password\": \"1234\",\r\n    \"name\": \"Magic Trick\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\": \"carnage\",\r\n    \"password\": \"1234\",\r\n    \"name\": \"Magic Trick\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -368,13 +368,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base-api-url}}/image/18",
+							"raw": "{{base-api-url}}/image/4",
 							"host": [
 								"{{base-api-url}}"
 							],
 							"path": [
 								"image",
-								"18"
+								"4"
 							]
 						}
 					},
@@ -392,6 +392,18 @@
 							],
 							"path": [
 								"image"
+							],
+							"query": [
+								{
+									"key": "credit",
+									"value": "ea",
+									"disabled": true
+								},
+								{
+									"key": "caption",
+									"value": "oo",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -576,14 +588,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base-api-url}}/admin/user/9",
+							"raw": "{{base-api-url}}/admin/user/2",
 							"host": [
 								"{{base-api-url}}"
 							],
 							"path": [
 								"admin",
 								"user",
-								"9"
+								"2"
 							]
 						}
 					},
