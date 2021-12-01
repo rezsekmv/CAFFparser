@@ -645,7 +645,7 @@
 	"variable": [
 		{
 			"key": "base-api-url",
-			"value": "https://localhost:8443/api"
+			"value": "http://localhost:8080/api"
 		},
 		{
 			"key": "access-token",
