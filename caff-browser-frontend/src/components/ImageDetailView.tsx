@@ -1,6 +1,6 @@
 import { faSmileBeam } from '@fortawesome/free-regular-svg-icons';
 import { Component, useEffect, useState } from 'react';
-import { Badge } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { ImageDto, CommentDto, ImageService } from '../services/openapi';
 import StaticService from '../services/StaticService';
@@ -8,6 +8,7 @@ import CommentCard from './CommentCard';
 
 const ImageDetailView = () => {
   const [image, setImage] = useState<ImageDto>();
+  const [commentText, setCommentText] = useState('');
   const { id } = useParams();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const ImageDetailView = () => {
             </p>
           </div>
         </div>
-        <div className='row'>
+        <div className="row">
           <div className="col-4">
             <p>Created by:</p>
           </div>
@@ -48,12 +49,16 @@ const ImageDetailView = () => {
             <p>{image?.credit}</p>
           </div>
         </div>
-        <div className='row'>
+        <div className="row">
           <div className="col-4">
             <p>On date:</p>
           </div>
           <div className="col-8">
-            <p>{image?.date!.replace('T', ' ').substring(0, image?.date!.length-3)}</p>
+            <p>
+              {image
+                ?.date!.replace('T', ' ')
+                .substring(0, image?.date!.length - 3)}
+            </p>
           </div>
         </div>
         <div className="row">
@@ -65,17 +70,34 @@ const ImageDetailView = () => {
           </div>
         </div>
 
-        {image?.tags?.map((tag) => {
+        {image?.tags?.map((tag, idx) => {
           return (
-            <>
+            <div key={idx}>
               <Badge className="hover-red" bg="secondary">
                 {tag}
               </Badge>{' '}
-            </>
+            </div>
           );
         })}
       </div>
       <div style={styles.commentsSection}>
+        {image?.commentable && (
+          <div className="input-group my-3">
+            <input
+              className="form-control"
+              placeholder="Add new comment..."
+              type={'text'}
+              value={commentText}
+              onChange={(e) => {
+                setCommentText(e.target.value);
+              }}
+            />
+            <div className="input-group-append">
+              <Button variant="primary">Submit</Button>
+            </div>
+          </div>
+        )}
+
         {image?.comments?.map((comment) => (
           <CommentCard
             content={comment.content!}
