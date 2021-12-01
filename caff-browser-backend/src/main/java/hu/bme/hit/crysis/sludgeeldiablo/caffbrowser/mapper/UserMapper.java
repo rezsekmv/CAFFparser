@@ -23,20 +23,20 @@ public abstract class UserMapper {
 
     @Mapping(expression = "java(getRoleNames(entity))", target = "roles")
     @Mapping(target = "password", ignore = true)
-    abstract public UserDto toDto(User entity);
+    public abstract UserDto toDto(User entity);
 
-    abstract public List<UserDto> toDtoList(List<User> user);
+    public abstract List<UserDto> toDtoList(List<User> user);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(expression = "java(getEncodedPassword(dto))", target = "password")
-    abstract public User toEntity(UserDto dto);
+    public abstract User toEntity(UserDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "username", ignore = true)
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "roles", ignore = true)
-    abstract public User update(@MappingTarget User entity, UserDto dto);
+    public abstract User update(@MappingTarget User entity, UserDto dto);
 
     Set<RoleName> getRoleNames(User entity) {
         return entity.getRoles().stream()

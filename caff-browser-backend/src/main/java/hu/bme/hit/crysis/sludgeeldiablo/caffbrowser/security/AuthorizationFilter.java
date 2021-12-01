@@ -9,6 +9,7 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbError;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.exception.CbTokenException;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ObjectMapperFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,13 +36,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter {
 
+    private static final String BASIC_MESSAGE_PATTERN = "{}: {}";
+
     @Value("${security.token-secret}")
     private String tokenSecret;
 
     private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain) throws ServletException, IOException {
         if (isLogin(request) || isRefreshToken(request) || isPublic(request)) {
             filterChain.doFilter(request, response);
         } else {
@@ -58,7 +62,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     String description = "Access token error";
                     String message = e.getMessage();
 
-                    log.error("{}: {}", description, message);
+                    log.error(BASIC_MESSAGE_PATTERN, description, message);
                     response.setStatus(UNAUTHORIZED.value());
                     response.setContentType(APPLICATION_JSON_VALUE);
                     objectMapper.writeValue(response.getOutputStream(), new CbError(message, description));
@@ -107,7 +111,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 .collect(Collectors.toSet());
     }
 
-    private List<String> getRolesList(DecodedJWT DecodedJwt) {
-        return Arrays.asList(DecodedJwt.getClaim(ROLES_PARAMETER).asArray(String.class));
+    private List<String> getRolesList(DecodedJWT decodedJwt) {
+        return Arrays.asList(decodedJwt.getClaim(ROLES_PARAMETER).asArray(String.class));
     }
 }

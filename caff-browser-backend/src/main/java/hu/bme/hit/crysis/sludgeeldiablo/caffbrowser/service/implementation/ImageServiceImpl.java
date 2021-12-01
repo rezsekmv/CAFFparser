@@ -41,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private void validateCanDelete(Long id) {
-        if (!canCurrentUserModifyImage(id)) {
+        if (Boolean.FALSE.equals(canCurrentUserModifyImage(id))) {
             throw new CbException("error.image.delete");
         }
     }
@@ -78,8 +78,8 @@ public class ImageServiceImpl implements ImageService {
     private Image parseFile(MultipartFile file) {
         try {
             return NativeParserUtil.parse(file);
-        } catch (Throwable t) {
-            throw new CbNativeParserException(t.getMessage());
+        } catch (Exception e) {
+            throw new CbNativeParserException(e.getMessage());
         }
     }
 

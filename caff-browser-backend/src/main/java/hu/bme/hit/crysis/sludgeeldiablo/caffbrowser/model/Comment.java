@@ -1,6 +1,5 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.model;
 
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.enums.RoleName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

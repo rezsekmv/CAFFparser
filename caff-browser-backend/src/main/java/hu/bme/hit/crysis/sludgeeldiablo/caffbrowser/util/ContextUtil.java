@@ -7,6 +7,10 @@ public class ContextUtil {
     public static final String ANONYMOUS_USER = "anonymousUser";
     public static final String ADMIN = "admin";
 
+    private ContextUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Visszaadja az aktuális bejelentkezett felhasználó felhasználónevét
      *

@@ -29,6 +29,8 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.PpmReader.ppm
 @Slf4j
 public class NativeParserUtil {
 
+    private static final String UUID_PARAMETER = "{uuid}";
+
     private static final String GIF_PATH = "/{uuid}.gif";
     private static final String CAFF_PATH = "/{uuid}.caff";
     private static final String JSON_PATH = "/{uuid}.json";
@@ -40,21 +42,25 @@ public class NativeParserUtil {
 
     private static final String REPOSITORY_PATH = getRepositoryPath();
 
+    private NativeParserUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String getGifPath(String uuid) {
-        return GIF_PATH.replace("{uuid}", uuid);
+        return GIF_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     public static String getCaffPath(String uuid) {
-        return CAFF_PATH.replace("{uuid}", uuid);
+        return CAFF_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     private static String getJsonPath(String uuid) {
-        return JSON_PATH.replace("{uuid}", uuid);
+        return JSON_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     private static String getRepositoryPath() {
         return FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString()
-                .replaceAll("\\\\", "/")
+                .replace("\\", "/")
                 .replace("/caff-browser-backend", "");
     }
 
@@ -65,10 +71,10 @@ public class NativeParserUtil {
      * @param file feltöltött CIFF vagy CAFF fájl
      * @return generált UUID azonosító
      */
-    public static Image parse(MultipartFile file) throws Exception {
+    public static Image parse(MultipartFile file) throws IOException, InterruptedException {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
-        validateFormat(file);
 
+        validateFormat(file);
         initDirectories();
 
         String uuid = saveCaff(file);

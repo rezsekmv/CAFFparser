@@ -2,6 +2,10 @@ package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security;
 
 public class SecurityVariables {
 
+    private SecurityVariables() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String LOGIN_URL = "/api/login";
     public static final String REFRESH_TOKEN_URL = "/api/refresh-token";
     public static final String PUBLIC_URL = "/api/public/**";
