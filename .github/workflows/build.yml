@@ -36,3 +36,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: cd caff-browser-backend && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kulcsii_CAFFparser
+      - name: Install & run Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          cd caff-browser-backend
+          rm mvnw mvnw.cmd
+          npm i -g snyk
+          snyk auth "$SNYK_TOKEN"
+          if snyk test; then
+            echo "Snyk test has found security errors"
+          else
+            echo "Snyk test completed without errors"
+          fi
