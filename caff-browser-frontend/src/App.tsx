@@ -11,7 +11,6 @@ import ImageDetailView from './components/ImageDetailView';
 import Color from './styles/Color';
 import {
   BrowserRouter as Router,
-  Navigate,
   Route,
   Routes,
 } from 'react-router-dom';

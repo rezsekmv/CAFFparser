@@ -1,4 +1,5 @@
 import ImageCard from './ImageCard';
+import FileUpload from './FileUpload';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { ImageDto, ImageService } from '../services/openapi';
@@ -7,68 +8,10 @@ import StaticService from '../services/StaticService'
 const Browser = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [lastPage, setLastPage] = useState(5);
-  const [data, setData] = useState<Array<ImageDto>>([
-    {
-      id: 1,
-      comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-      userDisplayName: 'Jozsi',
-      commentsSize: 2,
-      gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-    },
-    {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      },
-      {
-        id: 1,
-        comments: [{ content: 'Nice Pic' }, { content: 'Great' }],
-        userDisplayName: 'Jozsi',
-        commentsSize: 2,
-        gifPath: 'https://i.giphy.com/media/j4fbBhYgu8mNEHkQ4w/giphy.webp',
-      } 
-  ]);
-
+  const [data, setData] = useState<Array<ImageDto>>([]);
 
   useEffect(() => {
-    ImageService.getAllImage(8, currentPage, 'asdasd', 'asdas')
+    ImageService.getAllImage(8, currentPage)
       .then((page) => {
         setData(page.content!);
         setLastPage(page.totalPages!);
@@ -81,7 +24,12 @@ const Browser = () => {
   return (
     <>
       <div className="browser">
-        <h2>Image browser</h2>
+        <h2 className='float-start'>Image browser</h2>
+        <div className='row'>
+          <div className='col-5'>
+            <FileUpload></FileUpload>
+          </div>
+        </div>
         <div className="img-browser">
           <div className="row img-browser">
             {data.map((gif: ImageDto, idx) => {
@@ -89,10 +37,11 @@ const Browser = () => {
                 <div key={idx} className="col-3 mb-5">
                   <ImageCard
                     id={gif.id}
-                    title={'Caption'}
-                    user={gif.credit!}
+                    title={gif.caption}
+                    user={gif.credit}
                     commentCount={gif.commentsSize}
-                    imageUrl={StaticService.getImage(gif.gifPath!)}
+                    gifUrl={gif.gifPath}
+                    caffUrl={gif.caffPath}
                   />
                 </div>
               );

@@ -18,8 +18,8 @@ export class ImageService {
      * @throws ApiError
      */
     public static getAllImage(
-size?: number,
-page?: number,
+size: number,
+page: number,
 credit?: string,
 caption?: string,
 ): CancelablePromise<PageImageDto> {

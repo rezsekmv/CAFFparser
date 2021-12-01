@@ -46,15 +46,6 @@ const Header = (props: any) => {
           <Link
             className="text-decoration-none"
             style={linkStyle}
-            to={'/profile'}
-          >
-            <span className="h2" style={headerTextStyle}>
-              My profile
-            </span>
-          </Link>
-          <Link
-            className="text-decoration-none"
-            style={linkStyle}
             to={'/logout'}
           >
             <span className="h2" style={headerTextStyle}>
