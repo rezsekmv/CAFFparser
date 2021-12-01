@@ -24,8 +24,8 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.security.SecurityVari
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${security.cors}")
-    private Boolean cors;
+    @Value("${security.cors.enabled}")
+    private Boolean corsEnabled;
 
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         authenticationFilter.setFilterProcessesUrl(LOGIN_URL);
-        if (cors) {
+        if (corsEnabled) {
             http.cors();
         }
         http.csrf().disable();

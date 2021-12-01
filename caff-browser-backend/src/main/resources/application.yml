@@ -21,7 +21,9 @@ server:
   http-port: 8080
 
 security:
-  cors: true
+  cors:
+    enabled: true
+    frontend-url: http://localhost:4200
   token-secret: caffbrowsersecret
   access-token-expiration: 600000 # 10 perc
   refresh-token-expiration: 1800000 # 30 perc

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Lazy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommentMapper.class})
 public abstract class ImageMapper {
 
-    private static final String IMAGE_PATH_REGEX = "/**";
+    private static final String IMAGE_PATH_PATTERN = "/**";
 
     @Value("${spring.mvc.static-path-pattern}")
     private String imagesPath;
@@ -41,11 +41,11 @@ public abstract class ImageMapper {
     }
 
     private String getGifPath(Image entity) {
-        return imagesPath.replace(IMAGE_PATH_REGEX, NativeParserUtil.getGifPath(entity.getUuid()));
+        return imagesPath.replace(IMAGE_PATH_PATTERN, NativeParserUtil.getGifPath(entity.getUuid()));
     }
 
     private String getCaffPath(Image entity) {
-        return imagesPath.replace(IMAGE_PATH_REGEX, NativeParserUtil.getCaffPath(entity.getUuid()));
+        return imagesPath.replace(IMAGE_PATH_PATTERN, NativeParserUtil.getCaffPath(entity.getUuid()));
     }
 
     Integer getCommentsSize(Image entity) {
