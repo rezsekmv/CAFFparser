@@ -31,11 +31,12 @@ public class NativeParserUtil {
 
     private static final String GIF_PATH = "/{uuid}.gif";
     private static final String CAFF_PATH = "/{uuid}.caff";
-    private static final String JSON_PATH = "/{uuid}-json.json";
+    private static final String JSON_PATH = "/{uuid}.json";
 
     private static final String SERVER_IMAGES_PATH = "/caff-browser-backend/src/main/resources/static";
     private static final String PARSER_OUTPUT_JSON_PATH = "/caff-browser-native-parser/output-json";
     private static final String PARSER_OUTPUT_IMAGES_PATH = "/caff-browser-native-parser/output-images";
+    private static final String PARSER_GENERATED_EXE = "/caff-browser-native-parser/cmake-build-debug/caff-browser-native-parser.exe";
 
     private static final String REPOSITORY_PATH = getRepositoryPath();
 
@@ -69,21 +70,19 @@ public class NativeParserUtil {
         validateFormat(file);
 
         String uuid = saveCaff(file);
-        String filename = getCaffPath(uuid);
 
-        String exe = "D:\\Documents\\BME-VIK\\MSC\\2.felev\\Biztonsag\\CAFFparser\\caff-browser-native-parser\\cmake-build-debug\\caff-browser-native-parser.exe";
-        String path = "D:\\Documents\\BME-VIK\\MSC\\2.felev\\Biztonsag\\CAFFparser";
+        String exe = getRepositoryPath() + PARSER_GENERATED_EXE;
+        String path = getRepositoryPath();
 
-        callParser(exe, path, filename);
+        callParser(exe, path, uuid);
+        CaffJson caffJson = parseJson(uuid);
+        createGif(caffJson, uuid);
 
-        CaffJson caffJson = parseJson(filename);
-        createGif(caffJson, filename);
-
-        return createImageModel(filename, caffJson, caffJson.getCredit());
+        return createImageModel(uuid, caffJson);
     }
 
-    private static void callParser(String exe, String path, String filename) throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder(exe, path, filename);
+    private static void callParser(String exe, String path, String uuid) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(exe, path, uuid);
         processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         Process process = processBuilder.start();
@@ -111,7 +110,7 @@ public class NativeParserUtil {
 
     private static void createGif(CaffJson caffJson, String uuid) throws IOException {
         ImageOutputStream output = new FileImageOutputStream(new File(REPOSITORY_PATH + SERVER_IMAGES_PATH + getGifPath(uuid)));
-        GifSequenceWriter writer = new GifSequenceWriter(output, 1, 1, true);
+        GifSequenceWriter writer = new GifSequenceWriter(output, 1, Math.toIntExact(caffJson.getAnimation().getDurations().get(0)), true);
 
         int width = (int) getFirstElement(caffJson).getWidth();
         int height = (int) getFirstElement(caffJson).getHeight();
@@ -143,7 +142,9 @@ public class NativeParserUtil {
         return new File(REPOSITORY_PATH + PARSER_OUTPUT_IMAGES_PATH);
     }
 
-    private static Image createImageModel(String uuid, CaffJson caff, Credit credit) {
+    private static Image createImageModel(String uuid, CaffJson caff) {
+        Credit credit = caff.getCredit();
+
         Image image = new Image();
         image.setUuid(uuid);
         image.setDate(getLocalDateTime(credit));
