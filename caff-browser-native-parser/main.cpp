@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
     string path = argv[1];
     string filename = argv[2];
 
-    ifstream is(path + "\\caff-browser-backend\\src\\main\\resources\\static\\"+ filename, ifstream::binary);
+    ifstream is(path + "\\caff-browser-backend\\src\\main\\resources\\static\\"+ filename + ".caff", ifstream::binary);
     if (is) {
         is.seekg(0, is.end);
         int file_size = is.tellg();

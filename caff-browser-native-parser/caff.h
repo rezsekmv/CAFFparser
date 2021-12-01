@@ -52,7 +52,7 @@ public:
 
     void write_to_json(const string &path, const string &filename) {
         FILE *file;
-        file = fopen((path + "\\caff-browser-native-parser\\output-json\\" + filename +"-json.json").c_str(), "wb");
+        file = fopen((path + "\\caff-browser-native-parser\\output-json\\" + filename +".json").c_str(), "wb");
         if (file == nullptr) {
             perror("ERROR: Cannot open output file");
             exit(EXIT_FAILURE);
