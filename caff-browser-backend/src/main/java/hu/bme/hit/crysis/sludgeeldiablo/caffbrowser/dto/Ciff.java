@@ -8,8 +8,8 @@ import java.util.List;
 public class Ciff {
 
     String magic;
-    long header_size;
-    long content_size;
+    long headerSize;
+    long contentSize;
     long width;
     long height;
     String caption;

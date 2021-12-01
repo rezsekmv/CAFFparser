@@ -62,8 +62,8 @@ public:
         fprintf(file, "\t\t\"id\": %d,\n", header_id);
         fprintf(file, "\t\t\"length\": %llu,\n", header_length);
         fprintf(file, "\t\t\"magic\": \"%s\",\n", header_magic.c_str());
-        fprintf(file, "\t\t\"header_size\": %llu,\n", header_size);
-        fprintf(file, "\t\t\"num_anim\": %llu\n", num_anim);
+        fprintf(file, "\t\t\"headerSize\": %llu,\n", header_size);
+        fprintf(file, "\t\t\"numAnim\": %llu\n", num_anim);
         fprintf(file, "\t},\n");
         fprintf(file, "\t\"credit\": {\n");
         fprintf(file, "\t\t\"id\": %d,\n", credit_id);
@@ -73,7 +73,7 @@ public:
         fprintf(file, "\t\t\"day\": %d,\n", day);
         fprintf(file, "\t\t\"hour\": %d,\n", hour);
         fprintf(file, "\t\t\"minute\": %d,\n", minute);
-        fprintf(file, "\t\t\"creator_length\": %llu,\n", creator_size);
+        fprintf(file, "\t\t\"creatorLength\": %llu,\n", creator_size);
         fprintf(file, "\t\t\"creator\": \"%s\"\n", creator.c_str());
         fprintf(file, "\t},\n");
         fprintf(file, "\t\"animation\": {\n");
@@ -101,12 +101,12 @@ public:
                 fprintf(file, "%llu, ", animation_durations[i]);
             }
         }
-        fprintf(file, "\t\t\"CIFFs\": [\n");
+        fprintf(file, "\t\t\"ciffs\": [\n");
         for (int i = 0; i < images.size(); i++) {
             fprintf(file, "\t\t\t{\n");
             fprintf(file, "\t\t\t\t\"magic\": \"%s\",\n", images[i].magic.c_str());
-            fprintf(file, "\t\t\t\t\"header_size\": %llu,\n", images[i].header_size);
-            fprintf(file, "\t\t\t\t\"content_size\": %llu,\n", images[i].content_size);
+            fprintf(file, "\t\t\t\t\"headerSize\": %llu,\n", images[i].header_size);
+            fprintf(file, "\t\t\t\t\"contentSize\": %llu,\n", images[i].content_size);
             fprintf(file, "\t\t\t\t\"width\": %llu,\n", images[i].width);
             fprintf(file, "\t\t\t\t\"height\": %llu,\n", images[i].height);
             fprintf(file, "\t\t\t\t\"caption\": \"%s\",\n", images[i].caption.c_str());
