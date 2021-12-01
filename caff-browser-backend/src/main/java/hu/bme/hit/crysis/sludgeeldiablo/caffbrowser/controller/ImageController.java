@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -42,11 +43,12 @@ public class ImageController {
 
     @GetMapping
     @Operation(summary = "Összes kép megtekintése szűréssel")
-    public ResponseEntity<Page<ImageDto>> getAllImage(@PageableDefault(size = 8) Pageable pageable,
+    public ResponseEntity<Page<ImageDto>> getAllImage(@RequestParam Integer size,
+                                                      @RequestParam Integer page,
                                                       @RequestParam(required = false) String credit,
                                                       @RequestParam(required = false) String caption) {
-        log.trace("ImageController : getAllImage, pageable=[{}], credit=[{}], caption=[{}]", pageable, credit, caption);
-        return ResponseEntity.ok(imageService.getAll(pageable, new ImageQueryDto(credit, caption)));
+        log.trace("ImageController : getAllImage, size=[{}], page=[{}], credit=[{}], caption=[{}]", size, page, credit, caption);
+        return ResponseEntity.ok(imageService.getAll(PageRequest.of(page, size), new ImageQueryDto(credit, caption)));
     }
 
     @DeleteMapping("/{id}")
