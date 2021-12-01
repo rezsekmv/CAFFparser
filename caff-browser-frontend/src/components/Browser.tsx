@@ -66,14 +66,15 @@ const Browser = () => {
       } 
   ]);
 
+
   useEffect(() => {
-    ImageService.getAllImage({pageSize: 8, pageNumber: currentPage})
+    ImageService.getAllImage(8, currentPage, 'asdasd', 'asdas')
       .then((page) => {
         setData(page.content!);
         setLastPage(page.totalPages!);
       })
       .catch((err) => {
-        console.error(err?.body?.message);
+        console.error(JSON.stringify(err));
       });
   }, [currentPage]);
 

@@ -15,8 +15,8 @@ export type ImageDto = {
     modifiable?: boolean;
     date?: string;
     credit?: string;
-    captions?: Array<string>;
+    caption?: string;
     tags?: Array<string>;
-    height?: number;
     width?: number;
+    height?: number;
 }

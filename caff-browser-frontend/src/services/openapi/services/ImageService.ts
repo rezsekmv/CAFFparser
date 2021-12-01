@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ImageDto } from '../models/ImageDto';
-import type { Pageable } from '../models/Pageable';
 import type { PageImageDto } from '../models/PageImageDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -10,20 +9,28 @@ import { request as __request } from '../core/request';
 export class ImageService {
 
     /**
-     * Összes kép megtekintése
-     * @param pageable 
+     * Összes kép megtekintése szűréssel
+     * @param size 
+     * @param page 
+     * @param credit 
+     * @param caption 
      * @returns PageImageDto OK
      * @throws ApiError
      */
     public static getAllImage(
-pageable: Pageable,
+size?: number,
+page?: number,
+credit?: string,
+caption?: string,
 ): CancelablePromise<PageImageDto> {
         return __request({
             method: 'GET',
             path: `/api/image`,
             query: {
-                'page': ''+pageable.pageNumber,
-                'size': ''+pageable.pageSize
+                'size': size,
+                'page': page,
+                'credit': credit,
+                'caption': caption,
             },
         });
     }
