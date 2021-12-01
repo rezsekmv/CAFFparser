@@ -23,6 +23,6 @@ public class ImageDto {
     private String credit;
     private Set<String> captions;
     private Set<String> tags;
-    private Long height;
     private Long width;
+    private Long height;
 }

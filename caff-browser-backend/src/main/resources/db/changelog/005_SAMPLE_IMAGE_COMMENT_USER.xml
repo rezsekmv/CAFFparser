@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="bosz.norbert" id="005" labels="sample,test">
+        <loadData tableName="USER"
+                  file="../sampledata/005_USER.csv"
+                  relativeToChangelogFile="true"
+                  separator=";"
+                  usePreparedStatements="true">
+            <column name="USER_ID" type="NUMERIC"/>
+            <column name="USER_USERNAME" type="STRING"/>
+            <column name="USER_PASSWORD" type="STRING"/>
+            <column name="USER_EMAIL" type="STRING"/>
+            <column name="USER_NAME" type="STRING"/>
+        </loadData>
+        <loadData tableName="IMAGE"
+                  file="../sampledata/005_IMAGE.csv"
+                  relativeToChangelogFile="true"
+                  separator=";"
+                  usePreparedStatements="true">
+            <column name="IMAGE_ID" type="NUMERIC"/>
+            <column name="IMAGE_UUID" type="STRING"/>
+            <column name="IMAGE_CREATOR_ID" type="STRING"/>
+            <column name="IMAGE_DATE" type="STRING"/>
+            <column name="IMAGE_CREDIT" type="STRING"/>
+            <column name="IMAGE_CAPTIONS" type="STRING"/>
+            <column name="IMAGE_TAGS" type="STRING"/>
+            <column name="IMAGE_WIDTH" type="NUMERIC"/>
+            <column name="IMAGE_HEIGHT" type="NUMERIC"/>
+        </loadData>
+        <loadData tableName="COMMENT"
+                  file="../sampledata/005_COMMENT.csv"
+                  relativeToChangelogFile="true"
+                  separator=";"
+                  usePreparedStatements="true">
+            <column name="COMMENT_ID" type="NUMERIC"/>
+            <column name="COMMENT_USER_ID" type="NUMERIC"/>
+            <column name="COMMENT_IMAGE_ID" type="NUMERIC"/>
+            <column name="COMMENT_CONTENT" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

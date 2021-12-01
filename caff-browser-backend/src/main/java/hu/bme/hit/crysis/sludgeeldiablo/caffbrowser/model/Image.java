@@ -53,9 +53,9 @@ public class Image {
     @Convert(converter = SetConverter.class)
     private Set<String> tags = new HashSet<>();
 
-    @Column(name = "IMAGE_HEIGHT")
-    private Long height;
-
     @Column(name = "IMAGE_WIDTH")
     private Long width;
+
+    @Column(name = "IMAGE_HEIGHT")
+    private Long height;
 }
