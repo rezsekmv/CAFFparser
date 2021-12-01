@@ -386,7 +386,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base-api-url}}/image",
+							"raw": "{{base-api-url}}/image?page=0&size=8",
 							"host": [
 								"{{base-api-url}}"
 							],
@@ -395,13 +395,21 @@
 							],
 							"query": [
 								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "8"
+								},
+								{
 									"key": "credit",
-									"value": "ea",
+									"value": "e",
 									"disabled": true
 								},
 								{
 									"key": "caption",
-									"value": "oo",
+									"value": "o",
 									"disabled": true
 								}
 							]
