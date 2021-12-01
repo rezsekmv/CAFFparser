@@ -34,9 +34,9 @@ public class NativeParserUtil {
     private static final String JSON_PATH = "/{uuid}.json";
 
     private static final String SERVER_IMAGES_PATH = "/caff-browser-backend/src/main/resources/static";
+    private static final String PARSER_EXE = "/caff-browser-backend/src/main/resources/caff-browser-native-parser.exe";
     private static final String PARSER_OUTPUT_JSON_PATH = "/caff-browser-native-parser/output-json";
     private static final String PARSER_OUTPUT_IMAGES_PATH = "/caff-browser-native-parser/output-images";
-    private static final String PARSER_GENERATED_EXE = "/caff-browser-native-parser/cmake-build-debug/caff-browser-native-parser.exe";
 
     private static final String REPOSITORY_PATH = getRepositoryPath();
 
@@ -69,9 +69,11 @@ public class NativeParserUtil {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
         validateFormat(file);
 
+        initDirectories();
+
         String uuid = saveCaff(file);
 
-        String exe = getRepositoryPath() + PARSER_GENERATED_EXE;
+        String exe = getRepositoryPath() + PARSER_EXE;
         String path = getRepositoryPath();
 
         callParser(exe, path, uuid);
@@ -79,6 +81,17 @@ public class NativeParserUtil {
         createGif(caffJson, uuid);
 
         return createImageModel(uuid, caffJson);
+    }
+
+    private static void initDirectories() {
+        File outputImagesDir = getDirectory();
+        File outputJsonDir = new File(REPOSITORY_PATH + PARSER_OUTPUT_JSON_PATH);
+        if (!outputImagesDir.exists()) {
+            outputImagesDir.mkdirs();
+        }
+        if (!outputJsonDir.exists()) {
+            outputJsonDir.mkdirs();
+        }
     }
 
     private static void callParser(String exe, String path, String uuid) throws IOException, InterruptedException {
