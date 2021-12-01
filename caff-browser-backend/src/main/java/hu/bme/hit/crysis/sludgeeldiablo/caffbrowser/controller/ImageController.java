@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/image")
 @RequiredArgsConstructor
 @Tag(name = "image")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageController {
 
     private final ImageService imageService;
