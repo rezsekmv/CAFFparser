@@ -19,6 +19,18 @@ const ImageDetailView = () => {
       .catch((err) => console.error('Failed to fetch image!'));
   }, [id]);
 
+  const renderBadges = () => {
+    return image?.tags?.map((tag, idx) => {
+      return (
+        <>
+          <Badge key={idx} className="hover-red" bg="secondary">
+            {tag}
+          </Badge>{' '}
+        </>
+      );
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-6 mb-5 mt-2">
@@ -69,16 +81,7 @@ const ImageDetailView = () => {
             <p>{image?.userDisplayName}</p>
           </div>
         </div>
-
-        {image?.tags?.map((tag, idx) => {
-          return (
-            <>
-              <Badge key={idx} className="hover-red" bg="secondary">
-                {tag}
-              </Badge>{' '}
-            </>
-          );
-        })}
+        {renderBadges()}
       </div>
       <div style={styles.commentsSection}>
         {image?.commentable && (
