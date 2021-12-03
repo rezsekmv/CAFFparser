@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const App = () => {
-  const [/*loggedIn*/, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   //const [admin, setAdmin] = useState(false);
 
   return (
@@ -25,15 +25,15 @@ const App = () => {
         <Header></Header>
         <div className="container">
           <Routes>
-            <Route path="/" element={<Browser />}></Route>
+            <Route path="/" element={loggedIn ? <Browser /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
             <Route
               path="/login"
               element={<Login isLoggedIn={setLoggedIn} />}
             ></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/image/:id" element={<ImageDetailView />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/profile/edit" element={<EditProfile />}></Route>
+            <Route path="/register" element={loggedIn ? <Register /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
+            <Route path="/image/:id" element={loggedIn ? <ImageDetailView /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
+            <Route path="/profile" element={loggedIn ? <Profile /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
+            <Route path="/profile/edit" element={loggedIn ? <EditProfile /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
           </Routes>
         </div>
       </Router>
