@@ -14,8 +14,11 @@ const ImageCard = (props: any) => {
   const downloadIcon = faDownload as IconDefinition;
 
   const downloadImage = () => {
-    FileSaver.saveAs(StaticService.getImage(props.caffUrl), StaticService.getDownloadName(props.caffUrl));
-  }
+    FileSaver.saveAs(
+      StaticService.getImage(props.caffUrl),
+      StaticService.getDownloadName(props.caffUrl)
+    );
+  };
 
   return (
     <div className="card" style={{ height: '250px' }}>
@@ -50,9 +53,8 @@ const ImageCard = (props: any) => {
             </div>
           </div>
           <div className="col-6 card-comment">
-            <div  onClick={() => downloadImage()} className="download-child ">
-                  <FontAwesomeIcon icon={downloadIcon}></FontAwesomeIcon>
-          
+            <div onClick={() => downloadImage()} className="download-child">
+              <FontAwesomeIcon icon={downloadIcon}></FontAwesomeIcon>
             </div>
           </div>
         </div>

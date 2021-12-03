@@ -16,6 +16,7 @@ const footerStyle = {
   left: '0',
   bottom: '0',
   witdh: '100%',
+  marginTop: '20px'
 };
 
 const darkFooterStyle = {
