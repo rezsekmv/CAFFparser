@@ -1,9 +1,12 @@
 import { faCheck } from '@fortawesome/fontawesome-free-solid';
-import { faCheckCircle, faEdit, faTrashAlt, IconDefinition } from '@fortawesome/free-regular-svg-icons';
+import {
+  faEdit,
+  faTrashAlt,
+  IconDefinition,
+} from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CommentDto, CommentService, ImageService } from '../services/openapi';
+import { useState } from 'react';
+import { CommentService } from '../services/openapi';
 
 interface CommentCardProps {
   content: string;
@@ -37,7 +40,7 @@ const CommentCard = (props: CommentCardProps) => {
       imageId: props.imageId,
     })
       .then((res) => {
-        setEditText(res.content!)
+        setEditText(res.content!);
       })
       .catch((err) => {
         console.log('Can not update comment');
@@ -80,8 +83,18 @@ const CommentCard = (props: CommentCardProps) => {
           )}
         </div>
       </div>
-      {!editing && (<p>{editText}</p>)}
-      {editing && (<input style={styles.input} className="form-control" type={'text'} value={editText} onChange={(e) => {setEditText(e.target.value)}}/>)}
+      {!editing && <p>{editText}</p>}
+      {editing && (
+        <input
+          style={styles.input}
+          className="form-control"
+          type={'text'}
+          value={editText}
+          onChange={(e) => {
+            setEditText(e.target.value);
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -101,8 +114,8 @@ const styles = {
     color: 'grey',
   },
   input: {
-    width: '80%'
-  }
+    width: '80%',
+  },
 };
 
 export default CommentCard;

@@ -18,7 +18,7 @@ const ImageCard = (props: any) => {
   }
 
   return (
-    <div className="card" style={{ height: '270px' }}>
+    <div className="card" style={{ height: '250px' }}>
       <div className="card-image-container">
         <Link to={'image/' + props.id}>
           <img
@@ -50,7 +50,7 @@ const ImageCard = (props: any) => {
             </div>
           </div>
           <div className="col-6 card-comment">
-            <div  onClick={() => downloadImage()} className="download-child btn btn-outline-dark">
+            <div  onClick={() => downloadImage()} className="download-child ">
                   <FontAwesomeIcon icon={downloadIcon}></FontAwesomeIcon>
           
             </div>

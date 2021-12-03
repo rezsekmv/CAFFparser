@@ -1,7 +1,4 @@
 import { OpenAPI } from './openapi';
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios').default;
 
 const StaticService = {
   getImage: (imagePath: string) => {
