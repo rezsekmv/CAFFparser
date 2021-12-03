@@ -41,12 +41,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Value("${security.token-secret}")
     private String tokenSecret;
 
+    @Value("${security.cors.enabled}")
+    private Boolean corsEnabled;
+
     private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         if (isLogin(request) || isRefreshToken(request) || isPublic(request)) {
+            corsOnPublic(response);
             filterChain.doFilter(request, response);
         } else {
             String header = request.getHeader(AUTHORIZATION);
@@ -68,6 +72,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     objectMapper.writeValue(response.getOutputStream(), new CbError(message, description));
                 }
             }
+        }
+    }
+
+    private void corsOnPublic(@NotNull HttpServletResponse response) {
+        if (Boolean.TRUE.equals(corsEnabled)) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
         }
     }
 
