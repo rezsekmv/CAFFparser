@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -16,8 +16,8 @@ import {
 } from 'react-router-dom';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [admin, setAdmin] = useState(false);
+  const [/*loggedIn*/, setLoggedIn] = useState(false);
+  //const [admin, setAdmin] = useState(false);
 
   return (
     <div className="App" style={globalStyle}>

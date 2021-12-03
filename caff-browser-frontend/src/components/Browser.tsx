@@ -3,7 +3,6 @@ import FileUpload from './FileUpload';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { ImageDto, ImageService } from '../services/openapi';
-import StaticService from '../services/StaticService'
 
 const Browser = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -24,9 +23,9 @@ const Browser = () => {
   return (
     <>
       <div className="browser">
-        <h2 className='float-start'>Image browser</h2>
-        <div className='row'>
-          <div className='col-5'>
+        <h2 className="float-start">Image browser</h2>
+        <div className="row">
+          <div className="col-5">
             <FileUpload></FileUpload>
           </div>
         </div>

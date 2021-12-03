@@ -1,8 +1,7 @@
-import { faSmileBeam } from '@fortawesome/free-regular-svg-icons';
-import { Component, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { ImageDto, CommentDto, ImageService } from '../services/openapi';
+import { ImageDto,  ImageService } from '../services/openapi';
 import StaticService from '../services/StaticService';
 import CommentCard from './CommentCard';
 
@@ -37,6 +36,7 @@ const ImageDetailView = () => {
         <img
           style={styles.mainImage}
           src={StaticService.getImage(image?.gifPath!)}
+          alt=""
         />
       </div>
       <div className="col-6 mx-auto my-3">
