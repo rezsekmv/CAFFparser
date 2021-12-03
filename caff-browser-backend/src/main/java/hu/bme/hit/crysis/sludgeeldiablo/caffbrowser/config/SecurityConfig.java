@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         authenticationFilter.setFilterProcessesUrl(LOGIN_URL);
-        if (corsEnabled) {
+        if (Boolean.TRUE.equals(corsEnabled)) {
             http.cors();
         }
         http.csrf().disable();
