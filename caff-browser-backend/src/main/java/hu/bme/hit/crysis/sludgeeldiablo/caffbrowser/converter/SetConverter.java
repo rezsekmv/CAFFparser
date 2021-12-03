@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Converter
 public class SetConverter implements AttributeConverter<Set<String>, String> {
 
-    private final static String SEPARATOR = "; ";
+    private static final String SEPARATOR = "; ";
 
     @Override
     public String convertToDatabaseColumn(Set<String> attribute) {

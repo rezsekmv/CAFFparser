@@ -27,6 +27,8 @@ server:
 security:
   cors:
     enabled: true
+  csrf:
+    disabled: true
   token-secret: caffbrowsersecret
   access-token-expiration: 6000000 # 100 perc
   refresh-token-expiration: 18000000 # 300 perc

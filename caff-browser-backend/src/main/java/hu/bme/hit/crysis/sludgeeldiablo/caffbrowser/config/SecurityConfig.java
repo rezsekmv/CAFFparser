@@ -27,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${security.cors.enabled}")
     private Boolean corsEnabled;
 
+    @Value("${security.csrf.disabled}")
+    private Boolean csrfDisabled;
+
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationFilter authenticationFilter;
@@ -43,7 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (Boolean.TRUE.equals(corsEnabled)) {
             http.cors();
         }
-        http.csrf().disable();
+        if (Boolean.TRUE.equals(csrfDisabled)) {
+            http.csrf().disable();
+        }
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(LOGIN_URL, REFRESH_TOKEN_URL, PUBLIC_URL, IMAGES_URL).permitAll();
         http.authorizeRequests().antMatchers(MOD_URL).hasAnyAuthority(RoleName.MODERATOR.toString());

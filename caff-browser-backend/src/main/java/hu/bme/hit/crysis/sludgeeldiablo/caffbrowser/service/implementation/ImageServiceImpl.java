@@ -78,6 +78,9 @@ public class ImageServiceImpl implements ImageService {
     private Image parseFile(MultipartFile file) {
         try {
             return NativeParserUtil.parse(file);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CbNativeParserException(e.getMessage());
         } catch (Exception e) {
             throw new CbNativeParserException(e.getMessage());
         }
