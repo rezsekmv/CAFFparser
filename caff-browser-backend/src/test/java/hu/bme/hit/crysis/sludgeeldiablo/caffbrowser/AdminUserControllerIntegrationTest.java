@@ -65,6 +65,15 @@ class AdminUserControllerIntegrationTest extends UserSessionTest {
     }
 
     @Test
+    @DisplayName("Nem létező felhasználó sikertelen lekérése")
+    void testGetUserNotFoundUser() throws Exception {
+        // when, then
+        this.mockMvc.perform(get(BASE_PARAMETER_URL, 999L)
+                .with(csrf()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     @DisplayName("Felhasználói adatok sikeres módosítása azonosító alapján")
     void testUpdateUser() throws Exception {
         // given
