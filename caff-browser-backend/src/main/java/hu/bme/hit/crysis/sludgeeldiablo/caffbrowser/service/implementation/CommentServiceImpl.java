@@ -28,9 +28,14 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto save(CommentDto commentDto) {
         log.trace("CommentService : save, commentDto=[{}]", commentDto);
+        validateImageExist(commentDto.getImageId());
         validateCanComment(commentDto.getImageId());
         Comment createdComment = commentRepository.save(commentMapper.toEntity(commentDto));
         return commentMapper.toDto(createdComment);
+    }
+
+    private void validateImageExist(Long imageId) {
+        imageService.findById(imageId);
     }
 
     private void validateCanComment(Long imageId) {
