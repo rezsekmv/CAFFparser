@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Transactional
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CommentControllerIT extends UserSessionTest {
+class CommentControllerIntegrationTest extends UserSessionTest {
 
     private static final String BASE_URL = "/api/comment";
     private static final String BASE_PARAMETER_URL = BASE_URL + "/{commentId}";

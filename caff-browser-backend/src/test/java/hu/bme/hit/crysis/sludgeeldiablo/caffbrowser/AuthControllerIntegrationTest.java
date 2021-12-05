@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Transactional
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AuthControllerIT {
+class AuthControllerIntegrationTest {
 
     private static final String SIGN_UP_URL = "/api/public/sign-up";
     private static final String API_DOCS_URL = "/api/public/api-docs";

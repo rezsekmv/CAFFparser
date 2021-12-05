@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Transactional
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserControllerIT extends UserSessionTest {
+class UserControllerIntegrationTest extends UserSessionTest {
 
     private static final String BASE_URL = "/api/user";
     private static final String PASSWORD_URL = BASE_URL + "/password";

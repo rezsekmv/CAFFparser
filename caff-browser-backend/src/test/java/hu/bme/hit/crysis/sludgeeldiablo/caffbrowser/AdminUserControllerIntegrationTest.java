@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Transactional
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AdminUserControllerIT extends UserSessionTest {
+class AdminUserControllerIntegrationTest extends UserSessionTest {
 
     private static final String BASE_URL = "/api/admin/user";
     private static final String BASE_PARAMETER_URL = BASE_URL + "/{userId}";
