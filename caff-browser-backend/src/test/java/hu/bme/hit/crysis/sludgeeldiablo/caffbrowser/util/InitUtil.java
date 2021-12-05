@@ -1,7 +1,9 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.PasswordDto;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
+import org.springframework.security.core.parameters.P;
 
 public class InitUtil {
 
@@ -52,5 +54,12 @@ public class InitUtil {
 
     public static UserDto createClearUpdateUserDto() {
         return new UserDto();
+    }
+
+    public static PasswordDto createValidPasswordDto() {
+        PasswordDto passwordDto = new PasswordDto();
+        passwordDto.setOldPassword("1234");
+        passwordDto.setNewPassword("123");
+        return passwordDto;
     }
 }
