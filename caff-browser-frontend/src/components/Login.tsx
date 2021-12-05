@@ -1,19 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginService from '../services/LoginService';
+import { TokenService } from '../services/TokenService';
 import Color from '../styles/Color';
 import InputField from './InputField';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = (e: any) => {
-    LoginService.login(username, password);
-    setTimeout(()=> {
-      navigate('/');
-    }, 100)
+    LoginService.login(username, password)
+      .then((res) => {
+        TokenService.saveAccessToken(res.data.accessToken);
+        TokenService.saveRefreshToken(res.data.refreshToken);
+        navigate('/');
+      })
+      .catch((error) => {
+        setError(true);
+      });
   };
 
   return (
@@ -37,6 +44,9 @@ const Login = () => {
           Login
         </button>
       </div>
+      {error && (
+        <div style={{ color: Color.red, textAlign: 'center' }}>Wrong username or password</div>
+      )}
     </div>
   );
 };
