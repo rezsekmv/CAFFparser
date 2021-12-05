@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "server.http-port",
+      "type": "java.lang.String",
+      "description": "HTTP esetén használt port"
+    },
+    {
+      "name": "server.https",
+      "type": "java.lang.String",
+      "description": "HTTPS esetén használt port"
+    },
+    {
+      "name": "security.cors.enabled",
+      "type": "java.lang.String",
+      "description": "CORS engedélyezése"
+    },
+    {
+      "name": "security.csrf.disabled",
+      "type": "java.lang.String",
+      "description": "CSRF kikapcsolásának engedélyezése"
+    },
+    {
+      "name": "security.token-secret",
+      "type": "java.lang.String",
+      "description": "Token signature-höz használt kulcs"
+    },
+    {
+      "name": "security.access-token-expiration",
+      "type": "java.lang.String",
+      "description": "Access token lejárati ideje milliszekundumban"
+    },
+    {
+      "name": "security.refresh-token-expiration",
+      "type": "java.lang.String",
+      "description": "Refresh token lejárati ideje milliszekundumban"
+    }
+  ]
+}

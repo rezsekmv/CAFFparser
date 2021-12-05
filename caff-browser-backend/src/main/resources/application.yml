@@ -36,5 +36,5 @@ security:
 springdoc:
   api-docs:
     path: /api/public/api-docs
-
-
+  swagger-ui:
+    path: /api/public/swagger.html
