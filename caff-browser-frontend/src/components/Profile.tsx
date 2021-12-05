@@ -36,12 +36,6 @@ const Profile = () => {
       .catch((err) => {
         setError('Sikertelen adatmódosítás');
       })
-      .finally(() => {
-        setTimeout(() => {
-          setError('');
-          setSuccess('');
-        }, 2000);
-      });
   };
 
   return (

@@ -1,7 +1,7 @@
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { ImageDto,  ImageService } from '../services/openapi';
+import { CommentService, ImageDto, ImageService } from '../services/openapi';
 import StaticService from '../services/StaticService';
 import CommentCard from './CommentCard';
 
@@ -17,6 +17,41 @@ const ImageDetailView = () => {
       })
       .catch((err) => console.error('Failed to fetch image!'));
   }, [id]);
+
+  const handleDeleteComment = (commentId: number) => {
+    CommentService.deleteComment(commentId)
+      .then((res) => {
+        ImageService.getImage(+id!)
+          .then((img) => {
+            setImage(img);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((err) => {
+        console.log('Can not delete comment');
+      });
+  };
+
+  const handleAddComment = () => {
+    CommentService.createComment({
+      imageId: image?.id,
+      content: commentText,
+    })
+      .then((res) => {
+        ImageService.getImage(+id!)
+          .then((img) => {
+            setImage(img);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const renderBadges = () => {
     return image?.tags?.map((tag, idx) => {
@@ -96,18 +131,22 @@ const ImageDetailView = () => {
               }}
             />
             <div className="input-group-append">
-              <Button variant="primary">Submit</Button>
+              <Button onClick={() => handleAddComment()} variant="primary">
+                Submit
+              </Button>
             </div>
           </div>
         )}
 
-        {image?.comments?.map((comment) => (
+        {image?.comments?.map((comment, idx) => (
           <CommentCard
+            key={idx}
             content={comment.content!}
             id={comment.id!}
             modifiable={comment.modifiable!}
             username={comment.userDisplayName!}
             imageId={comment.imageId!}
+            deleteComment={handleDeleteComment}
           />
         ))}
       </div>

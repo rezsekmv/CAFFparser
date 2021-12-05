@@ -14,6 +14,7 @@ interface CommentCardProps {
   modifiable: boolean;
   username: string;
   imageId: number;
+  deleteComment: Function;
 }
 
 const CommentCard = (props: CommentCardProps) => {
@@ -22,12 +23,8 @@ const CommentCard = (props: CommentCardProps) => {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(props.content);
 
-  const handleDelete = () => {
-    CommentService.deleteComment(props.id)
-      .then((res) => {})
-      .catch((err) => {
-        console.log('Can not delete comment');
-      });
+  const handleDelete = (commentId: number) => {
+    props.deleteComment(commentId);
   };
 
   const handleEdit = () => {
@@ -66,18 +63,18 @@ const CommentCard = (props: CommentCardProps) => {
                 </span>
               )}
               {editing && (
-                <span className="btn btn-success">
-                  <FontAwesomeIcon
-                    onClick={() => handleConfirm()}
-                    icon={faIcon}
-                  ></FontAwesomeIcon>
+                <span
+                  className="btn btn-success"
+                  onClick={() => handleConfirm()}
+                >
+                  <FontAwesomeIcon icon={faIcon}></FontAwesomeIcon>
                 </span>
               )}{' '}
-              <span className="btn btn-danger">
-                <FontAwesomeIcon
-                  onClick={() => handleDelete()}
-                  icon={faTrashAlt}
-                ></FontAwesomeIcon>
+              <span
+                className="btn btn-danger"
+                onClick={() => handleDelete(props.id)}
+              >
+                <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
               </span>
             </div>
           )}
