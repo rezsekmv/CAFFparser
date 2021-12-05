@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { TokenService } from './TokenService';
 var querystring = require('querystring');
 
 const LoginService = {

@@ -31,12 +31,14 @@ const Login = () => {
         placeholder={'Username'}
         classes={''}
         handleOnChange={setUsername}
+        validatorText=''
       />
       <InputField
         inputType={'password'}
         placeholder={'Password'}
         classes={''}
         handleOnChange={setPassword}
+        validatorText=''
       />
 
       <div>
