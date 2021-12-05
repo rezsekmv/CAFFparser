@@ -5,8 +5,8 @@ const Footer = () => {
     <div className="w-100 footer" style={footerStyle}>
       <div className='w-100' style={redLineStyle}></div>
       <div className='w-100' style={darkFooterStyle}>
-        <span className='float-start' style={footerTextStyle}>Carnage Feat. Sludge - El Diablo Productions</span>
-        <span className='float-end' style={footerTextStyle}>App information</span>
+        <span className='float-start' style={footerTextStyle}><a className='text-decoration-none' style={{color: Color.white}} href='https://www.youtube.com/watch?v=Dpz2ZCcO4OI'>Carnage Feat. Sludge - El Diablo Productions</a></span>
+        <span className='float-end' style={footerTextStyle}><a className='text-decoration-none' style={{color: Color.white}} href='https://github.com/kulcsii/CAFFparser'>App information</a></span>
       </div>
     </div>
   );
