@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { TokenService } from './TokenService';
 var querystring = require('querystring');
 
 const LoginService = {
-  login: (username: string, password: string) => {
-    axios
+  login: (username: string, password: string):Promise<AxiosResponse<any, any>>  => {
+    return axios
       .post(
         '/api/login',
         querystring.stringify({
@@ -18,15 +18,6 @@ const LoginService = {
           },
         }
       )
-      .then((res) => {
-        console.log(res.data)
-        TokenService.saveAccessToken(res.data.accessToken);
-        TokenService.saveRefreshToken(res.data.refreshToken);
-      })
-      .catch((error) => {
-        console.error('Login fetch FAILED!');
-        console.error(JSON.stringify(error));
-      });
   },
 };
 
