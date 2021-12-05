@@ -1,11 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.declaration;
 
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.CommentDto;
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.ImageDto;
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface CommentService {
 

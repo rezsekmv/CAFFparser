@@ -13,8 +13,10 @@ import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,7 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private void validateUserExists(User user) {
         if (user == null) {
             log.error("User not found");
-            throw new UsernameNotFoundException("User not found");
+            throw new BadCredentialsException("User not found");
         }
     }
 

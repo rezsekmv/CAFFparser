@@ -27,11 +27,11 @@ public abstract class ImageMapper {
 
     @Mapping(expression = "java(getCommentsSize(entity))", target = "commentsSize")
     @Mapping(target = "comments", ignore = true)
-    abstract public ImageDto toDto(Image entity);
+    public abstract ImageDto toDto(Image entity);
 
     @Mapping(expression = "java(isCommentable(entity))", target = "commentable")
     @Mapping(expression = "java(isModifiable(entity))", target = "modifiable")
-    abstract public ImageDto toDtoWithDetails(Image entity);
+    public abstract ImageDto toDtoWithDetails(Image entity);
 
     @AfterMapping
     public void mapToDto(@MappingTarget ImageDto dto, Image entity) {

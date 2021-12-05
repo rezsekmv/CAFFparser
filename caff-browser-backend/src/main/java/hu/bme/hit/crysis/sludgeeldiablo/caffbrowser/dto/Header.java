@@ -8,6 +8,6 @@ public class Header {
     long id;
     long length;
     String magic;
-    long header_size;
-    long num_anim;
+    long headerSize;
+    long numAnim;
 }

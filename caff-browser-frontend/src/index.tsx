@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
 import { TokenService } from './services/TokenService';
 import { OpenAPI } from './services/openapi';
 

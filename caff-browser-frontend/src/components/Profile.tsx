@@ -1,58 +1,122 @@
-import { Button, FormControl, InputGroup } from "react-bootstrap";
+import { useEffect, useState } from 'react';
+import { Alert, Button, FormControl, InputGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { UserDto, UserService } from '../services/openapi';
 
 const Profile = () => {
+  const [newPassword, setNewPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [myUser, setMyUser] = useState<UserDto>({
+    id: 1,
+    username: 'test_user',
+    password: 'hash',
+    email: 'testuser@example.com',
+    name: 'Test user',
+    roles: ['ADMINISTRATOR', 'MODERATOR'],
+  });
 
-    const profileData = {
-        id: 1,
-        username: 'test_user',
-        password: 'hash',
-        email: 'testuser@example.com',
-        displayName: 'Test user',
-        roles: ['ADMINISTRATOR', 'MODERATOR']
-    }
+  useEffect(() => {
+    UserService.getMyUser().then((me) => {
+      setMyUser(me);
+    });
+  }, []);
 
-    return (
-        <>
-            <h3>My profile</h3>
-            <div style={styles.profileBox}>
-                <h4>Profile data</h4>
-                <div className="profile-box-data">
-                    <p><b>Username: </b> {profileData.username}</p>
-                    <p><b>Email: </b> {profileData.email}</p>
-                    <p><b>Display name: </b> {profileData.displayName}</p>
-                    <p><b>My roles: </b> {profileData.roles.join(', ')}</p>
-                    <Button style={{ marginTop: 10 }} variant="primary" href="/profile/edit">Modify</Button>
-                </div>
-            </div>
-            <div style={styles.profileBox}>
-                <div className="profile-box-data">
-                    <p><h4>Modify password</h4></p>
-                    <InputGroup>
-                        <FormControl placeholder="Current password"></FormControl>
-                    </InputGroup>
-                    <InputGroup>
-                        <FormControl placeholder="New password"></FormControl>
-                    </InputGroup>
-                    <InputGroup>
-                        <FormControl placeholder="Repeat new password"></FormControl>
-                    </InputGroup>
-                    <Button style={{ marginTop: 10 }} variant="primary">Save</Button>
-                </div>
-            </div >
-        </>
-    )
-}
+  const handleChangePassword = () => {
+    UserService.updateMyPassword({ oldPassword, newPassword })
+      .then((res) => {
+        setSuccess(true);
+      })
+      .catch((err) => {
+        setError(true);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setError(false);
+          setSuccess(false);
+        }, 2000);
+      });
+  };
+
+  return (
+    <>
+      <h3>My profile</h3>
+      <div style={styles.profileBox}>
+        <h4>Profile data</h4>
+        <div className="profile-box-data">
+          <p>
+            <b>Username: </b> {myUser.username}
+          </p>
+          <p>
+            <b>Email: </b> {myUser.email}
+          </p>
+          <p>
+            <b>Display name: </b> {myUser.name}
+          </p>
+          <p>
+            <b>My roles: </b> {myUser.roles?.join(', ')}
+          </p>
+          <Button
+            style={{ marginTop: 10 }}
+            variant="primary"
+          >
+            <Link to={'/profile/edit'}>Modify</Link>
+          </Button>
+        </div>
+      </div>
+      <div style={styles.profileBox}>
+        <div className="profile-box-data">
+          <p>
+            <h4>Modify password</h4>
+          </p>
+          <InputGroup>
+            <FormControl
+              value={oldPassword}
+              onChange={(e: any) => setOldPassword(e.target.value)}
+              placeholder="Current password"
+              type="password"
+            ></FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl
+              value={newPassword}
+              onChange={(e: any) => setNewPassword(e.target.value)}
+              placeholder="New password"
+              type="password"
+            ></FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl
+              placeholder="Repeat new password"
+              type="password"
+            ></FormControl>
+          </InputGroup>
+          <Button
+            style={{ marginTop: 10, marginBottom: 20}}
+            onClick={() => handleChangePassword()}
+            variant="primary"
+          >
+            Save
+          </Button>
+          {success && <Alert variant={'success'}>Sikeres adatmódosítás!</Alert>}
+          {error && <Alert variant={'danger'}>Sikertelen adatmódosítás!</Alert>}
+        </div>
+      </div>
+    </>
+  );
+};
 
 const styles = {
-    profileBox: {
-        display: 'block',
-        margin: 'auto',
-        maxWidth: 600,
-        marginTop: 40,
-        boxShadow: '0px 0px 1.5px 1.5px rgba(0, 0, 0, 0.1)',
-        borderRadius: 5,
-        padding: 30
-    }
-}
+  profileBox: {
+    display: 'block',
+    margin: 'auto',
+    maxWidth: 600,
+    marginTop: 40,
+    boxShadow: '0px 0px 1.5px 1.5px rgba(0, 0, 0, 0.1)',
+    borderRadius: 5,
+    padding: 30,
+  },
+};
 
 export default Profile;

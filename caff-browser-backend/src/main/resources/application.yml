@@ -14,6 +14,10 @@ spring:
     multipart:
       max-file-size: 25MB
       max-request-size: 25MB
+  web:
+    resources:
+      static-locations[0]: "file:src/main/resources/static/"
+      static-locations[1]: "classpath:/static/"
 
 server:
   port: 8080
@@ -23,6 +27,8 @@ server:
 security:
   cors:
     enabled: true
+  csrf:
+    disabled: true
   token-secret: caffbrowsersecret
   access-token-expiration: 6000000 # 100 perc
   refresh-token-expiration: 18000000 # 300 perc
@@ -30,3 +36,5 @@ security:
 springdoc:
   api-docs:
     path: /api/public/api-docs
+  swagger-ui:
+    path: /api/public/swagger.html

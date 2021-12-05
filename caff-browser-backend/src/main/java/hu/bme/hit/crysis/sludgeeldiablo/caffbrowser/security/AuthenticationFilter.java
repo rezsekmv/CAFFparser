@@ -78,10 +78,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     private HashMap<String, String> createTokenMap(HttpServletRequest request, User user, Algorithm algorithm) {
-        return new HashMap<String, String>() {{
-            put(ACCESS_TOKEN_PARAMETER, createAccessToken(request, user, algorithm));
-            put(REFRESH_TOKEN_PARAMETER, createRefreshToken(request, user, algorithm));
-        }};
+        HashMap<String, String> map = new HashMap<>();
+        map.put(ACCESS_TOKEN_PARAMETER, createAccessToken(request, user, algorithm));
+        map.put(REFRESH_TOKEN_PARAMETER, createRefreshToken(request, user, algorithm));
+        return map;
     }
 
     private String createAccessToken(HttpServletRequest request, User user, Algorithm algorithm) {

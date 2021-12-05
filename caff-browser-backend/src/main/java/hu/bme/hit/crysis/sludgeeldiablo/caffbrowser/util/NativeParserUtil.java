@@ -29,32 +29,38 @@ import static hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.service.PpmReader.ppm
 @Slf4j
 public class NativeParserUtil {
 
+    private static final String UUID_PARAMETER = "{uuid}";
+
     private static final String GIF_PATH = "/{uuid}.gif";
     private static final String CAFF_PATH = "/{uuid}.caff";
     private static final String JSON_PATH = "/{uuid}.json";
 
     private static final String SERVER_IMAGES_PATH = "/caff-browser-backend/src/main/resources/static";
+    private static final String PARSER_EXE = "/caff-browser-backend/src/main/resources/caff-browser-native-parser.exe";
     private static final String PARSER_OUTPUT_JSON_PATH = "/caff-browser-native-parser/output-json";
     private static final String PARSER_OUTPUT_IMAGES_PATH = "/caff-browser-native-parser/output-images";
-    private static final String PARSER_GENERATED_EXE = "/caff-browser-native-parser/cmake-build-debug/caff-browser-native-parser.exe";
 
     private static final String REPOSITORY_PATH = getRepositoryPath();
 
+    private NativeParserUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String getGifPath(String uuid) {
-        return GIF_PATH.replace("{uuid}", uuid);
+        return GIF_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     public static String getCaffPath(String uuid) {
-        return CAFF_PATH.replace("{uuid}", uuid);
+        return CAFF_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     private static String getJsonPath(String uuid) {
-        return JSON_PATH.replace("{uuid}", uuid);
+        return JSON_PATH.replace(UUID_PARAMETER, uuid);
     }
 
     private static String getRepositoryPath() {
         return FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString()
-                .replaceAll("\\\\", "/")
+                .replace("\\", "/")
                 .replace("/caff-browser-backend", "");
     }
 
@@ -65,13 +71,15 @@ public class NativeParserUtil {
      * @param file feltöltött CIFF vagy CAFF fájl
      * @return generált UUID azonosító
      */
-    public static Image parse(MultipartFile file) throws Exception {
+    public static Image parse(MultipartFile file) throws IOException, InterruptedException {
         log.trace("NativeParserUtil : parse, file=[{}]", file);
+
         validateFormat(file);
+        initDirectories();
 
         String uuid = saveCaff(file);
 
-        String exe = getRepositoryPath() + PARSER_GENERATED_EXE;
+        String exe = getRepositoryPath() + PARSER_EXE;
         String path = getRepositoryPath();
 
         callParser(exe, path, uuid);
@@ -79,6 +87,17 @@ public class NativeParserUtil {
         createGif(caffJson, uuid);
 
         return createImageModel(uuid, caffJson);
+    }
+
+    private static void initDirectories() {
+        File outputImagesDir = getDirectory();
+        File outputJsonDir = new File(REPOSITORY_PATH + PARSER_OUTPUT_JSON_PATH);
+        if (!outputImagesDir.exists()) {
+            outputImagesDir.mkdirs();
+        }
+        if (!outputJsonDir.exists()) {
+            outputJsonDir.mkdirs();
+        }
     }
 
     private static void callParser(String exe, String path, String uuid) throws IOException, InterruptedException {
@@ -125,7 +144,7 @@ public class NativeParserUtil {
     }
 
     private static Ciff getFirstElement(CaffJson caff) {
-        return caff.getAnimation().getCIFFs().get(0);
+        return caff.getAnimation().getCiffs().get(0);
     }
 
     private static List<File> getGifParts(String uuid) {
@@ -162,7 +181,7 @@ public class NativeParserUtil {
     }
 
     private static String getCaption(CaffJson caff) {
-        return caff.getAnimation().getCIFFs()
+        return caff.getAnimation().getCiffs()
                 .stream()
                 .map(Ciff::getCaption)
                 .findFirst()
@@ -170,7 +189,7 @@ public class NativeParserUtil {
     }
 
     private static Set<String> getTags(CaffJson caff) {
-        return caff.getAnimation().getCIFFs()
+        return caff.getAnimation().getCiffs()
                 .stream()
                 .map(Ciff::getTags)
                 .flatMap(Collection::stream)

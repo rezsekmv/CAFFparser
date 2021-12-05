@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "9b8678e4-85a4-4177-beb5-8b1702e0cdae",
 		"name": "CaffBrowser",
+		"description": "CAFF fájlok kezelését, megjelenítését és véleményezését végző alkalmazás, komplett felhasználókezeléssel és adminisztrátori jogosultsággal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -53,7 +54,8 @@
 							"path": [
 								"login"
 							]
-						}
+						},
+						"description": "Bejelentkezés"
 					},
 					"response": []
 				},
@@ -83,7 +85,8 @@
 								"public",
 								"sign-up"
 							]
-						}
+						},
+						"description": "Regisztráció"
 					},
 					"response": []
 				},
@@ -123,7 +126,8 @@
 							"path": [
 								"refresh-token"
 							]
-						}
+						},
+						"description": "Új access token kérése refresh tokennel"
 					},
 					"response": []
 				},
@@ -141,11 +145,13 @@
 								"public",
 								"api-docs"
 							]
-						}
+						},
+						"description": "Végpontok OpenAPI leírásának lekérése"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Felhasználókezelésre használt és alkalmazás működésével kapcsolatos segéd végpontok"
 		},
 		{
 			"name": "HelloController",
@@ -174,7 +180,8 @@
 							"path": [
 								"hello"
 							]
-						}
+						},
+						"description": "Tesztvégpont a bejelentkezés sikerességének vizsgálatára"
 					},
 					"response": []
 				},
@@ -192,7 +199,8 @@
 								"mod",
 								"hello"
 							]
-						}
+						},
+						"description": "Tesztvégpont a moderátori jogosultság ellenőrzésére"
 					},
 					"response": []
 				},
@@ -210,7 +218,8 @@
 								"admin",
 								"hello"
 							]
-						}
+						},
+						"description": "Tesztvégpont az adminisztrátori jogosultság ellenőrzésére"
 					},
 					"response": []
 				},
@@ -231,11 +240,13 @@
 								"public",
 								"hello"
 							]
-						}
+						},
+						"description": "Tesztvégpont az alkalmazás működésének vizsgálatára"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Tesztvégpontok"
 		},
 		{
 			"name": "UserController",
@@ -253,7 +264,8 @@
 							"path": [
 								"user"
 							]
-						}
+						},
+						"description": "Saját felhasználó adatainak lekérése"
 					},
 					"response": []
 				},
@@ -279,7 +291,8 @@
 							"path": [
 								"user"
 							]
-						}
+						},
+						"description": "Saját felhasználói adatok módosítása"
 					},
 					"response": []
 				},
@@ -306,7 +319,8 @@
 								"user",
 								"password"
 							]
-						}
+						},
+						"description": "Saját jelszó módosítása"
 					},
 					"response": []
 				},
@@ -323,11 +337,13 @@
 							"path": [
 								"user"
 							]
-						}
+						},
+						"description": "Saját felhasználói fiók törlése"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Saját felhasználó kezelésére szolgáló műveletek"
 		},
 		{
 			"name": "ImageController",
@@ -346,7 +362,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/D:/Net/Random Pictures/katona.jpg"
+									"src": "/D:/BME/9-felev-2021-osz/Szamitogep-biztonsag/CAFFparser/caff-browser-native-parser/images/2.caff"
 								}
 							]
 						},
@@ -358,7 +374,8 @@
 							"path": [
 								"image"
 							]
-						}
+						},
+						"description": "CAFF formátumú kép feltöltése"
 					},
 					"response": []
 				},
@@ -376,7 +393,8 @@
 								"image",
 								"4"
 							]
-						}
+						},
+						"description": "Egy kép és annak részletes adatai, illetve a képhez fűzött hozzászólások megtekintése"
 					},
 					"response": []
 				},
@@ -413,7 +431,8 @@
 									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Galéria megtekintése, egy oldalnyi kép böngészése"
 					},
 					"response": []
 				},
@@ -431,11 +450,13 @@
 								"image",
 								"1"
 							]
-						}
+						},
+						"description": "Kép eltávolítása"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Képekkel kapcsolatos műveletek"
 		},
 		{
 			"name": "CommentController",
@@ -462,7 +483,8 @@
 							"path": [
 								"comment"
 							]
-						}
+						},
+						"description": "Hozzászólás fűzése a megadott képhez a saját felhasználónk nevében"
 					},
 					"response": []
 				},
@@ -489,7 +511,8 @@
 								"comment",
 								"1"
 							]
-						}
+						},
+						"description": "Hozzászólás szerkesztése"
 					},
 					"response": []
 				},
@@ -507,11 +530,13 @@
 								"comment",
 								"1"
 							]
-						}
+						},
+						"description": "Hozzászólás törlése"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Hozzászólásokkal kapcsolatos műveletek"
 		},
 		{
 			"name": "AdminUserController",
@@ -531,7 +556,8 @@
 								"user",
 								"1"
 							]
-						}
+						},
+						"description": "Megadott felhasználó adatainak lekérése"
 					},
 					"response": []
 				},
@@ -549,7 +575,8 @@
 								"admin",
 								"user"
 							]
-						}
+						},
+						"description": "Összes felhasználó adatainak megtekintése"
 					},
 					"response": []
 				},
@@ -577,7 +604,8 @@
 								"user",
 								"1"
 							]
-						}
+						},
+						"description": "Felhasználó adatainak módosítása"
 					},
 					"response": []
 				},
@@ -605,11 +633,13 @@
 								"user",
 								"2"
 							]
-						}
+						},
+						"description": "Felhasználói fiók eltávolítása"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Adminisztrátori joggal végezhető műveletek"
 		}
 	],
 	"auth": {

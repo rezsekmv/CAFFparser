@@ -28,13 +28,18 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto save(CommentDto commentDto) {
         log.trace("CommentService : save, commentDto=[{}]", commentDto);
+        validateImageExist(commentDto.getImageId());
         validateCanComment(commentDto.getImageId());
         Comment createdComment = commentRepository.save(commentMapper.toEntity(commentDto));
         return commentMapper.toDto(createdComment);
     }
 
+    private void validateImageExist(Long imageId) {
+        imageService.findById(imageId);
+    }
+
     private void validateCanComment(Long imageId) {
-        if (!imageService.canCurrentUserCommentImage(imageId)) {
+        if (Boolean.FALSE.equals(imageService.canCurrentUserCommentImage(imageId))) {
             throw new CbException("error.comment.unable");
         }
     }
@@ -48,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void validateCanUpdate(Long id) {
-        if (!canCurrentUserModifyComment(id)) {
+        if (Boolean.FALSE.equals(canCurrentUserModifyComment(id))) {
             throw new CbException("error.comment.update");
         }
     }
@@ -79,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void validateCanDelete(Long id) {
-        if (!canCurrentUserModifyComment(id)) {
+        if (Boolean.FALSE.equals(canCurrentUserModifyComment(id))) {
             throw new CbException("error.comment.delete");
         }
     }

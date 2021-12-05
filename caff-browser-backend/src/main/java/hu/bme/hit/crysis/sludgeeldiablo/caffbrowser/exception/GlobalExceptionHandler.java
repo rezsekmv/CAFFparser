@@ -10,46 +10,50 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Locale;
+
 @Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
+
+    private static final String BASIC_MESSAGE_PATTERN = "{}: {}";
 
     private final MessageSource messageSource;
 
     @ExceptionHandler(CbNotFoundException.class)
     public ResponseEntity<CbError> handleNotFoundException() {
         String description = "Not found";
-        String message = messageSource.getMessage("error.notFound", null, null);
+        String message = messageSource.getMessage("error.notFound", null, Locale.getDefault());
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CbForbiddenException.class)
     public ResponseEntity<CbError> handleCfmForbiddenException(CbForbiddenException e) {
         String description = "Insufficient permissions";
-        String message = messageSource.getMessage(e.getMessageKey(), null, null);
+        String message = messageSource.getMessage(e.getMessageKey(), null, Locale.getDefault());
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(CbException.class)
     public ResponseEntity<CbError> handleCfmException(CbException e) {
         String description = "Application error";
-        String message = messageSource.getMessage(e.getMessageKey(), null, null);
+        String message = messageSource.getMessage(e.getMessageKey(), null, Locale.getDefault());
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CbNativeParserException.class)
     public ResponseEntity<CbError> handleNativeParserException(CbNativeParserException e) {
         String description = "Native parser error";
-        String message = e.getMessage() != null ? e.getMessage() : messageSource.getMessage("error.parser", null, null);
+        String message = e.getMessage() != null ? e.getMessage() : messageSource.getMessage("error.parser", null, Locale.getDefault());
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
@@ -59,7 +63,7 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         String comment = "Jelentkezz be újra";
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.UNAUTHORIZED);
     }
 
@@ -69,7 +73,7 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         String comment = "Ellenőrizd a JSON üzenetet, valószínűleg elírtál valamit";
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.BAD_REQUEST);
     }
 
@@ -79,7 +83,7 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         String comment = "Ellenőrizd, hogy a megadott végponton elvégezhető-e a kért művelet";
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
@@ -89,7 +93,7 @@ public class GlobalExceptionHandler {
         String message = t.getMessage();
         String comment = "Hoppá! Ez nem jelent jót, keresd az üzemeltetőt";
 
-        log.error("{}: {}", description, message);
+        log.error(BASIC_MESSAGE_PATTERN, description, message);
         return new ResponseEntity<>(new CbError(message, description, comment), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
