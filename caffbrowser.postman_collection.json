@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "9b8678e4-85a4-4177-beb5-8b1702e0cdae",
 		"name": "CaffBrowser",
+		"description": "CAFF fájlok kezelését, megjelenítését és véleményezését végző alkalmazás, komplett felhasználókezeléssel és adminisztrátori jogosultsággal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -149,7 +150,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Felhasználókezelésre használt és alkalmazás működésével kapcsolatos segéd végpontok"
 		},
 		{
 			"name": "HelloController",
@@ -243,7 +245,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Tesztvégpontok"
 		},
 		{
 			"name": "UserController",
@@ -339,7 +342,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Saját felhasználó kezelésére szolgáló műveletek"
 		},
 		{
 			"name": "ImageController",
@@ -451,7 +455,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Képekkel kapcsolatos műveletek"
 		},
 		{
 			"name": "CommentController",
@@ -530,7 +535,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Hozzászólásokkal kapcsolatos műveletek"
 		},
 		{
 			"name": "AdminUserController",
@@ -632,7 +638,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Adminisztrátori joggal végezhető műveletek"
 		}
 	],
 	"auth": {
