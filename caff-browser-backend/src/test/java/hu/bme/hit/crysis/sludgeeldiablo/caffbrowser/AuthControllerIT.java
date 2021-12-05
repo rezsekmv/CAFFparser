@@ -1,6 +1,6 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser;
 
-import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.config.TestConfig;
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.TestConfig;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
