@@ -3,6 +3,7 @@ import FileUpload from './FileUpload';
 import { Pagination, FormControl } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { ImageDto, ImageService } from '../services/openapi';
+import { useNavigate } from 'react-router-dom';
 
 const Browser = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -10,6 +11,7 @@ const Browser = () => {
   const [data, setData] = useState<Array<ImageDto>>([]);
   const [caption, setCaption] = useState('');
   const [credit, setCredit] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     ImageService.getAllImage(8, currentPage, credit, caption)
@@ -19,8 +21,9 @@ const Browser = () => {
       })
       .catch((err) => {
         console.error(JSON.stringify(err.status));
+        navigate('/login');
       });
-  }, [currentPage]);
+  }, [currentPage, caption, credit, navigate]);
 
   const handleCaptionFilter = (e: any) => {
     const c = e.target.value;

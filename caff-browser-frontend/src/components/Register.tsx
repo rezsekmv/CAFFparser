@@ -29,11 +29,11 @@ const Register = () => {
 
   return (
     <div className="container" style={registerBoxStyle}>
-      <h1>Regisztráció</h1>
+      <h1>Register</h1>
       <div className="row">
         <InputField
           inputType={'text'}
-          placeholder={'Felhasználónév'}
+          placeholder={'Username'}
           classes={'col-12'}
           handleOnChange={setUsername}
         />
@@ -45,25 +45,25 @@ const Register = () => {
         />
         <InputField
           inputType={'email'}
-          placeholder={'Email újra'}
+          placeholder={'Email again'}
           classes={'col-6'}
           handleOnChange={() => {}}
         />
         <InputField
           inputType={'password'}
-          placeholder={'Jelszó'}
+          placeholder={'Password'}
           classes={'col-6'}
           handleOnChange={setPassword}
         />
         <InputField
           inputType={'password'}
-          placeholder={'Jelszó újra'}
+          placeholder={'Password again'}
           classes={'col-6'}
           handleOnChange={() => {}}
         />
         <InputField
           inputType={'text'}
-          placeholder={'Név'}
+          placeholder={'Full Name'}
           classes={'col-12'}
           handleOnChange={setName}
         />
@@ -89,6 +89,3 @@ const buttonStyle = {
 };
 
 export default Register;
-function useHistory() {
-  throw new Error('Function not implemented.');
-}

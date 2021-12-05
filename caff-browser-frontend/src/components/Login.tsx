@@ -11,7 +11,9 @@ const Login = () => {
 
   const handleClick = (e: any) => {
     LoginService.login(username, password);
-    navigate('/');
+    setTimeout(()=> {
+      navigate('/');
+    }, 100)
   };
 
   return (

@@ -4,8 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { TokenService } from './services/TokenService';
-import { OpenAPI } from './services/openapi';
 
 /*axios.interceptors.request.use(
   (config) => {
@@ -64,7 +62,6 @@ axios.interceptors.response.use(
   }
 );*/
 
-OpenAPI.TOKEN = TokenService.getAccessToken();
 ReactDOM.render(
   <React.StrictMode>
     <App />

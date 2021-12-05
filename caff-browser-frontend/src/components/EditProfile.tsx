@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
+import { Alert, Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { UserDto, UserService } from '../services/openapi';
 
 const EditProfile = () => {
-  const [myUser, setMyUser] = useState<UserDto>();
+  const [myUser, setMyUser] = useState<UserDto>({});
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     UserService.getMyUser()
@@ -13,8 +15,24 @@ const EditProfile = () => {
       .catch((err) => {});
   }, []);
 
-  const handleDataChange = () => {
-  }
+  const handleDataChange = (e: any) => {
+    let tmpUser = { ...myUser };
+    if (e.target.id === 'display-name') tmpUser.name = e.target.value;
+    if (e.target.id === 'email') tmpUser.email = e.target.value;
+    setMyUser(tmpUser);
+  };
+
+  const saveData = () => {
+    UserService.updateMyUser(myUser)
+      .then((res) => {
+        setMyUser(myUser);
+        setSuccess('Data was set successfully');
+      })
+      .catch((error) => {
+        console.error(JSON.stringify(error));
+        setError('Submit failed, some error happened');
+      });
+  };
 
   return (
     <>
@@ -27,18 +45,28 @@ const EditProfile = () => {
             <FormControl
               id="display-name"
               value={myUser?.name}
-              onChange={(e:any) => {
-                  handleDataChange()
+              onChange={(e) => {
+                handleDataChange(e);
               }}
             ></FormControl>
           </InputGroup>
-          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Label htmlFor="email" className="mt-3">
+            Email
+          </Form.Label>
           <InputGroup>
-            <FormControl id="email" value={myUser?.email}></FormControl>
+            <FormControl
+              id="email"
+              value={myUser?.email}
+              onChange={(e) => {
+                handleDataChange(e);
+              }}
+            ></FormControl>
           </InputGroup>
-          <Button style={{ marginTop: 10 }} variant="primary">
+          <Button className="my-3" variant="primary" onClick={() => saveData()}>
             Save
           </Button>
+          {success && <Alert variant={'success'}>Sikeres adatmódosítás!</Alert>}
+          {error && <Alert variant={'danger'}>Sikertelen adatmódosítás!</Alert>}
         </div>
       </div>
     </>

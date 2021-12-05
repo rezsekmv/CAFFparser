@@ -62,8 +62,8 @@ const Profile = () => {
           <p>
             <b>My roles: </b> {myUser.roles?.join(', ')}
           </p>
-          <Button style={{ marginTop: 10 }} variant="primary">
-            <Link to={'/profile/edit'}>Modify</Link>
+          <Button style={{marginTop: 10}} variant="primary">
+            <Link style={styles.clearLinkStyle} to={'/profile/edit'}>Modify</Link>
           </Button>
         </div>
       </div>
@@ -121,6 +121,11 @@ const styles = {
     borderRadius: 5,
     padding: 30,
   },
+  clearLinkStyle: {
+    marginTop: 10,
+    color: 'white',
+    textDecoration: 'none'
+  }
 };
 
 export default Profile;

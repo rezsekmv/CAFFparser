@@ -1,17 +1,19 @@
-import { AuthService } from './openapi';
+import { AuthService, OpenAPI } from './openapi';
 
 const ACCESS_TOKEN = 'accessToken';
 const REFRESH_TOKEN = 'refreshToken';
 
 export const TokenService = {
   saveAccessToken: (token: string) => {
-    sessionStorage.setItem(ACCESS_TOKEN, token);
+    //sessionStorage.setItem(ACCESS_TOKEN, token);
+    OpenAPI.TOKEN = token;
   },
-  getAccessToken: (): string => {
-    return sessionStorage.getItem(ACCESS_TOKEN)!;
+  getAccessToken: (): boolean => {
+      return OpenAPI.TOKEN === undefined;
   },
   removeAccessToken: () => {
-    sessionStorage.removeItem(ACCESS_TOKEN);
+    //sessionStorage.removeItem(ACCESS_TOKEN);
+    OpenAPI.TOKEN = undefined;
   },
   saveRefreshToken: (token: string) => {
     localStorage.setItem(REFRESH_TOKEN, token);
