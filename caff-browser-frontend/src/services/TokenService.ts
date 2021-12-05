@@ -5,14 +5,14 @@ const REFRESH_TOKEN = 'refreshToken';
 
 export const TokenService = {
   saveAccessToken: (token: string) => {
-    //sessionStorage.setItem(ACCESS_TOKEN, token);
+    sessionStorage.setItem(ACCESS_TOKEN, token);
     OpenAPI.TOKEN = token;
   },
-  getAccessToken: (): boolean => {
-      return OpenAPI.TOKEN === undefined;
+  getAccessToken: (): string => {
+    return sessionStorage.getItem(ACCESS_TOKEN)!;
   },
   removeAccessToken: () => {
-    //sessionStorage.removeItem(ACCESS_TOKEN);
+    sessionStorage.removeItem(ACCESS_TOKEN);
     OpenAPI.TOKEN = undefined;
   },
   saveRefreshToken: (token: string) => {
@@ -36,8 +36,9 @@ export const TokenService = {
 
   refreshToken: async () => {
     try {
+      OpenAPI.TOKEN = localStorage.getItem(REFRESH_TOKEN)!;
       const authToken = await AuthService.refreshToken();
-      TokenService.saveAccessToken(`Bearer ${authToken}`);
+      TokenService.saveAccessToken(`${authToken}`);
     } catch (error) {
       console.log('Refresh Token Error');
     }

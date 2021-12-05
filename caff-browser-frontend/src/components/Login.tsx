@@ -31,14 +31,14 @@ const Login = () => {
         placeholder={'Username'}
         classes={''}
         handleOnChange={setUsername}
-        validatorText=''
+        validatorText=""
       />
       <InputField
         inputType={'password'}
         placeholder={'Password'}
         classes={''}
         handleOnChange={setPassword}
-        validatorText=''
+        validatorText=""
       />
 
       <div>
@@ -47,7 +47,9 @@ const Login = () => {
         </button>
       </div>
       {error && (
-        <div style={{ color: Color.red, textAlign: 'center' }}>Wrong username or password</div>
+        <div style={{ color: Color.red, textAlign: 'center' }}>
+          Wrong username or password
+        </div>
       )}
     </div>
   );

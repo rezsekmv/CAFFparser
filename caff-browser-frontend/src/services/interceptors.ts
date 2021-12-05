@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { TokenService } from './TokenService';
+import axios from "axios";
+import { TokenService } from "./TokenService";
 
-export const requestInterceptor = axios.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
     console.log(
       `${config.method?.toUpperCase()} Request made to ${
@@ -17,7 +17,7 @@ export const requestInterceptor = axios.interceptors.request.use(
   }
 );
 
-export const responseInterceptor =axios.interceptors.response.use(
+axios.interceptors.response.use(
   (response) => {
     const { status, data, config } = response;
     console.log(`Response from ${config.url}:`, {
@@ -27,12 +27,21 @@ export const responseInterceptor =axios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response) {
-      const { status, data } = error.response;
+    console.log('url ' + error.config.url);
+    const path: string = error.config.url;
+    if (
+      path.includes('login') ||
+      path.includes('refresh') ||
+      path.includes('static') ||
+      path.includes('signup')
+    )
+      return;
 
+    if (error.response) {
+      const { status } = error.response;
       switch (status) {
+        case 403:
         case 401:
-          // check if 401 error was token
           // token has expired;
           try {
             // attempting to refresh token;
