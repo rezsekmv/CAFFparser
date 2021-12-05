@@ -1,6 +1,7 @@
 import Color from '../styles/Color';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { TokenService } from '../services/TokenService';
 
 const Header = (props: any) => {
   const location = useLocation();
@@ -9,11 +10,11 @@ const Header = (props: any) => {
 
   useEffect(() => {
     if (location.pathname === '/register') {
-      setLabel('Bejelentkezés');
+      setLabel('Login');
       setLink('/login');
     }
     if (location.pathname === '/login') {
-      setLabel('Regisztráció');
+      setLabel('Register');
       setLink('/register');
     }
     if (location.pathname === '/') {
@@ -21,6 +22,11 @@ const Header = (props: any) => {
       setLink('/profile');
     }
   }, [link, label, location.pathname]);
+
+  const handleLogout = () => {
+    TokenService.removeAccessToken();
+    TokenService.removeRefreshToken();
+  };
 
   return (
     <div className="masthead">
@@ -39,7 +45,8 @@ const Header = (props: any) => {
           <Link
             className="text-decoration-none"
             style={linkStyle}
-            to={'/logout'}
+            to={'/login'}
+            onClick={() => handleLogout()}
           >
             <span className="h2" style={headerTextStyle}>
               Logout
