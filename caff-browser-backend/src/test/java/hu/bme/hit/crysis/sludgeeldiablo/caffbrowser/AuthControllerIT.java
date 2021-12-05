@@ -1,8 +1,10 @@
 package hu.bme.hit.crysis.sludgeeldiablo.caffbrowser;
 
+import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.InitUtil;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.util.TestConfig;
 import hu.bme.hit.crysis.sludgeeldiablo.caffbrowser.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -28,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Transactional
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AuthControllerIT {
+class AuthControllerIT {
 
     private static final String SIGN_UP_URL = "/api/public/sign-up";
     private static final String API_DOCS_URL = "/api/public/api-docs";
@@ -37,26 +39,11 @@ public class AuthControllerIT {
     private final MockMvc mockMvc;
     private final JacksonTester<UserDto> userJson;
 
-    private UserDto createValidUserDto() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("virtualriot");
-        userDto.setPassword("1234");
-        userDto.setName("Virtual Riot");
-        userDto.setEmail("virtual@riot.com");
-        return userDto;
-    }
-
-    private UserDto createInvalidUserDto() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername("éé--");
-        userDto.setPassword("1234");
-        return userDto;
-    }
-
     @Test
-    public void testSignUp() throws Exception {
+    @DisplayName("Új felhasználó sikeres regisztrációja")
+    void testSignUp() throws Exception {
         // given
-        UserDto dto = createValidUserDto();
+        UserDto dto = InitUtil.createValidUserDto();
 
         // when, then
         this.mockMvc.perform(post(SIGN_UP_URL)
@@ -74,9 +61,10 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void testSignUpInvalidUsername() throws Exception {
+    @DisplayName("Helytelen felhasználónév megadásakor sikertelen regisztráció")
+    void testSignUpInvalidUsername() throws Exception {
         // given
-        UserDto dto = createInvalidUserDto();
+        UserDto dto = InitUtil.createInvalidUserDto();
 
         // when, then
         this.mockMvc.perform(post(SIGN_UP_URL)
@@ -87,7 +75,8 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void testApiDocs() throws Exception {
+    @DisplayName("OpenAPI Docs sikeres lekérése")
+    void testApiDocs() throws Exception {
         // when, then
         this.mockMvc.perform(get(API_DOCS_URL)
                 .with(csrf()))
@@ -96,7 +85,8 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void testLogin() throws Exception {
+    @DisplayName("Sikeres bejelentkezés")
+    void testLogin() throws Exception {
         // when, then
         this.mockMvc.perform(post(LOGIN_URL)
                 .contentType((MediaType.APPLICATION_FORM_URLENCODED_VALUE))
@@ -109,7 +99,8 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void testLoginUsernameNotExist() throws Exception {
+    @DisplayName("Nem létező felhasználóval sikertelen a bejelentkezés")
+    void testLoginUsernameNotExist() throws Exception {
         // when, then
         this.mockMvc.perform(post(LOGIN_URL)
                 .contentType((MediaType.APPLICATION_FORM_URLENCODED_VALUE))
