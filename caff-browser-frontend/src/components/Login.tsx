@@ -4,40 +4,35 @@ import LoginService from '../services/LoginService';
 import Color from '../styles/Color';
 import InputField from './InputField';
 
-interface LoginProps {
-  isLoggedIn: Function
-}
-
-const Login = ({isLoggedIn}: LoginProps) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleClick = (e: any) => {
     LoginService.login(username, password);
-    isLoggedIn(true);
     navigate('/');
   };
 
   return (
     <div className="mx-auto" style={loginBoxStyle}>
-      <h1 style={titleStyle}>Bejelentkezés</h1>
+      <h1 style={titleStyle}>Login</h1>
       <InputField
         inputType={'text'}
-        placeholder={'Felhasználónév'}
+        placeholder={'Username'}
         classes={''}
         handleOnChange={setUsername}
       />
       <InputField
         inputType={'password'}
-        placeholder={'Jelszó'}
+        placeholder={'Password'}
         classes={''}
         handleOnChange={setPassword}
       />
 
       <div>
         <button onClick={(e) => handleClick(e)} style={buttonStyle}>
-          Bejelentkezés
+          Login
         </button>
       </div>
     </div>

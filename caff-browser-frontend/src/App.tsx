@@ -9,31 +9,24 @@ import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import ImageDetailView from './components/ImageDetailView';
 import Color from './styles/Color';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  //const [admin, setAdmin] = useState(false);
-
   return (
     <div className="App" style={globalStyle}>
       <Router>
         <Header></Header>
         <div className="container">
           <Routes>
-            <Route path="/" element={loggedIn ? <Browser /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
+            <Route path="/" element={<Browser />}></Route>
             <Route
               path="/login"
-              element={<Login isLoggedIn={setLoggedIn} />}
+              element={<Login />}
             ></Route>
-            <Route path="/register" element={loggedIn ? <Register /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
-            <Route path="/image/:id" element={loggedIn ? <ImageDetailView /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
-            <Route path="/profile" element={loggedIn ? <Profile /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
-            <Route path="/profile/edit" element={loggedIn ? <EditProfile /> : <Login isLoggedIn={setLoggedIn}/>}></Route>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/image/:id" element={<ImageDetailView />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/profile/edit" element={<EditProfile />}></Route>
           </Routes>
         </div>
       </Router>

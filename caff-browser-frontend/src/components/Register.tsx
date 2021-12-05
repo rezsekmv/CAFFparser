@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/openapi/services/AuthService';
 import Color from '../styles/Color';
 import InputField from './InputField';
@@ -9,20 +10,21 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
+  const navigate = useNavigate();
+
   const handleRegister = (e: any) => {
     AuthService.signUp({
       username,
       password,
       email,
-      name
-    }).then(
-      (user) => {
-        console.log(user);
-      }
-    ).catch( (error) => {
-      console.log(error);
-    });
-
+      name,
+    })
+      .then((user) => {
+        navigate('/login');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -45,7 +47,7 @@ const Register = () => {
           inputType={'email'}
           placeholder={'Email újra'}
           classes={'col-6'}
-          handleOnChange={()=>{}}
+          handleOnChange={() => {}}
         />
         <InputField
           inputType={'password'}
@@ -57,7 +59,7 @@ const Register = () => {
           inputType={'password'}
           placeholder={'Jelszó újra'}
           classes={'col-6'}
-          handleOnChange={()=>{}}
+          handleOnChange={() => {}}
         />
         <InputField
           inputType={'text'}
@@ -87,3 +89,6 @@ const buttonStyle = {
 };
 
 export default Register;
+function useHistory() {
+  throw new Error('Function not implemented.');
+}

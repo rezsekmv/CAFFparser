@@ -12,13 +12,13 @@ const Browser = () => {
   const [credit, setCredit] = useState('');
 
   useEffect(() => {
-    ImageService.getAllImage(8, currentPage)
+    ImageService.getAllImage(8, currentPage, credit, caption)
       .then((page) => {
         setData(page.content!);
         setLastPage(page.totalPages!);
       })
       .catch((err) => {
-        console.error(JSON.stringify(err));
+        console.error(JSON.stringify(err.status));
       });
   }, [currentPage]);
 

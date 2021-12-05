@@ -5,9 +5,10 @@ import { UserDto, UserService } from '../services/openapi';
 
 const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
   const [myUser, setMyUser] = useState<UserDto>({
     id: 1,
     username: 'test_user',
@@ -24,17 +25,21 @@ const Profile = () => {
   }, []);
 
   const handleChangePassword = () => {
+    if (newPassword !== confirmPassword) {
+      setError('A két jelszó nem egyezik');
+      return;
+    }
     UserService.updateMyPassword({ oldPassword, newPassword })
       .then((res) => {
-        setSuccess(true);
+        setSuccess('Sikeres adatmódosítás');
       })
       .catch((err) => {
-        setError(true);
+        setError('Sikertelen adatmódosítás');
       })
       .finally(() => {
         setTimeout(() => {
-          setError(false);
-          setSuccess(false);
+          setError('');
+          setSuccess('');
         }, 2000);
       });
   };
@@ -57,10 +62,7 @@ const Profile = () => {
           <p>
             <b>My roles: </b> {myUser.roles?.join(', ')}
           </p>
-          <Button
-            style={{ marginTop: 10 }}
-            variant="primary"
-          >
+          <Button style={{ marginTop: 10 }} variant="primary">
             <Link to={'/profile/edit'}>Modify</Link>
           </Button>
         </div>
@@ -88,12 +90,14 @@ const Profile = () => {
           </InputGroup>
           <InputGroup>
             <FormControl
+              value={confirmPassword}
+              onChange={(e: any) => setConfirmPassword(e.target.value)}
               placeholder="Repeat new password"
               type="password"
             ></FormControl>
           </InputGroup>
           <Button
-            style={{ marginTop: 10, marginBottom: 20}}
+            style={{ marginTop: 10, marginBottom: 20 }}
             onClick={() => handleChangePassword()}
             variant="primary"
           >

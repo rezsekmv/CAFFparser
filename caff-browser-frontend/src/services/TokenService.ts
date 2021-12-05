@@ -7,7 +7,7 @@ export const TokenService = {
   saveAccessToken: (token: string) => {
     sessionStorage.setItem(ACCESS_TOKEN, token);
   },
-  getAccessToken: ():string => {
+  getAccessToken: (): string => {
     return sessionStorage.getItem(ACCESS_TOKEN)!;
   },
   removeAccessToken: () => {
@@ -16,11 +16,14 @@ export const TokenService = {
   saveRefreshToken: (token: string) => {
     localStorage.setItem(REFRESH_TOKEN, token);
   },
-  getRefreshToken: ():string => {
+  getRefreshToken: (): string => {
     return localStorage.getItem(REFRESH_TOKEN)!;
   },
   removeRefreshToken: () => {
     localStorage.removeItem(REFRESH_TOKEN);
+  },
+  isAdmin: () => {
+    return sessionStorage.getItem(ACCESS_TOKEN)!;
   },
 
   getAccessTokenWithRefreshToken: () => {
