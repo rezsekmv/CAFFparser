@@ -44,7 +44,7 @@ jobs:
           rm mvnw mvnw.cmd
           npm i -g snyk
           snyk auth "$SNYK_TOKEN"
-          if snyk test; then
+          if ! snyk test; then
             echo "Snyk test has found security errors"
           else
             echo "Snyk test completed without errors"
