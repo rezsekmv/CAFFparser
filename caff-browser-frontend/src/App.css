@@ -75,7 +75,8 @@ div.container {
   overflow: hidden;
 }
 
-.profile-box-data p, .profile-box-data input {
+.profile-box-data p,
+.profile-box-data input {
   margin-top: 10px;
 }
 
@@ -84,4 +85,22 @@ div.container {
   opacity: 0;
   position: absolute;
   transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner-bg {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1a1a2de1;
+  width: 100%;
+  height: 82.5vh;
 }

@@ -4,6 +4,7 @@ import { Pagination, FormControl } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { ImageDto, ImageService } from '../services/openapi';
 import { useNavigate } from 'react-router-dom';
+import Spinner from './Spinner';
 
 const Browser = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -11,6 +12,7 @@ const Browser = () => {
   const [data, setData] = useState<Array<ImageDto>>([]);
   const [caption, setCaption] = useState('');
   const [credit, setCredit] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,10 +55,11 @@ const Browser = () => {
 
   return (
     <>
+      {loading && <Spinner></Spinner>}
       <div className="browser">
         <h2 className="float-start">Image browser</h2>
         <div className="row mt-2 float-end">
-          <FileUpload></FileUpload>
+          <FileUpload loading={setLoading}></FileUpload>
         </div>
         <div className="row p-2">
           <div className="col-6">

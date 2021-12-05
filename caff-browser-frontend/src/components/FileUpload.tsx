@@ -3,12 +3,18 @@ import { Button, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ImageService } from '../services/openapi';
 
-const FileUpload = () => {
+interface FileUploadProps {
+  loading: Function;
+}
+
+const FileUpload = ({ loading }: FileUploadProps) => {
   const [selectedFile, setSelectedFile] = useState<any>();
   const navigate = useNavigate();
 
   const handleCreateCaff = () => {
+    loading(true);
     ImageService.createImage({ image: selectedFile }).then((res) => {
+      loading(false);
       navigate(`/image/${res.id}`);
     });
   };
