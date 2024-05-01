@@ -1,5 +1,12 @@
 # CAFF Browser
 
+The application is capable to parse the CAFF extension. The whole app can be controled from the UI.
+
+The application has 3 components:
+ - frontend UI in react
+ - backend in spring
+ - native parser in C++
+
 ## Starting the application
 
 ### Running backend with Docker
